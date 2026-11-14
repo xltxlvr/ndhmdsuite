@@ -436,6 +436,9 @@ def main():
     built_specs = [s for s in DOCS if not a.only or s["slug"] == a.only]
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td)
+        if (SRC / "img").is_dir():           # 그림은 변환할 때도, 결과 폴더에도 둔다
+            shutil.copytree(SRC / "img", tmp / "img")
+            shutil.copytree(SRC / "img", OUT / "img", dirs_exist_ok=True)
         for spec in built_specs:
             print(f"* {spec['src']}")
             md = (SRC / spec["src"]).read_text(encoding="utf-8")

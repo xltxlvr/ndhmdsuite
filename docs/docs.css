@@ -166,3 +166,7 @@ nav.pager a.next{margin-left:auto}
   header.top nav{display:none}
   a.anchor{display:none}
 }
+
+/* 그림 */
+figure.figure{text-align:center}
+figure.figure img{border:1px solid var(--line); border-radius:8px; max-width:min(100%,460px)}

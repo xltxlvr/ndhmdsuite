@@ -32,7 +32,10 @@
 <li><a href="#처음-실행-작업공간-고르기">처음 실행: 작업공간 고르기</a></li>
 <li><a href="#첫-원고-쓰기">첫 원고 쓰기</a></li>
 <li><a href="#pdf-만들기">PDF 만들기</a></li>
-<li><a href="#원고와-pdf-오가기">원고와 PDF 오가기</a></li>
+<li><details><summary><a href="#원고와-pdf-오가기">원고와 PDF 오가기</a></summary><ul>
+<li><a href="#id-1-sumatrapdf에-역방향-검색-명령-넣기">1. SumatraPDF에 역방향 검색 명령 넣기</a></li>
+<li><a href="#id-2-ndhmdwriter에서-뷰어-등록하기">2. ndhmdWriter에서 뷰어 등록하기</a></li>
+</ul></details></li>
 <li><a href="#문서마다-다르게-front-matter">문서마다 다르게: front matter</a></li>
 <li><a href="#여러-파일로-책-만들기">여러 파일로 책 만들기</a></li>
 <li><a href="#명령줄에서">명령줄에서</a></li>
@@ -87,7 +90,26 @@
 <p><code>hello.tex</code>, <code>hello.pdf</code> 등은 원고와 <strong>같은 폴더</strong>에 생긴다. 컴파일이 성공하면 PDF가 열린다. SumatraPDF가 있으면 그것으로, 없으면 시스템 기본 뷰어로 열린다.</p>
 <p>컴파일 전에 마크업에 실수가 없는지만 보고 싶으면 <strong>컴파일 ▶ 마크업 점검</strong>(<code>Ctrl+Shift+K</code>)을 쓴다. 컴파일이 실패하면 콘솔 창에 로그가 나오고, <strong>오류 위치로</strong> 버튼을 누르면 원고의 해당 줄로 이동한다.</p>
 <h2 id="원고와-pdf-오가기">원고와 PDF 오가기<a class="anchor" href="#원고와-pdf-오가기" aria-label="링크">#</a></h2>
-<p>원고에서 커서를 둔 줄에 해당하는 PDF 자리를 보려면 <strong>컴파일 ▶ PDF에서 이 위치 보기</strong>(<code>Ctrl+Alt+F</code>)를 쓴다. 반대로 PDF에서 원고로 돌아오는 <strong>역방향 검색</strong>은 PDF 뷰어에 등록해 두어야 한다. 방법은 설명서의 <a href="ndhmdwriter-manual.html#sec-inverse">역방향 검색</a>을 본다.</p>
+<p>원고에서 커서를 둔 줄에 해당하는 PDF 자리를 보려면 <strong>컴파일 ▶ PDF에서 이 위치 보기</strong>(<code>Ctrl+Alt+F</code>)를 쓴다.</p>
+<p>반대로 PDF를 더블클릭해서 원고의 해당 줄로 돌아오는 <strong>역방향 검색</strong>은 처음에 한 번 설정해 두어야 한다. PDF 뷰어는 SumatraPDF를 기준으로 설명한다.</p>
+<h3 id="id-1-sumatrapdf에-역방향-검색-명령-넣기">1. SumatraPDF에 역방향 검색 명령 넣기<a class="anchor" href="#id-1-sumatrapdf에-역방향-검색-명령-넣기" aria-label="링크">#</a></h3>
+<p>SumatraPDF를 실행해 <strong>메뉴 ▶ 설정 ▶ 옵션</strong>을 연다. 맨 아래 <strong>명령줄 역방향 탐색 설정</strong> 칸에 다음을 그대로 적고 <strong>확인</strong>을 누른다.</p>
+<pre><code>ndhmdsync --line %l "%f"</code></pre>
+<figure class="figure">
+<img src="img/sumatra-inverse-search.png" alt="SumatraPDF 옵션의 명령줄 역방향 탐색 설정" />
+<figcaption><span class="caption-label">그림 1.</span> SumatraPDF 옵션의 명령줄 역방향 탐색 설정</figcaption>
+</figure>
+<h3 id="id-2-ndhmdwriter에서-뷰어-등록하기">2. ndhmdWriter에서 뷰어 등록하기<a class="anchor" href="#id-2-ndhmdwriter에서-뷰어-등록하기" aria-label="링크">#</a></h3>
+<p>ndhmdWriter를 실행(바탕화면 아이콘을 더블클릭)하고 <strong>설정 ▶ 환경설정</strong>을 연다.</p>
+<ol>
+<li><strong>PDF 뷰어 역방향 검색</strong> 줄의 <strong>지금 등록</strong>을 누른다.</li>
+<li><strong>PDF 뷰어 기본 앱</strong> 줄의 <strong>감지된 뷰어로 등록</strong>을 누른다.</li>
+</ol>
+<figure class="figure">
+<img src="img/ndhmdwriter-settings.png" alt="환경설정의 PDF 뷰어 항목" />
+<figcaption><span class="caption-label">그림 2.</span> 환경설정의 PDF 뷰어 항목</figcaption>
+</figure>
+<p>이제 PDF에서 문장을 더블클릭하면 ndhmdWriter가 해당 원고 줄로 커서를 옮긴다. 자세한 동작은 설명서의 <a href="ndhmdwriter-manual.html#sec-inverse">역방향 검색</a>을 본다.</p>
 <h2 id="문서마다-다르게-front-matter">문서마다 다르게: front matter<a class="anchor" href="#문서마다-다르게-front-matter" aria-label="링크">#</a></h2>
 <p>머리말이 없으면 설치 때 함께 들어온 기본 설정으로 조판된다. 문서마다 바꾸고 싶으면 원고 맨 위에 yaml 머리말을 붙인다.</p>
 <pre><code class="language-yaml">---

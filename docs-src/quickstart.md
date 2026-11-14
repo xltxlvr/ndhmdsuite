@@ -54,7 +54,30 @@ macOS와 Linux는 [ndhmd4tex 저장소의 INSTALLATION.md](https://github.com/xl
 
 ## 원고와 PDF 오가기
 
-원고에서 커서를 둔 줄에 해당하는 PDF 자리를 보려면 **컴파일 ▶ PDF에서 이 위치 보기**(`Ctrl+Alt+F`)를 쓴다. 반대로 PDF에서 원고로 돌아오는 **역방향 검색**은 PDF 뷰어에 등록해 두어야 한다. 방법은 설명서의 [역방향 검색](ndhmdwriter-manual.html#sec-inverse)을 본다.
+원고에서 커서를 둔 줄에 해당하는 PDF 자리를 보려면 **컴파일 ▶ PDF에서 이 위치 보기**(`Ctrl+Alt+F`)를 쓴다.
+
+반대로 PDF를 더블클릭해서 원고의 해당 줄로 돌아오는 **역방향 검색**은 처음에 한 번 설정해 두어야 한다. PDF 뷰어는 SumatraPDF를 기준으로 설명한다.
+
+### 1. SumatraPDF에 역방향 검색 명령 넣기
+
+SumatraPDF를 실행해 **메뉴 ▶ 설정 ▶ 옵션**을 연다. 맨 아래 **명령줄 역방향 탐색 설정** 칸에 다음을 그대로 적고 **확인**을 누른다.
+
+```
+ndhmdsync --line %l "%f"
+```
+
+![SumatraPDF 옵션의 명령줄 역방향 탐색 설정](img/sumatra-inverse-search.png)
+
+### 2. ndhmdWriter에서 뷰어 등록하기
+
+ndhmdWriter를 실행(바탕화면 아이콘을 더블클릭)하고 **설정 ▶ 환경설정**을 연다.
+
+1. **PDF 뷰어 역방향 검색** 줄의 **지금 등록**을 누른다.
+2. **PDF 뷰어 기본 앱** 줄의 **감지된 뷰어로 등록**을 누른다.
+
+![환경설정의 PDF 뷰어 항목](img/ndhmdwriter-settings.png)
+
+이제 PDF에서 문장을 더블클릭하면 ndhmdWriter가 해당 원고 줄로 커서를 옮긴다. 자세한 동작은 설명서의 [역방향 검색](ndhmdwriter-manual.html#sec-inverse)을 본다.
 
 ## 문서마다 다르게: front matter
 
