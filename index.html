@@ -78,6 +78,19 @@
   .card a.repo{font-weight:600; text-decoration:none; font-size:.95rem}
   .card a.repo:hover{text-decoration:underline}
 
+  .vers{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-bottom:28px}
+  .ver{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px}
+  .ver b{display:block; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.9rem}
+  .ver span.n{font-size:1.35rem; font-weight:700; letter-spacing:-.01em; color:var(--accent)}
+  .log h3{margin:0 0 10px; font-size:1.05rem}
+  .log ul{list-style:none; margin:0; padding:0}
+  .log li{display:flex; gap:12px; padding:8px 0; border-bottom:1px dashed var(--line); font-size:.93rem; color:var(--muted)}
+  .log li:last-child{border-bottom:0}
+  .log li i{
+    font-style:normal; flex:none; min-width:3.4em; font-weight:600; color:var(--fg);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.88rem; padding-top:1px;
+  }
+
   ol.steps{margin:0; padding:0; list-style:none; counter-reset:s}
   ol.steps li{
     counter-increment:s; position:relative; padding:14px 0 14px 48px;
@@ -126,6 +139,7 @@
     <nav>
       <a class="hide-s" href="#download"><span data-l="ko">다운로드</span><span data-l="en">Download</span></a>
       <a class="hide-s" href="#components"><span data-l="ko">구성 요소</span><span data-l="en">Components</span></a>
+      <a class="hide-s" href="#changes"><span data-l="ko">변경 이력</span><span data-l="en">Changes</span></a>
       <a class="hide-s" href="#install"><span data-l="ko">설치</span><span data-l="en">Install</span></a>
       <a href="#usage"><span data-l="ko">사용법</span><span data-l="en">Usage</span></a>
     </nav>
@@ -190,6 +204,44 @@
           </p>
           <a class="repo" href="https://github.com/xltxlvr/ksruncltex" target="_blank" rel="noopener">github.com/xltxlvr/ksruncltex →</a>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="changes">
+    <div class="wrap">
+      <h2><span data-l="ko">버전과 최근 변경</span><span data-l="en">Versions &amp; recent changes</span></h2>
+      <p class="sub">
+        <span data-l="ko">현재 버전과 최근 수정 내용을 요약했습니다. 전체 이력은 각 저장소의 CHANGELOG를 참고하세요.</span>
+        <span data-l="en">Current versions and a short summary of recent changes. See each repository's CHANGELOG for the full history.</span>
+      </p>
+      <div class="vers">
+        <div class="ver"><b>ndhmdwriter</b><span class="n">0.9.5</span></div>
+        <div class="ver"><b>ndhmd4tex</b><span class="n">0.22.2</span></div>
+        <div class="ver"><b>ndhmd2html</b><span class="n">0.4.1</span></div>
+        <div class="ver"><b>ndhmdsync</b><span class="n">0.5.6</span></div>
+      </div>
+      <div class="two">
+        <div class="box log">
+          <h3>ndhmdwriter</h3>
+          <ul>
+            <li><i>0.9.5</i><span><span data-l="ko">PDF 그림 미리보기가 poppler 없이도 동작(QtPdf로 대체 — Windows 대응)</span><span data-l="en">PDF figure preview works without poppler (QtPdf fallback, for Windows)</span></span></li>
+            <li><i>0.9.4</i><span><span data-l="ko">LilyPond 컴파일 시 tagline 자동 제거</span><span data-l="en">LilyPond: tagline removed automatically when compiling</span></span></li>
+            <li><i>0.9.3</i><span><span data-l="ko">조각 그림에 “실행 후 자르기” 옵션 추가</span><span data-l="en">Jigsaw figures: new “crop after run” option</span></span></li>
+            <li><i>0.9.2</i><span><span data-l="ko">LilyPond 2.23.12 이상 대응(<code>-dsafe</code> 제거)</span><span data-l="en">LilyPond 2.23.12+ support (<code>-dsafe</code> removed)</span></span></li>
+            <li><i>0.9.0</i><span><span data-l="ko">ndhmd4tex 0.22의 <code>external</code> 블록 지원</span><span data-l="en">Support for ndhmd4tex 0.22 <code>external</code> blocks</span></span></li>
+          </ul>
+        </div>
+        <div class="box log">
+          <h3>ndhmd4tex · ndhmd2html</h3>
+          <ul>
+            <li><i>0.22.2</i><span><span data-l="ko"><code>external</code> 결과를 <code>||</code>로 이을 때의 줄바꿈 오류 수정 (ndhmd2html 0.4.1)</span><span data-l="en">Fixed a stray line break when joining <code>external</code> output with <code>||</code> (ndhmd2html 0.4.1)</span></span></li>
+            <li><i>0.22.1</i><span><span data-l="ko"><code>external</code> 결과 종류 <code>math</code> 추가</span><span data-l="en">New <code>math</code> result type for <code>external</code></span></span></li>
+            <li><i>0.22.0</i><span><span data-l="ko">외부 도구 결과를 그림·글로 받는 <code>external</code> 블록 도입 (ndhmd2html 0.4.0)</span><span data-l="en">New <code>external</code> block: pull figures or text from external tools (ndhmd2html 0.4.0)</span></span></li>
+            <li><i>0.21.3</i><span><span data-l="ko">polyglossia 아랍어 RTL 블록의 컴파일 실패 수정</span><span data-l="en">Fixed compile failure of polyglossia Arabic RTL blocks</span></span></li>
+            <li><i>0.21.2</i><span><span data-l="ko">RTL 블록과 인라인 구간 구분</span><span data-l="en">RTL blocks distinguished from inline spans</span></span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
