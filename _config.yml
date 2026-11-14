@@ -1,0 +1,7 @@
+# GitHub Pages(Jekyll)가 원고와 도구를 처리하지 않도록 제외한다.
+# docs-src 의 .md 에는 {{파일}} 처럼 Liquid 로 오해되는 글이 많다.
+# (.nojekyll 이 있으면 Jekyll 자체가 돌지 않으므로 이 파일은 안전장치다.)
+exclude:
+  - docs-src
+  - tools
+  - README.md
