@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ndhmdSuite — Markdown to TeX authoring suite</title>
+<meta name="description" content="ndhmdSuite: ndhmdwriter, ndhmd4tex, ksruncltex로 구성된 문서 저술·조판 도구 모음 / A document authoring and typesetting toolset.">
+<style>
+  :root{
+    --bg:#fbfaf7; --fg:#1d1d1f; --muted:#6b6b70; --line:#e4e1d8;
+    --card:#ffffff; --accent:#1f4fd8; --accent-fg:#fff; --soft:#eef2ff;
+    --code:#f3f1ea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#141416; --fg:#ececee; --muted:#9b9ba3; --line:#2b2b30;
+      --card:#1c1c20; --accent:#7c9cff; --accent-fg:#0b0f1f; --soft:#1d2238;
+      --code:#232328;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent)}
+  .wrap{max-width:960px; margin:0 auto; padding:0 24px}
+
+  header.top{
+    position:sticky; top:0; z-index:10;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  }
+  header.top .wrap{display:flex; align-items:center; gap:20px; height:56px}
+  .brand{font-weight:700; letter-spacing:-.01em; color:var(--fg); text-decoration:none}
+  .brand span{color:var(--accent)}
+  nav{display:flex; gap:18px; margin-left:auto; font-size:.92rem}
+  nav a{color:var(--muted); text-decoration:none}
+  nav a:hover{color:var(--fg)}
+  .lang{
+    border:1px solid var(--line); background:var(--card); color:var(--fg);
+    border-radius:999px; padding:4px 12px; font:inherit; font-size:.85rem; cursor:pointer;
+  }
+  .lang:hover{border-color:var(--accent)}
+
+  .hero{padding:88px 0 56px}
+  .eyebrow{
+    display:inline-block; font-size:.8rem; font-weight:600; color:var(--accent);
+    background:var(--soft); padding:4px 12px; border-radius:999px; margin-bottom:20px;
+  }
+  h1{font-size:clamp(2.2rem,6vw,3.6rem); line-height:1.12; letter-spacing:-.03em; margin:0 0 18px}
+  .lead{font-size:1.15rem; color:var(--muted); max-width:640px; margin:0 0 32px}
+  .cta{display:flex; flex-wrap:wrap; gap:12px}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:12px 22px;
+    border-radius:10px; font-weight:600; text-decoration:none; font-size:1rem;
+    border:1px solid var(--line); color:var(--fg); background:var(--card);
+  }
+  .btn:hover{border-color:var(--accent)}
+  .btn.primary{background:var(--accent); color:var(--accent-fg); border-color:var(--accent)}
+  .btn.primary:hover{filter:brightness(1.08)}
+  .meta{margin-top:14px; font-size:.88rem; color:var(--muted)}
+
+  section{padding:56px 0; border-top:1px solid var(--line)}
+  h2{font-size:1.6rem; letter-spacing:-.02em; margin:0 0 8px}
+  .sub{color:var(--muted); margin:0 0 28px}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:22px; display:flex; flex-direction:column;
+  }
+  .card h3{margin:0 0 4px; font-size:1.1rem; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .tag{font-size:.78rem; color:var(--muted); margin-bottom:10px}
+  .card p{margin:0 0 16px; color:var(--muted); font-size:.95rem; flex:1}
+  .card a.repo{font-weight:600; text-decoration:none; font-size:.95rem}
+  .card a.repo:hover{text-decoration:underline}
+
+  ol.steps{margin:0; padding:0; list-style:none; counter-reset:s}
+  ol.steps li{
+    counter-increment:s; position:relative; padding:14px 0 14px 48px;
+    border-bottom:1px dashed var(--line);
+  }
+  ol.steps li:last-child{border-bottom:0}
+  ol.steps li::before{
+    content:counter(s); position:absolute; left:0; top:14px;
+    width:30px; height:30px; border-radius:50%;
+    background:var(--soft); color:var(--accent); font-weight:700;
+    display:grid; place-items:center; font-size:.9rem;
+  }
+  code{
+    background:var(--code); padding:2px 6px; border-radius:5px; font-size:.88em;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  .two{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px}
+  .box{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px}
+  .box h3{margin:0 0 10px; font-size:1.05rem}
+  .box ul{margin:0; padding-left:1.2em; color:var(--muted); font-size:.95rem}
+  .box li{margin:4px 0}
+
+  .soon{
+    border:1.5px dashed var(--line); border-radius:14px; padding:36px 24px;
+    text-align:center; color:var(--muted);
+  }
+  footer{border-top:1px solid var(--line); padding:32px 0 56px; color:var(--muted); font-size:.88rem}
+  footer .wrap{display:flex; flex-wrap:wrap; gap:8px 24px; justify-content:space-between}
+
+  /* language switching */
+  [data-l]{display:none}
+  html[lang="ko"] [data-l="ko"], html[lang="en"] [data-l="en"]{display:revert}
+  html[lang="ko"] span[data-l="ko"], html[lang="en"] span[data-l="en"]{display:inline}
+
+  @media (max-width:640px){
+    nav a.hide-s{display:none}
+    .hero{padding:56px 0 40px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">ndhmd<span>Suite</span></a>
+    <nav>
+      <a class="hide-s" href="#download"><span data-l="ko">다운로드</span><span data-l="en">Download</span></a>
+      <a class="hide-s" href="#components"><span data-l="ko">구성 요소</span><span data-l="en">Components</span></a>
+      <a class="hide-s" href="#install"><span data-l="ko">설치</span><span data-l="en">Install</span></a>
+      <a href="#usage"><span data-l="ko">사용법</span><span data-l="en">Usage</span></a>
+    </nav>
+    <button class="lang" id="langBtn" type="button" aria-label="Switch language">English</button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <span class="eyebrow">Version 4.35 · Windows</span>
+    <h1>ndhmdSuite</h1>
+    <p class="lead">
+      <span data-l="ko">문서 저술과 조판을 위한 통합 도구 모음. 전용 편집기 ndhmdwriter와 변환기 ndhmd4tex, 컴파일 래퍼 ksruncltex를 한 번에 설치합니다.</span>
+      <span data-l="en">A comprehensive toolset for document authoring and compilation: the ndhmdwriter editor, the ndhmd4tex converter, and the ksruncltex compilation wrapper, installed in one step.</span>
+    </p>
+    <div class="cta">
+      <a class="btn primary" id="download" href="https://drive.google.com/file/d/1sEWJ3L15oYN1hjQyb1cUia1nzbuv5Cuu/view?usp=sharing" target="_blank" rel="noopener">
+        ⬇ <span data-l="ko">ndhmdSuite 다운로드</span><span data-l="en">Download ndhmdSuite</span>
+      </a>
+      <a class="btn" href="https://github.com/xltxlvr/ndhmdwriter" target="_blank" rel="noopener">
+        <span data-l="ko">GitHub에서 보기</span><span data-l="en">View on GitHub</span>
+      </a>
+    </div>
+    <p class="meta">
+      <span data-l="ko">설치 파일 <code>ndhmdSuite_Setup.exe</code>는 Google Drive에서 내려받습니다.</span>
+      <span data-l="en">The installer <code>ndhmdSuite_Setup.exe</code> is hosted on Google Drive.</span>
+    </p>
+  </div>
+
+  <section id="components">
+    <div class="wrap">
+      <h2><span data-l="ko">구성 요소</span><span data-l="en">Components</span></h2>
+      <p class="sub">
+        <span data-l="ko">세 도구 모두 GitHub에 소스가 공개되어 있습니다.</span>
+        <span data-l="en">All three tools are open on GitHub.</span>
+      </p>
+      <div class="grid">
+        <article class="card">
+          <h3>ndhmdwriter</h3>
+          <div class="tag"><span data-l="ko">편집기 · GUI</span><span data-l="en">Editor · GUI</span></div>
+          <p>
+            <span data-l="ko">스위트의 중심이 되는 그래픽 편집기. 원고를 쓰고 정리하고 출판까지 이어가는 인터페이스입니다.</span>
+            <span data-l="en">The primary graphical editor and interface of the suite, from writing and organizing to publishing.</span>
+          </p>
+          <a class="repo" href="https://github.com/xltxlvr/ndhmdwriter" target="_blank" rel="noopener">github.com/xltxlvr/ndhmdwriter →</a>
+        </article>
+        <article class="card">
+          <h3>ndhmd4tex</h3>
+          <div class="tag"><span data-l="ko">변환기 · CLI</span><span data-l="en">Converter · CLI</span></div>
+          <p>
+            <span data-l="ko">ndhmd 문법의 markdown을 TeX로 변환하는 도구. 여러 원고를 이어 붙여 한 권의 책으로 만들 수 있습니다.</span>
+            <span data-l="en">Converts ndhmd-flavoured markdown into TeX and can assemble multiple manuscripts into a single book.</span>
+          </p>
+          <a class="repo" href="https://github.com/xltxlvr/ndhmd4tex" target="_blank" rel="noopener">github.com/xltxlvr/ndhmd4tex →</a>
+        </article>
+        <article class="card">
+          <h3>ksruncltex</h3>
+          <div class="tag"><span data-l="ko">컴파일 래퍼</span><span data-l="en">Compilation wrapper</span></div>
+          <p>
+            <span data-l="ko">cluttex를 매끄럽게 실행해 주는 래퍼. 설치 과정에서 자동으로 구성됩니다.</span>
+            <span data-l="en">A wrapper that runs cluttex smoothly. Configured automatically during installation.</span>
+          </p>
+          <a class="repo" href="https://github.com/xltxlvr/ksruncltex" target="_blank" rel="noopener">github.com/xltxlvr/ksruncltex →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <h2><span data-l="ko">설치</span><span data-l="en">Installation</span></h2>
+      <p class="sub">
+        <span data-l="ko">Windows 설치 프로그램 하나로 끝납니다.</span>
+        <span data-l="en">A single Windows installer does everything.</span>
+      </p>
+      <ol class="steps">
+        <li>
+          <span data-l="ko"><code>ndhmdSuite_Setup.exe</code> 설치 파일을 내려받습니다.</span>
+          <span data-l="en">Download the <code>ndhmdSuite_Setup.exe</code> installer.</span>
+        </li>
+        <li>
+          <span data-l="ko">실행 파일을 실행합니다. <b>모든 사용자</b>(관리자 권한 필요)와 <b>현재 사용자</b> 설치를 모두 지원합니다.</span>
+          <span data-l="en">Run it. Both <b>All Users</b> (requires Administrator privileges) and <b>Current User</b> modes are supported.</span>
+        </li>
+        <li>
+          <span data-l="ko">이전 버전이 감지되면 설치 프로그램이 깨끗이 제거할지 먼저 묻습니다.</span>
+          <span data-l="en">If a previous version is detected, the installer offers to remove it cleanly first.</span>
+        </li>
+        <li>
+          <span data-l="ko">언어(영어 또는 한국어)를 고르고 마법사를 따라 진행합니다.</span>
+          <span data-l="en">Choose your language (English or Korean) and follow the setup wizard.</span>
+        </li>
+      </ol>
+
+      <div class="two" style="margin-top:32px">
+        <div class="box">
+          <h3><span data-l="ko">설치 중 자동으로 수행되는 작업</span><span data-l="en">Automated setup actions</span></h3>
+          <ul>
+            <li><span data-l="ko"><b>환경 변수</b>: 설치 폴더를 PATH에 추가해 어느 위치에서나 명령행으로 도구를 실행할 수 있습니다.</span><span data-l="en"><b>Environment variables</b>: the install directory is appended to PATH for command-line access from anywhere.</span></li>
+            <li><span data-l="ko"><b>리소스 배포</b>: 필요한 사용자 리소스를 <code>%USERPROFILE%\ndhmd4tex\</code>에 복사합니다.</span><span data-l="en"><b>Resource deployment</b>: user resources are copied to <code>%USERPROFILE%\ndhmd4tex\</code>.</span></li>
+            <li><span data-l="ko"><b>스크립트 초기화</b>: ksruncltex 설치 배치 스크립트를 조용히 실행합니다.</span><span data-l="en"><b>Script initialization</b>: the ksruncltex install batch script runs silently.</span></li>
+            <li><span data-l="ko"><b>바로가기</b>: ndhmdwriter.exe의 바탕화면·시작 메뉴 바로가기를 만듭니다.</span><span data-l="en"><b>Shortcuts</b>: Desktop and Start Menu shortcuts for ndhmdwriter.exe.</span></li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3><span data-l="ko">제거</span><span data-l="en">Uninstallation</span></h3>
+          <ul>
+            <li><span data-l="ko">Windows의 “설치된 앱” 또는 “프로그램 추가/제거”에서 제거합니다.</span><span data-l="en">Remove it from Windows “Apps &amp; features” or “Add or Remove Programs”.</span></li>
+            <li><span data-l="ko">PATH에서 설치 폴더를 지우고 설치된 실행 파일을 삭제합니다.</span><span data-l="en">The install directory is removed from PATH and the binaries are deleted.</span></li>
+            <li><span data-l="ko"><code>%USERPROFILE%\ndhmd4tex\</code>의 사용자 파일과 설정은 필요 없다면 직접 삭제해야 합니다.</span><span data-l="en">Files and settings in <code>%USERPROFILE%\ndhmd4tex\</code> may need to be removed manually.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="usage">
+    <div class="wrap">
+      <h2><span data-l="ko">사용법</span><span data-l="en">Usage</span></h2>
+      <p class="sub">
+        <span data-l="ko">ndhmdwriter, ndhmd4tex, ksruncltex의 사용 안내를 이곳에 추가할 예정입니다.</span>
+        <span data-l="en">Guides for ndhmdwriter, ndhmd4tex and ksruncltex will be added here.</span>
+      </p>
+      <div class="soon">
+        <span data-l="ko">준비 중입니다. 그동안은 각 GitHub 저장소의 문서를 참고해 주세요.</span>
+        <span data-l="en">Coming soon. In the meantime, see the documentation in each GitHub repository.</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>ndhmdSuite 4.35 · Publisher: ndhmd</span>
+    <span>
+      <a href="https://github.com/xltxlvr/ndhmdwriter" target="_blank" rel="noopener">ndhmdwriter</a> ·
+      <a href="https://github.com/xltxlvr/ndhmd4tex" target="_blank" rel="noopener">ndhmd4tex</a> ·
+      <a href="https://github.com/xltxlvr/ksruncltex" target="_blank" rel="noopener">ksruncltex</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var html = document.documentElement, btn = document.getElementById('langBtn');
+  function set(l){
+    html.lang = l;
+    btn.textContent = (l === 'ko') ? 'English' : '한국어';
+    try { localStorage.setItem('ndhmd-lang', l); } catch(e){}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('ndhmd-lang'); } catch(e){}
+  if (!saved) saved = (navigator.language || '').toLowerCase().indexOf('ko') === 0 ? 'ko' : 'en';
+  set(saved);
+  btn.addEventListener('click', function(){ set(html.lang === 'ko' ? 'en' : 'ko'); });
+})();
+</script>
+</body>
+</html>
