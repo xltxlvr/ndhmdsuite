@@ -6,6 +6,8 @@ Publisher: ndhmd
 
 ndhmdSuite is a comprehensive toolset designed for efficient document authoring and compilation. The suite features the main dedicated editor (ndhmdwriter) alongside integrated auxiliary tools and compilation wrappers like ksruncltex.
 
+* Homepage: https://xltxlvr.github.io/ndhmdsuite
+
 ## Included Components
 ndhmdwriter: The primary graphical editor and interface for the suite.
 
