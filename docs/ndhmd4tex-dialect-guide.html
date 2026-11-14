@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ndhmd4tex 방언 사양서 — ndhmdSuite</title>
+<meta name="description" content="ndhmd4tex 0.22 기준 · ndhmarkdown 문법 전체">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html">ndhmd<span>Suite</span></a>
+    <nav>
+      <a href="index.html">문서</a>
+      <a href="../index.html#download">다운로드</a>
+    </nav>
+    <div class="search">
+      <input id="q" type="search" placeholder="문서 검색…" autocomplete="off" aria-label="문서 검색">
+      <div id="results" class="results" hidden></div>
+    </div>
+  </div>
+</header>
+<div class="layout">
+  <aside class="side" id="side">
+    <button class="side-toggle" id="sideToggle" type="button">목차</button>
+    <nav class="toc" aria-label="목차">
+<ul class="toc-list">
+<li><details><summary><a href="#id-1-실행-방법">1. 실행 방법</a></summary><ul>
+<li><a href="#id-11-헤더-없는-원고와-기본-헤더---setup---default">1.1. 헤더 없는 원고와 기본 헤더 (--setup, --default)</a></li>
+<li><a href="#id-12-설정-파일을-여러-문서가-나눠-쓰기">1.2. 설정 파일을 여러 문서가 나눠 쓰기</a></li>
+<li><a href="#id-121---search-resource-어디서-찾는지-직접-확인하기">1.2.1. --search-resource — 어디서 찾는지 직접 확인하기</a></li>
+<li><a href="#id-122---guide-가이드-문서를-바로-열기">1.2.2. --guide — 가이드 문서를 바로 열기</a></li>
+<li><a href="#id-13---lint-흔한-마크업-실수-점검">1.3. --lint — 흔한 마크업 실수 점검</a></li>
+<li><a href="#id-14---pandoc-본문만-pandoc에-맡기기">1.4. --pandoc — 본문만 pandoc에 맡기기</a></li>
+<li><a href="#id-141---mmd-본문만-multimarkdown에-맡기기">1.4.1. --mmd — 본문만 MultiMarkdown에 맡기기</a></li>
+<li><a href="#id-15---syncinfo-pdf에서-원본-md로-역방향-검색">1.5. --syncinfo — PDF에서 원본 md로 역방향 검색</a></li>
+<li><a href="#id-16---latexmk-ksruncltex-대신-표준-도구로-컴파일하기">1.6. --latexmk — ksruncltex 대신 표준 도구로 컴파일하기</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-2-front-matter">2. Front matter</a></summary><ul>
+<li><a href="#id-21-yaml-값에-백슬래시를-쓸-때">2.1. YAML 값에 백슬래시를 쓸 때</a></li>
+<li><a href="#id-22-모르는-키는-매크로로-넘어간다">2.2. 모르는 키는 매크로로 넘어간다</a></li>
+<li><a href="#id-23-maketitle-tocloft-제목목차-자동-삽입">2.3. maketitle / tocloft — 제목·목차 자동 삽입</a></li>
+<li><a href="#id-24-rtltypeset-오른쪽에서-왼쪽으로-쓰는-문자">2.4. RTLtypeset — 오른쪽에서 왼쪽으로 쓰는 문자</a></li>
+</ul></details></li>
+<li><a href="#id-3-헤딩">3. 헤딩</a></li>
+<li><details><summary><a href="#id-4-문단과-줄바꿈">4. 문단과 줄바꿈</a></summary><ul>
+<li><a href="#id-41-문단을-나누지-않고-이어-붙이기">4.1. || — 문단을 나누지 않고 이어 붙이기</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-5-인라인-서식">5. 인라인 서식</a></summary><ul>
+<li><a href="#id-51-규칙-추가하기-extra_inline">5.1. 규칙 추가하기 — extra_inline</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-6-따옴표-스마트-따옴표-변환">6. 따옴표 (스마트 따옴표 변환)</a></summary><ul>
+<li><a href="#id-601-quotes-결과-문자를-고르기">6.0.1. quotes — 결과 문자를 고르기</a></li>
+<li><a href="#id-61-줄임표">6.1. 줄임표 (...)</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-7-인라인-수식-매크로-raw-latex">7. 인라인 수식 / 매크로 / raw LaTeX</a></summary><ul>
+<li><a href="#id-71-인라인-raw-스팬-문장-한복판의-latex">7.1. 인라인 raw 스팬 — 문장 한복판의 LaTeX</a></li>
+<li><a href="#id-72-물결표-정책">7.2. 물결표(~) 정책</a></li>
+</ul></details></li>
+<li><a href="#id-8-디스플레이-수식-raw-환경-블록-단계에서-보호">8. 디스플레이 수식 / raw 환경 (블록 단계에서 보호)</a></li>
+<li><details><summary><a href="#id-9-주석------">9. 주석 (&lt;!-- --&gt;)</a></summary><ul>
+<li><a href="#id-91-라인-코멘트-linecomment-true">9.1. 라인 코멘트 — linecomment: true</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-10-코드-블록">10. 코드 블록</a></summary><ul>
+<li><a href="#id-101-일반-코드-펜스">10.1. 일반 코드 펜스</a></li>
+<li><a href="#id-102-showexam-원문과-변환-결과를-나란히">10.2. showexam — 원문과 변환 결과를 나란히</a></li>
+<li><a href="#id-103-external-외부-도구의-결과를-받아오기">10.3. external — 외부 도구의 결과를 받아오기</a></li>
+</ul></details></li>
+<li><a href="#id-11-리스트">11. 리스트</a></li>
+<li><details><summary><a href="#id-12-인용구blockquote">12. 인용구(blockquote)</a></summary><ul>
+<li><a href="#id-121-quote와-quotation">12.1. quote와 quotation</a></li>
+</ul></details></li>
+<li><a href="#id-13-구분선">13. 구분선</a></li>
+<li><details><summary><a href="#id-14-표">14. 표</a></summary><ul>
+<li><a href="#id-141-grid-표-병합-셀과-여러-줄-셀">14.1. grid 표 — 병합 셀과 여러 줄 셀</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-15-그림">15. 그림</a></summary><ul>
+<li><a href="#id-151-그림-내려받기와-형식-변환">15.1. 그림 내려받기와 형식 변환</a></li>
+<li><a href="#id-156-참조로-여러-번-쓰기-tagged-reference">15.6. 참조로 여러 번 쓰기 — tagged reference</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-16-링크-각주-상호참조-색인">16. 링크 / 각주 / 상호참조 / 색인</a></summary><ul>
+<li><a href="#id-161-아무-데나-라벨-id">16.1. 아무 데나 라벨 — {#id}</a></li>
+<li><a href="#id-162-각주의-종류-notes와-꼬리표">16.2. 각주의 종류 — notes와 꼬리표</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-17-커스텀-환경">17. 커스텀 환경 (:::)</a></summary><ul>
+<li><a href="#id-171-떠다니는-상자-table과-figure">17.1. 떠다니는 상자 — table과 figure</a></li>
+<li><a href="#id-172-thebibliography-원고에-직접-쓰는-문헌-목록">17.2. thebibliography — 원고에 직접 쓰는 문헌 목록</a></li>
+<li><a href="#id-173-운문-hverse와-verse">17.3. 운문 — hverse와 verse</a></li>
+<li><a href="#id-174-완전히-raw-lines-raw">17.4. 완전히 raw — lines: raw</a></li>
+<li><a href="#id-175-선택적-속성-기본값과-줄">17.5. 선택적 속성 — 기본값과 ? 줄</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-18-자동-이스케이프되는-특수문자">18. 자동 이스케이프되는 특수문자</a></summary><ul>
+<li><a href="#id-181-m-소스-자체에-강제-개행-넣기">18.1. ^^M — 소스 자체에 강제 개행 넣기</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-19-mappingyaml-로-매핑-재정의">19. mapping.yaml 로 매핑 재정의</a></summary><ul>
+<li><a href="#id-191-원고-안에-바로-mappingrule">19.1. 원고 안에 바로 — mappingrule:</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-20-파일-포함-filename">20. 파일 포함 ({{filename}})</a></summary><ul>
+<li><a href="#id-201-날-latex-파일-그대로-끼워넣기-texfilename">20.1. 날 LaTeX 파일 그대로 끼워넣기 ({{tex:filename}})</a></li>
+<li><a href="#id-202-여러-파일을-한-번에-파일패턴물음표목록">20.2. 여러 파일을 한 번에 ({{파일패턴;물음표=목록}})</a></li>
+</ul></details></li>
+<li><details><summary><a href="#id-21-마스터-헤더-상속-setup">21. 마스터 헤더 상속 (setup:)</a></summary><ul>
+<li><a href="#id-211-병합-규칙-로컬이-이긴다">21.1. 병합 규칙 — 로컬이 이긴다</a></li>
+<li><a href="#id-212-이어붙이려면-키">21.2. 이어붙이려면 키+:</a></li>
+<li><a href="#id-213-여러-파일을-나열하기">21.3. 여러 파일을 나열하기</a></li>
+<li><a href="#id-214-title은-상속되지-않는다">21.4. title은 상속되지 않는다</a></li>
+<li><a href="#id-215-mapping은-언제나-최상위-파일-기준">21.5. mapping:은 언제나 최상위 파일 기준</a></li>
+<li><a href="#id-216-체인은-2단계까지">21.6. 체인은 2단계까지</a></li>
+<li><a href="#id-217-출처-확인하기">21.7. 출처 확인하기</a></li>
+</ul></details></li>
+<li><a href="#id-22-알려진-제약-주의사항">22. 알려진 제약 / 주의사항</a></li>
+<li><a href="#id-23-beamer-프레임-4속성">23. Beamer 프레임 (={4,}{속성})</a></li>
+</ul>
+    </nav>
+  </aside>
+  <main class="doc">
+    <div class="doc-head">
+      <h1 class="doc-title">ndhmd4tex 방언 사양서</h1>
+      <p class="doc-sub">ndhmd4tex 0.22 기준 · ndhmarkdown 문법 전체</p>
+    </div>
+
+<p>이 문서는 <code>ndhmd4tex.py</code>가 인식하는 markdown → LaTeX 변환 문법을 정리한 참조 가이드다. 표준 Pandoc markdown과 여러 지점에서 다르므로, 특히 <strong>따옴표</strong>, <strong>리스트 이어쓰기</strong>, <strong>설명 리스트(<code>::</code>)</strong>, <strong>커스텀 환경(<code>:::</code>)</strong> 부분은 꼭 확인하고 쓰는 것이 좋다.</p>
+<hr />
+<h2 id="id-1-실행-방법">1. 실행 방법<a class="anchor" href="#id-1-실행-방법" aria-label="링크">#</a></h2>
+<pre><code class="language-bash">python3 ndhmd4tex.py 입력.md                 # 입력.tex 생성
+python3 ndhmd4tex.py 입력.md -o 출력.tex      # 출력 경로 지정
+python3 ndhmd4tex.py 입력.md --config mapping.yaml   # 명령 매핑 override
+python3 ndhmd4tex.py 입력.md --setup 바탕.md   # 이 파일의 헤더를 바탕으로 (1.1 참고)
+python3 ndhmd4tex.py 입력.md --setup a.md,b.md   # 여러 파일을 순서대로 병합 (21.3 참고)
+python3 ndhmd4tex.py --init-setup             # 기본 헤더를 현재 폴더에 꺼내고 끝
+python3 ndhmd4tex.py 입력.txt --encoding cp949  # 입력 인코딩 직접 지정
+python3 ndhmd4tex.py 입력.md --lint      # 변환하지 않고 마크업 실수만 점검 (1.3 참고)
+python3 ndhmd4tex.py 입력.md --fetch-images  # URL 그림을 내려받는다 (15.1 참고)
+python3 ndhmd4tex.py 입력.md --pdf     # pdflatex 로 컴파일 후 뷰어로 열기
+python3 ndhmd4tex.py 입력.md --pdfxe   # xelatex 로 컴파일
+python3 ndhmd4tex.py 입력.md --pdflua  # lualatex 로 컴파일
+python3 ndhmd4tex.py 입력.md --pdfxe --brief  # 컴파일러 출력은 숨기고 핵심만
+python3 ndhmd4tex.py 입력.md --dump-meta  # 병합된 최종 front matter만 출력하고 종료
+python3 ndhmd4tex.py 입력.md --pandoc    # 본문 변환만 pandoc에 맡긴다 (1.4 참고)
+python3 ndhmd4tex.py 입력.md --pandoc="--number-sections"   # pandoc 인자와 함께
+python3 ndhmd4tex.py 입력.md --mmd       # 본문 변환만 MultiMarkdown에 맡긴다 (1.4.1 참고)</code></pre>
+<p><code>--config</code>를 생략하면 front matter의 <code>mapping:</code> 키(상대경로는 입력 파일 기준)를 찾아 자동으로 사용한다. <code>--pdf</code>류 옵션은 <code>kpsewhich</code>로 <code>ksruncltex.lua</code>를 찾아 <code>texlua</code>로 실행하며, front matter의 <code>compileoption:</code> 문자열을 셸 인자로 그대로 덧붙인다. 컴파일이 끝나면 플랫폼 기본 뷰어(macOS <code>open</code>, Linux <code>xdg-open</code>, Windows는 연결 프로그램)로 PDF를 연다. 다른 뷰어를 쓰고 싶으면 환경변수 <code>NDHMARKDOWN_PDF_VIEWER</code>에 실행 파일과 인자를 지정한다(예: <code>okular --unique</code>). 지정한 것을 찾지 못하거나 실행에 실패하면 경고를 찍고 플랫폼 기본 뷰어로 물러난다.</p>
+<p><strong>콘솔 출력은 두 갈래다.</strong> <code>--verbose</code>(기본값, 굳이 안 써도 된다)는 지금까지 설명한 그대로 — <code>--pdf</code>류나 <code>--latexmk</code>를 쓰면 그 컴파일러 자신의 로그(실행 명령어, xelatex/latexmk의 진행 상황)가 화면에 그대로 흐른다. <strong><code>--brief</code>를 주면 이 컴파일러 로그를 숨기고, “컴파일합니다: (실제 명령줄)”/”PDF를 엽니다: …” 같은 핵심 진행 상황만 보여준다</strong> — 컴파일이 실패했을 때만 예외로, 숨겼던 로그를 그제서야 화면에 보여준다(“조용하다”와 “실패해도 단서가 없다”는 서로 다른 문제이기 때문이다).</p>
+<p><strong><code>--nopreview</code></strong>를 주면 컴파일은 그대로 하되 끝난 뒤 PDF 뷰어를 열지 않는다(<code>--pdf</code>/<code>--pdfxe</code>/<code>--pdflua</code>/<code>--latexmk</code>와 함께 쓴다). 뷰어가 이미 떠 있거나, 스크립트·CI에서 PDF만 만들고 싶을 때 쓴다. <code>--brief</code>와 함께 써도 된다.</p>
+<p>이 도구가 직접 내는 메시지(오류·경고·안내 전부, <code>--verbose</code>/<code>--brief</code> 어느 쪽이든)에는 앞에 <code>[ndhmd] </code>가 자동으로 붙는다 — 콘솔 출력을 <code>grep '\[ndhmd\]'</code> 등으로 걸러서 이 도구의 진행 상황만 따로 보고 싶을 때를 위한 것이다. 컴파일러 자신의 로그(<code>--verbose</code>일 때 그대로 흐르는 것, <code>--brief</code>에서 실패 시에만 보여주는 것)에는 이 접두어가 안 붙는다 — “이 도구가 한 말”과 “컴파일러가 한 말”이 항상 구분되게 하려는 것이다. <code>--help</code>/<code>--version</code> 출력에는 접두어가 없다(표준적인 도움말/버전 형식을 그대로 지키기 위해서다).</p>
+<p>입력 파일은 <strong>UTF-8을 먼저 시도하고, 실패하면 <code>cp949</code>, <code>euc-kr</code>로 물러선다.</strong> 한국어 윈도우에서 만든 <code>.txt</code> 원고가 cp949인 경우가 흔하기 때문이다. 물러섰을 때는 경고를 찍으므로, 글자가 깨져 보이면 <code>--encoding</code>으로 직접 지정하거나 파일을 UTF-8로 다시 저장하면 된다. 이 규칙은 <code>{{포함}}</code> 파일과 <code>setup:</code> 파일에도 똑같이 적용된다.</p>
+<p>파일 이름을 잘못 적었거나, 폴더를 넘겼거나, PDF처럼 텍스트가 아닌 파일을 넘기면 트레이스백 대신 무엇이 잘못됐는지 알려주고 종료 코드 1로 끝난다.</p>
+<p><strong>줄바꿈은 읽을 때 LF로 통일한다.</strong> 윈도우 편집기가 만든 CRLF 원고를 그대로 두면 줄 끝의 <code>\r</code> 때문에 줄 단위 규칙들이 조용히 빗나간다 — 헤딩의 <code>{label=...}</code>이 제목에 글자로 남거나, 코드 펜스의 닫는 ``` 줄이 인식되지 않아 그 아래 문서 전체가 코드 블록에 삼켜지는 식이다.</p>
+<p><code>--dump-meta</code>는 변환을 하지 않고, <code>setup:</code> 체인까지 모두 병합한 최종 front matter를 YAML로 출력하고 끝낸다. 설정 값의 출처가 여러 곳(CLI / 현재 파일 / setup 파일 / 기본값)으로 나뉘므로, “이 폰트 설정이 대체 어디서 왔나”를 확인할 때 쓴다(21장 참고).</p>
+<p><strong><code>--dump-mapping</code>은 <code>mapping:</code>/<code>mappingrule:</code>/<code>--config</code>를 전부 병합한 최종 매핑 규칙을 YAML로 출력하고 끝낸다.</strong> <code>--dump-meta</code>가 보여주는 것은 front matter의 <code>mapping:</code> 값(YAML 파일 <strong>경로</strong>)일 뿐, 그 파일들을 실제로 읽어서 병합한 내용까지는 아니다 — 여러 <code>mapping.yaml</code>을 나열했을 때 <code>extra_inline</code>처럼 이어붙는 키와 그 외 “뒤가 이긴다”는 키가 섞여 있고, 거기에 <code>mappingrule:</code>과 <code>--config</code>까지 우선순위대로 얹히므로, “지금 이 문서에서 <code>**굵게**</code>가 정말 어떤 템플릿으로 나가는지”는 파일들을 눈으로 대조하는 것보다 이렇게 병합 결과를 직접 보는 게 정확하다.</p>
+<pre><code class="language-bash">python3 ndhmd4tex.py 입력.md --dump-mapping</code></pre>
+<p><code>--dump-meta</code>와 <code>--dump-mapping</code>을 <strong>함께 주면 순서대로(먼저 meta, 다음 mapping) 콘솔에 출력</strong>하고 끝낸다 — 어느 하나만 있어도, 둘 다 있어도 실제 변환은 하지 않는다. 각 출력 끝에는 <code>====== end of meta =======</code>/ <code>====== end of mapping =======</code> 줄이 붙어서, 둘을 한꺼번에 볼 때 어디서 한쪽이 끝나고 다른 쪽이 시작하는지 한눈에 구분된다.</p>
+<h3 id="id-11-헤더-없는-원고와-기본-헤더---setup---default">1.1. 헤더 없는 원고와 기본 헤더 (<code>--setup</code>, <code>--default</code>)<a class="anchor" href="#id-11-헤더-없는-원고와-기본-헤더---setup---default" aria-label="링크">#</a></h3>
+<p>front matter를 한 줄도 적지 않은 원고도 제대로 조판되게 하는 장치다. 헤더의 바탕이 될 파일을 다음 순서로 찾는다.</p>
+<ol>
+<li><code>--setup 파일</code> 로 지정한 파일(콤마로 여러 개 나열 가능, 21.3 참고). 문서 자신의 <code>setup:</code> 보다 <strong>우선한다</strong>(<code>--config</code>가 front matter의 <code>mapping:</code>을 이기는 것과 같은 원칙).</li>
+<li>문서 자신의 <code>setup:</code> (21장).</li>
+<li><code>--default 파일</code>로 지정한 파일, 안 줬으면 <code>ndhmd-default.nmd</code> — <strong>현재 작업 폴더</strong>를 먼저 보고, 없으면 <strong>프로그램이 놓인 폴더</strong>를 본다. 배포할 때 스크립트와 함께 딸려 가는 파일이다. PyInstaller로 묶은 실행 파일에서는 찾는 자리가 조금 다르다(바로 아래 참고).</li>
+<li>아무것도 없으면 예전처럼 <code>\documentclass{book}</code> 한 줄로 떨어진다.</li>
+</ol>
+<p>찾은 파일은 <code>setup:</code>으로 지정한 것과 똑같이 취급된다. 즉 <strong>문서 자신의 front matter가 그 값을 덮어쓴다.</strong> 강제가 아니라 기본값이다. <code>--dump-meta</code>를 쓰면 어떤 파일에서 왔는지 체인으로 보여준다.</p>
+<pre><code class="language-bash">$ python3 ndhmd4tex.py 헤더없는글.md --dump-meta
+# setup 체인: 헤더없는글.md -&gt; /home/nova/ndhmd-default.nmd
+class: oblivoir
+...</code></pre>
+<p><code>ndhmd-default.nmd</code>의 본문은 읽지 않는다. front matter만 쓰이므로 아래에 메모를 적어 두어도 된다. 확장자가 <code>.md</code>가 아닌 것은 편집기에서 일반 원고와 구분하기 위해서다.</p>
+<p><code>--default</code>(축약형 <code>-d</code>)는 이 3번 자리의 파일 자체를 임시로 바꿔치기한다. <code>--setup</code>과는 성격이 다르다 — <code>--setup</code>은 “이번 실행만큼은 무조건 이 헤더를 쓰라”는 최우선 지시라 문서 자신의 <code>setup:</code>마저 덮어쓰지만, <code>--default</code>는 훨씬 약하다. “아무 헤더도 정하지 않은 문서들에 한해, 어떤 파일을 기본으로 쓸지”만 바꾸는 것이라, 문서가 <code>setup:</code>을 스스로 정했다면 여전히 그게 이긴다(2번이 3번보다 우선하는 순서 자체는 그대로다).</p>
+<pre><code class="language-bash">python3 ndhmd4tex.py 글.md --default 회사양식      # 회사양식.nmd 를 찾는다
+python3 ndhmd4tex.py 글.md -d 회사양식.nmd          # 확장자를 이미 적었으면 그대로</code></pre>
+<ul>
+<li>확장자가 없으면 <code>.nmd</code>를 자동으로 붙인다. 이미 있으면 그대로 존중한다.</li>
+<li>찾는 위치는 <code>ndhmd-default.nmd</code>를 찾던 곳과 똑같다(작업 폴더 → 스크립트/exe 옆 → 공유 리소스 폴더). 절대경로를 주면 그 경로만 본다.</li>
+<li><code>--dump-meta</code>에도 반영된다 — <code>--default</code>로 지정한 파일을 못 찾았으면, 그 사실 자체가 진단 메시지에 나온다(아무 설명 없이 <code>ndhmd-default.nmd</code>를 못 찾았다고만 나오면 헷갈리기 때문이다).</li>
+</ul>
+<h4 id="id---default-none-문서-구조는-빼고-본문-조각만-만들기"><code>--default NONE</code> — 문서 구조는 빼고 본문 조각만 만들기<a class="anchor" href="#id---default-none-문서-구조는-빼고-본문-조각만-만들기" aria-label="링크">#</a></h4>
+<p><code>--default NONE</code>(정확히 대문자)은 위와 전혀 다른, 훨씬 강한 지시다. “기본 헤더 자리에 아무것도 안 넣는다” 정도가 아니라, <strong>문서를 감싸는 껍데기 자체를 만들지 않고, 마크다운 본문만 LaTeX 조각으로 낸다.</strong> <code>\documentclass</code> 도, <code>\begin{document}</code>/<code>\end{document}</code>도 나오지 않는다.</p>
+<p>전형적인 용례: 공저자가 이미 pandoc으로 <code>main.tex</code>를 관리하고 있고, 그 파일에 대한 권한은 없이 <strong>본문 내용만</strong> 그 문서에 맞는 형태로 넘겨줘야 할 때. <code>--config</code>/<code>mapping:</code>으로 그 문서의 관례(제목 레벨, 커스텀 문법 등)에 맞춰 두고 조각만 뽑아 전달하면 된다.</p>
+<pre><code class="language-bash">python3 ndhmd4tex.py 글.md --default NONE -o 조각.tex</code></pre>
+<pre><code>\section{제목}
+
+본문 \emph{강조}와 \hl{하이라이트}.</code></pre>
+<p>이 결과물은 <strong>그 자체로는 컴파일되지 않는다</strong> — 감싸는 문서가 없기 때문이다. 다른 문서에 <code>{{tex:조각.tex}}</code>로 끼워 넣거나, 직접 손으로 프리앰블을 붙일 때 쓰는 용도다.</p>
+<p><strong>무시되는 것은 “문서 구조”뿐이고, “마크업을 어떻게 번역할지”는 그대로 살아 있다.</strong> 이 둘은 서로 다른 층이다.</p>
+<ul>
+<li><strong>무시된다(자동으로)</strong>: <code>title</code>, <code>class</code>, <code>preamble</code>, <code>author</code>, <code>date</code>, <code>setup:</code>, <code>maketitle</code>, <code>tocloft</code> — 이 키들은 오직 문서 껍데기를 조립하는 코드에서만 읽히므로, 껍데기 자체를 안 만들면 자연히 아무 영향이 없다. front matter를 안 읽는 게 아니라, 여전히 정상적으로 해석하되(<code>setup:</code> 체인 포함) 그 결과 중 이 키들만 쓰일 자리가 없어지는 것이다.</li>
+<li><strong>여전히 적용된다</strong>: <code>mapping:</code>, <code>mappingrule:</code>, <code>toplevel:</code>, <code>pandocoption:</code>, <code>--config</code>. 이것들은 “본문의 마크업을 어떻게 번역할지” 를 정하는 것이라, 조각을 끼워 넣을 대상 문서의 관례(제목 레벨, <code>extra_inline</code>으로 추가한 커스텀 문법 등)를 맞추려면 여전히 필요하다. <code>--config</code>를 주면 평소처럼 그 매핑이 적용된다.</li>
+<li><strong><code>--pdf</code>/<code>--pdfxe</code>/<code>--pdflua</code>/<code>--latexmk</code>는 전부 무시된다</strong> — 컴파일할 완전한 문서 자체가 없기 때문이다. 경고를 찍고 컴파일 시도 자체를 건너뛴다.</li>
+<li><strong><code>--syncinfo</code>도 무의미하다</strong> — 컴파일 결과가 없으니 줄 번호를 대응시킬 대상이 없다. 경고를 찍고 <code>.nmdsync</code>는 만들지 않는다.</li>
+<li><strong><code>--pandoc</code>과는 함께 쓸 수 있다.</strong> 본문 변환을 pandoc에 맡기되, 역시 <code>\documentclass</code>/<code>\begin{document}</code> 없이 본문 조각만 나온다. 다만 <code>extra_inline</code> 같은 이 방언 고유의 매핑 규칙은 pandoc 모드 자체의 기존 제약과 마찬가지로 이 조합에서도 적용되지 않는다 — pandoc이 본문 변환 전체를 넘겨받으므로.</li>
+<li><code>--dump-meta</code>를 함께 주면, 해석된 메타 전체를 보여주면서 “문서 구조는 무시되고 마크업 번역 규칙만 실제로 쓰인다”는 안내를 덧붙인다.</li>
+</ul>
+<h4 id="실행-파일exe로-배포할-때">실행 파일(.exe)로 배포할 때<a class="anchor" href="#실행-파일exe로-배포할-때" aria-label="링크">#</a></h4>
+<p>PyInstaller로 묶으면 <code>__file__</code>이 exe 옆을 가리키지 않는다. 실측하면 이렇다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>빌드 방식</th><th><code>__file__</code></th><th><code>sys.executable</code></th></tr>
+</thead>
+<tbody>
+<tr><td><code>--onefile</code></td><td>임시 압축 해제 폴더(<code>Temp\_MEIxxxx</code>)</td><td>exe 자신</td></tr>
+<tr><td><code>--onedir</code></td><td><code>앱폴더\_internal</code></td><td><code>앱폴더\앱.exe</code></td></tr>
+</tbody>
+</table></div>
+<p><code>--onefile</code>의 임시 폴더는 실행이 끝나면 사라지므로 사용자가 거기에 파일을 둘 수조차 없다. 그래서 얼어붙은 상태에서는 <strong>exe가 놓인 폴더</strong>를 본다. 찾는 순서는 이렇게 된다.</p>
+<ol>
+<li>현재 작업 폴더</li>
+<li><code>ndhmd4tex.exe</code> 가 놓인 폴더</li>
+<li>exe 안에 함께 묶인 자료 폴더(<code>sys._MEIPASS</code>)</li>
+</ol>
+<p>3번 덕분에 <strong>기본 헤더를 exe 안에 넣어 배포할 수 있다.</strong> 윈도우에서는 이렇게 묶는다(자료 파일의 구분자가 <code>;</code>인 것에 주의 — 리눅스·맥은 <code>:</code>이다).</p>
+<pre><code>pyinstaller --add-data="ndhmd-default.nmd;." --onefile ndhmd4tex.py</code></pre>
+<p><code>.spec</code> 파일을 직접 손볼 때는 아래 한 줄에 해당한다.</p>
+<pre><code class="language-python">datas=[('ndhmd-default.nmd', '.')],</code></pre>
+<p>이러면 사용자가 아무것도 두지 않아도 기본 헤더가 먹고, 옆에 파일을 두면 그것이 우선한다. 프로젝트 폴더에 두면 다시 그것이 우선한다.</p>
+<h4 id="id---init-setup-묶여-있는-기본-헤더-꺼내기"><code>--init-setup</code> — 묶여 있는 기본 헤더 꺼내기<a class="anchor" href="#id---init-setup-묶여-있는-기본-헤더-꺼내기" aria-label="링크">#</a></h4>
+<p><code>--onefile</code>로 묶으면 기본 헤더가 exe 안에 들어가 사용자가 열어볼 수도, 고칠 수도 없다. 꺼내 놓으라고 있는 것이 <code>--init-setup</code>이다.</p>
+<pre><code>D:\작업&gt; ndhmd4tex.exe --init-setup
+D:\작업\ndhmd-default.nmd 를 만들었습니다.  (원본: C:\...\Temp\_MEI123456\ndhmd-default.nmd)
+이 파일을 고치면 이 폴더의 원고에 그대로 반영됩니다.</code></pre>
+<p>작업 폴더가 탐색 순서의 맨 앞이므로, 꺼낸 사본이 그 순간부터 exe 안의 것을 가린다. 이미 같은 이름의 파일이 있으면 덮어쓰지 않고 오류로 끝낸다. 입력 파일 없이 이 옵션만 주어도 된다.</p>
+<p>기본 헤더를 못 찾았을 때는 <code>--dump-meta</code>가 어디를 뒤졌는지 보여준다.</p>
+<pre><code>$ ndhmd4tex.exe 글.md --dump-meta
+# ndhmd-default.nmd 을 찾지 못했습니다. 찾아본 곳:
+#   D:\작업\ndhmd-default.nmd
+#   C:\Program Files\ndhmd\ndhmd-default.nmd
+#   C:\Users\...\Temp\_MEI123456\ndhmd-default.nmd</code></pre>
+<p><strong>주의할 점 두 가지.</strong></p>
+<ul>
+<li>이 장치는 헤더가 없는 문서에만 걸리는 것이 아니다. <code>setup:</code>이 없는 문서면 <strong>전부</strong> 걸린다. 그래서 작업 폴더에 <code>ndhmd-default.nmd</code>를 두면 그 폴더의 모든 원고가 영향을 받는다 — 책 한 권을 한 폴더에서 작업할 때는 이게 바로 원하는 동작이지만, 무심코 둔 파일이 다른 원고까지 바꿔놓을 수도 있다.</li>
+<li><code>class</code>만 덮어쓰고 <code>classoptions</code>를 그대로 두면 어긋난다. 기본 헤더가 <code>chapter</code> 옵션을 주는데 문서에서 <code>class: article</code>로만 바꾸면 <code>\documentclass[..., chapter]{article}</code>이 되어 컴파일이 깨진다. 클래스를 바꿀 때는 <code>classoptions</code>와 <code>toplevel</code>도 함께 손볼 것.</li>
+</ul>
+<p>프리앰블은 <code>preamble:</code>로 적으면 <strong>갈아치우고</strong>, <code>preamble+:</code>로 적으면 기본 헤더의 것 <strong>뒤에 덧붙는다</strong>(21장). 기본 헤더를 살리면서 패키지만 보태고 싶다면 <code>preamble+:</code>를 쓴다.</p>
+<h3 id="id-12-설정-파일을-여러-문서가-나눠-쓰기">1.2. 설정 파일을 여러 문서가 나눠 쓰기<a class="anchor" href="#id-12-설정-파일을-여러-문서가-나눠-쓰기" aria-label="링크">#</a></h3>
+<p><code>mapping.yaml</code>과 <code>setup:</code>용 헤더 파일은 여러 원고가 함께 쓰라고 있는 것이다. 그래서 문서 가까이에서 못 찾으면 <strong>공유 리소스 폴더</strong>를 뒤진다.</p>
+<p>찾는 순서는 이렇다. 가까운 것이 언제나 이긴다.</p>
+<ol>
+<li>절대경로면 그대로.</li>
+<li>문서 가까이 — <code>setup:</code>은 그것을 적은 파일 옆, front matter의 <code>mapping:</code>은 최상위 입력 파일 옆, CLI의 <code>--setup</code>/<code>--config</code>는 작업 폴더 기준.</li>
+<li>환경변수 <code>NDHMARKDOWN_RESOURCE_DIRECTORY</code>. 경로 구분자(윈도우 <code>;</code>, 그 외 <code>:</code>)로 여러 곳을 늘어놓을 수 있다.</li>
+<li>사용자 폴더의 관례적인 자리 — <code>~/Library/ndhmd4tex/resources</code> (macOS), <code>~/ndhmd4tex/resources</code>, <code>~/.config/ndhmd4tex/resources</code>.</li>
+<li>프로그램이 놓인 폴더의 <code>resources/</code>. 배포판에 예제를 함께 담을 자리다.</li>
+</ol>
+<pre><code class="language-bash">export NDHMARKDOWN_RESOURCE_DIRECTORY=~/문서/ndhmd-공용
+python3 ndhmd4tex.py 원고.md          # setup: basicpreamble.nmd 를 거기서 찾는다</code></pre>
+<ul>
+<li>4번의 세 자리를 플랫폼별로 하나만 보지 않고 <strong>전부</strong> 훑는다. 설정을 여러 기계에서 동기화해 쓰는 경우가 흔한데, 없는 폴더는 어차피 걸러지므로 잃는 것이 없다.</li>
+<li>못 찾으면 <strong>찾아본 경로를 전부 보여준다.</strong> 탐색 경로가 여럿인 기능에서 “왜 안 찾지”를 추적할 방법이 없으면 곤란하기 때문이다.</li>
+<li>1.1의 <code>ndhmd-default.nmd</code>도 같은 폴더들을 본다(작업 폴더 → 프로그램 폴더 → 리소스 폴더 → 실행 파일 안 사본 순).</li>
+<li><strong><code>{{포함}}</code>은 이 탐색을 하지 않는다.</strong> 그쪽은 설정이 아니라 원고 내용이라 문서 기준으로만 찾는 것이 옳다.</li>
+</ul>
+<h4 id="여러-mappingyaml을-나눠-쓰기">여러 <code>mapping.yaml</code>을 나눠 쓰기<a class="anchor" href="#여러-mappingyaml을-나눠-쓰기" aria-label="링크">#</a></h4>
+<p>front matter의 <code>mapping:</code>은 <code>setup:</code>과 마찬가지로 파일 하나뿐 아니라 <strong>리스트</strong>도 받는다. 회사·팀 공통 규칙 파일과 프로젝트 전용 규칙 파일을 나눠 두고, 한 문서에서 둘 다 쓰고 싶을 때를 위한 것이다.</p>
+<pre><code class="language-yaml">mapping: [공통.yaml, 프로젝트전용.yaml]</code></pre>
+<p>합치는 원칙은 두 갈래로 나뉜다.</p>
+<ul>
+<li><strong><code>extra_inline</code>을 뺀 나머지 보통의 키는 <code>setup: [a, b]</code>와 완전히 같은 원칙 — 뒤에 적은 파일이 이긴다.</strong> <code>공통.yaml</code>과 <code>프로젝트전용.yaml</code>이 둘 다 <code>headings:</code>를 정의했다면, <code>프로젝트전용.yaml</code> 쪽이 남는다. 이 프로젝트의 front matter 전반에 걸친 override 규칙(나중/더 구체적인 것이 이긴다)과 일관되게 맞춘 것이다.</li>
+<li><strong><code>extra_inline</code>만은 예외로, 모든 파일에 걸쳐 그대로 이어붙는다.</strong> 위 원칙(뒤가 이긴다)을 그대로 적용하면 <code>프로젝트전용.yaml</code>의 <code>extra_inline</code>이 <code>공통.yaml</code>의 것을 통째로 지워 버려서, “여러 파일에 나눠 적은 확장 규칙을 다 함께 쓴다”는 애초의 목적을 못 살린다. 그래서 이 키만 덮어쓰기가 아니라 이어붙이기로 처리한다 — <code>공통.yaml</code>에 정의한 규칙과 <code>프로젝트전용.yaml</code>에 정의한 규칙이 서로를 지우지 않고 함께 적용된다.</li>
+<li><code>environments:</code>(커스텀 환경, 22장)는 이 특별 처리가 따로 필요 없다 — 애초에 리스트가 아니라 <code>{환경 이름: 정의}</code> 딕셔너리라서, 서로 다른 이름을 정의한 파일들은 이미 자연스럽게 다 함께 남고, 같은 이름을 여러 파일이 재정의해도 <code>begin</code>/<code>end</code> 같은 필드 단위로 병합된다(부분 재정의도 그대로 살아남는다).</li>
+<li><code>--config</code>(CLI)는 지금은 파일 하나만 받는다. 여러 파일을 나열하고 싶으면 이 리스트 문법은 front matter의 <code>mapping:</code>에서만 쓸 수 있다.</li>
+<li>파일 목록 중 하나라도 못 찾으면 오류로 멈춘다(어느 파일을 못 찾았는지 명시하고, 찾아본 경로도 함께 보여준다).</li>
+</ul>
+<h4 id="하위-폴더까지-뒤지기">하위 폴더까지 뒤지기<a class="anchor" href="#하위-폴더까지-뒤지기" aria-label="링크">#</a></h4>
+<p><code>mapping:</code>/<code>setup:</code>에 <strong>경로 없이 파일 이름만</strong> 쓰면(<code>deep/mapping.yaml</code>처럼 직접 경로를 적은 게 아니라 그냥 <code>mapping.yaml</code>), 위 4번(사용자 폴더의 관례적인 자리) 안에서 바로 못 찾았을 때 그 폴더 <strong>아래를 재귀적으로도</strong> 뒤진다. <code>resources/회사용/mapping.yaml</code>, <code>resources/개인용/mapping.yaml</code>처럼 용도별로 폴더를 나눠 정리해 두고도 원고에는 그냥 <code>mapping: mapping.yaml</code>만 적고 싶을 때를 위한 것이다.</p>
+<pre><code>~/ndhmd4tex/resources/
+├── deep/
+│   ├── mapping.yaml          ← 이게 선택된다
+│   └── deeper/
+│       └── mapping.yaml      ← 이건 후보에서 밀린다</code></pre>
+<ul>
+<li><strong>“먼저 발견되는 것”은 “최대한 상위(얕은) 디렉터리에 있는 것”이다.</strong> 위 예시처럼 <code>deep/</code>과 <code>deep/deeper/</code>에 동명 파일이 둘 다 있으면, 더 얕은 <code>deep/mapping.yaml</code>이 선택된다. 같은 깊이에 후보가 여럿이면 폴더 이름 알파벳 순으로 정하므로, 몇 번을 실행해도 결과가 같다.</li>
+<li><strong>경로가 이미 적혀 있으면 재귀를 안 한다.</strong> <code>mapping: deep/deeper/ mapping.yaml</code>처럼 이미 상대경로를 명시했다면 그건 “정확히 여기서 찾으라”는 뜻이므로, 재귀로 다른 후보를 끼워 넣지 않는다.</li>
+<li><strong>문서 옆(near)이 재귀보다 항상 우선한다.</strong> 문서 바로 옆이나 작업 폴더에 같은 이름의 파일이 있으면, 공유 리소스 폴더 안에서 재귀 탐색을 벌이기 전에 이미 그걸로 확정된다.</li>
+<li>못 찾았을 때의 오류 메시지에는 재귀로 뒤진 경로를 하나하나 다 나열하는 대신 <code>resources/**/mapping.yaml</code>처럼 와일드카드로 “이 폴더 아래 어딘가”라고만 표시한다 — 폴더가 깊거나 파일이 많으면 경로를 전부 나열하는 게 오히려 안 읽힌다.</li>
+<li>여러 폴더에 동명 파일이 있어서 어느 것이 선택됐는지 헷갈리면, 아래 <code>--search-resource</code>가 재귀로 찾은 것까지 전부(얕은 순서대로) 보여준다.</li>
+</ul>
+<h3 id="id-121---search-resource-어디서-찾는지-직접-확인하기">1.2.1. <code>--search-resource</code> — 어디서 찾는지 직접 확인하기<a class="anchor" href="#id-121---search-resource-어디서-찾는지-직접-확인하기" aria-label="링크">#</a></h3>
+<p>위 탐색 순서를 일일이 외울 필요 없이, 실제로 어디서 발견되는지 바로 물어볼 수 있다.</p>
+<pre><code class="language-bash">python3 ndhmd4tex.py --search-resource            # 실행 파일/스크립트 자신의 위치만
+python3 ndhmd4tex.py --search-resource article.nmd  # 현재 폴더 + 모든 리소스 폴더</code></pre>
+<ul>
+<li>인자 없이 쓰면 <code>$0</code>에 해당하는 것, 즉 지금 실행 중인 스크립트나 실행 파일 자신의 경로를 보여준다. PyInstaller exe에서는 임시 압축 해제 폴더가 아니라 exe 자신의 경로가 나온다.</li>
+<li><strong>그 뒤에 <code>ndhmd-default.nmd</code>가 실제로 어디서 오는지도 함께 보여준다.</strong> 1.1의 탐색 순서(작업 폴더 → 프로그램 폴더 → 리소스 폴더 → exe 안 번들 사본)를 전부 훑어, 발견된 것을 그 순서대로 나열한다. 여러 곳에 있으면 전부 나오고, <strong>맨 위의 것이 실제로 쓰이는 것</strong>이다. exe 안의 번들 사본까지 정확히 잡히므로, 그것이 왜 어느 임시 폴더를 가리키는지도 확인할 수 있다.</li>
+<li>파일 이름을 주면 <strong>첫 매치에서 멈추지 않고</strong> 현재 폴더와 모든 공유 리소스 폴더를 전부 뒤져 발견된 경로를 빠짐없이 보여준다. 여러 곳에 같은 이름이 있어 어느 것이 실제로 쓰이는지 헷갈릴 때를 위한 것이다 — <code>setup:</code>이나 <code>mapping:</code>이 조용히 딴 파일을 물어 오는 상황을 확인하는 용도다. <strong>경로 없이 순수 이름만 줬다면 공유 리소스 폴더 아래를 재귀적으로도 뒤져서, 하위 폴더에 있는 동명 파일까지 얕은 순서대로 다 보여준다</strong> — <code>mapping:</code>/<code>setup:</code>이 실제로 고르는 것(가장 얕은 것)은 이 목록의 어디쯤에 있는지 보면 바로 알 수 있다. <strong><code>ndhmd-default.nmd</code>를 이름으로 주면</strong> 위의 인자 없는 형태와 같은 탐색 순서(1.1 참고)까지 함께 뒤진다 — 이 파일은 스크립트/exe 바로 옆이라는, 공유 리소스 폴더와는 다른 자리에 두는 것이 가장 흔하기 때문이다.</li>
+<li>못 찾으면 찾아본 경로를 전부 보여주고 종료 코드 1로 끝난다.</li>
+</ul>
+<h3 id="id-122---guide-가이드-문서를-바로-열기">1.2.2. <code>--guide</code> — 가이드 문서를 바로 열기<a class="anchor" href="#id-122---guide-가이드-문서를-바로-열기" aria-label="링크">#</a></h3>
+<p><code>~/ndhmd4tex/guide</code>(macOS는 <code>~/Library/ndhmd4tex/guide</code>, XDG로는 <code>~/.config/ndhmd4tex/guide</code>도 함께 본다 — <code>resources/</code>와 완전히 같은 3단계 구조를 <code>guide/</code>에 적용한 것뿐이다)에 이 가이드나 퀵스타트 같은 문서(<code>.md</code>, <code>.pdf</code>)를 놔두면, <code>texdoc</code>처럼 명령 하나로 PDF를 바로 열 수 있다.</p>
+<pre><code class="language-bash">python3 ndhmd4tex.py --guide                          # ndhmd4tex_dialect_guide.pdf
+python3 ndhmd4tex.py --guide=ndhmd4tex_dialect_guide_en  # 영문판(확장자 자동 보완)</code></pre>
+<ul>
+<li>인자 없이 쓰면 <code>ndhmd4tex_dialect_guide.pdf</code>를 연다.</li>
+<li>확장자를 안 붙이면 <code>.pdf</code>를 자동으로 붙인다(<code>--default</code>의 <code>.nmd</code> 자동 보완과 같은 관례).</li>
+<li>찾는 순서는 <code>resource_dirs()</code>와 같다 — 환경변수 <code>NDHMARKDOWN_GUIDE_DIRECTORY</code> → 사용자 폴더의 관례적인 자리 → 프로그램이 놓인 폴더의 <code>guide/</code>.</li>
+<li>못 찾으면 찾아본 경로를 전부 보여준다. 폴더 자체가 하나도 없어도 “어디에 두어야 하는지” 알 수 있도록, 실제 존재 여부와 무관하게 관례적인 후보 경로를 그대로 보여준다.</li>
+<li>PDF 뷰어를 여는 방식은 <code>--pdf</code> 계열이 컴파일 후 여는 것과 같다 (<code>NDHMARKDOWN_PDF_VIEWER</code> 환경변수로 바꿀 수 있다).</li>
+</ul>
+<hr />
+<h3 id="id-13---lint-흔한-마크업-실수-점검">1.3. <code>--lint</code> — 흔한 마크업 실수 점검<a class="anchor" href="#id-13---lint-흔한-마크업-실수-점검" aria-label="링크">#</a></h3>
+<p>이 방언에는 <strong>오류를 내지 않고 조용히 다른 결과가 나오는</strong> 실수가 몇 가지 있다. 변환은 성공하고 PDF도 나오는데 리스트가 문단으로 뭉개져 있거나 각주가 엉뚱하게 늘어나 있는 식이라, 눈으로 잡기 어렵다. <code>--lint</code>는 변환하지 않고 그런 자리만 훑는다.</p>
+<pre><code>$ python3 ndhmd4tex.py 원고.md --lint
+원고.md:12: 오류: 리스트 마커가 문단에 흡수됐습니다. 앞 항목 안에 빈 줄이 있어
+리스트가 끊긴 것입니다 — 항목 본문의 빈 줄을 없애십시오.
+원고.md:25: 경고: `[^ndh2024x]` 는 정의가 없어 "ndh2024x" 라는 인라인 각주가 됩니다.
+원고.md: 오류 2건, 경고 1건</code></pre>
+<p>점검 항목은 이렇다. 짐작으로 고른 것이 아니라 이 문서를 쓰면서 실제로 밟았던 실수들이다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>등급</th><th>항목</th></tr>
+</thead>
+<tbody>
+<tr><td>오류</td><td>front matter 들여쓰기에 탭 — 헤더 전체가 무시됨</td></tr>
+<tr><td>오류</td><td>front matter의 YAML이 깨짐 — 헤더 전체가 무시됨</td></tr>
+<tr><td>오류</td><td>리스트 항목 안의 빈 줄로 리스트가 끊김</td></tr>
+<tr><td>오류</td><td>헤딩 아래에 빈 줄 없이 본문이 붙음</td></tr>
+<tr><td>오류</td><td><code>::: {이름}</code> — <code>:::</code> 와 <code>{</code> 사이 공백</td></tr>
+<tr><td>오류</td><td><code>:::</code> 블록이 닫히지 않음</td></tr>
+<tr><td>오류</td><td>코드 펜스가 닫히지 않음</td></tr>
+<tr><td>오류</td><td>각주 정의 식별자에 쓸 수 없는 문자</td></tr>
+<tr><td>오류</td><td><code>{{포함}}</code> 파일이 없거나 확장자를 뺌</td></tr>
+<tr><td>경고</td><td>정의 없는 <code>[^식별자]</code> — 인라인 각주로 둔갑</td></tr>
+<tr><td>경고</td><td>산문 속 공백 둘러싼 <code>::</code> — 설명 리스트로 오인 (중괄호형 <code>{용어} ::  설명</code>은 대상이 아님)</td></tr>
+<tr><td>경고</td><td>표처럼 보이는데 둘째 줄이 정렬 구분선이 아님</td></tr>
+<tr><td>오류</td><td>grid 표를 해석할 수 없음(모서리·세로선 위치 어긋남)</td></tr>
+<tr><td>경고</td><td>열린 적 없는 <code>:::</code> 닫는 줄</td></tr>
+</tbody>
+</table></div>
+<p>코드 펜스 안과 인라인 코드 스팬 안은 검사하지 않는다. 문법을 예시로 적어둔 것을 실수로 오인하지 않기 위해서다. 오류가 하나라도 있으면 <strong>종료 코드 1</strong>로 끝나므로 Makefile이나 스크립트에서 검사 단계로 끼워 넣을 수 있다.</p>
+<p>맨 앞 두 항목이 특히 중요하다. YAML이 깨지면 <code>class</code>도 <code>setup</code>도 <code>mapping</code>도 전부 먹지 않는데, 변환은 그대로 성공하므로 알아채기 어렵다. <strong>LaTeX 편집기에서 프리앰블을 복사해 붙일 때 딸려 오는 탭</strong>이 흔한 원인이다 — 그쪽에서는 탭이 그냥 공백이라 아무 표시가 나지 않는다.</p>
+<p><strong><code>{{포함}}</code> 하위 파일까지 함께 검사한다</strong>(20장과 같이 한 단계). 단행본이라면 마스터 파일은 <code>{{...}}</code> 줄만 늘어놓은 껍데기이고 본문은 전부 하위 파일에 있으므로, 거기를 안 보면 검사할 것이 남지 않는다.</p>
+<pre><code>$ python3 ndhmd4tex.py 책.md --lint
+parts/ch1.md:6: 오류: 리스트 마커가 문단에 흡수됐습니다. ...
+parts/ch2.md:4: 경고: `[^ndh2024x]` 는 정의가 없어 ...
+책.md (+포함 2개): 오류 1건, 경고 1건</code></pre>
+<p>병합해서 한 덩어리로 보지는 않는다. 그러면 줄 번호가 어느 파일 몇 행인지 알 수 없게 되기 때문이다. 파일마다 따로 보되 <strong>각주 정의만은 전체에서 모아 공유한다</strong> — 참조는 마스터에, 정의는 하위 파일에 두는 일이 흔한데 따로 검사하면 그것이 전부 오탐이 된다.</p>
+<p>이 점검은 변환을 막지 않는다. 여기 걸리는 것들은 대부분 변환 자체는 성공하는 입력이므로, 고칠지 말지는 저자가 판단한다.</p>
+<h3 id="id-14---pandoc-본문만-pandoc에-맡기기">1.4. <code>--pandoc</code> — 본문만 pandoc에 맡기기<a class="anchor" href="#id-14---pandoc-본문만-pandoc에-맡기기" aria-label="링크">#</a></h3>
+<p>이 방언 대신 <strong>pandoc의 마크다운</strong>으로 본문을 쓰고 싶을 때 쓴다. 나머지는 그대로 이 스크립트가 담당하므로, 결과적으로 <strong>트랜스클루전이 되는 pandoc LaTeX 처리기</strong>가 된다. 컴파일과 뷰어 열기도 평소와 똑같이 <code>--pdfxe</code> 등으로 이어서 하면 된다.</p>
+<pre><code class="language-bash">python3 ndhmd4tex.py 책.md --pandoc --pdfxe</code></pre>
+<p>처리 순서는 이렇다.</p>
+<ol>
+<li>front matter를 떼어내 보관한다. <strong>pandoc에는 본문만 넘긴다</strong> — 넘기면 pandoc이 제 나름의 메타데이터로 해석해서 <code>preamble</code>이나 <code>setup:</code> 체계와 충돌한다.</li>
+<li><code>{{파일}}</code> 트랜스클루전(20장)을 <strong>먼저</strong> 해석해 통짜 본문으로 만든다. pandoc이 모르는 문법이라 우리가 병합해 줘야 한다. 서브 파일의 front matter는 평소처럼 떨어져 나간다.</li>
+<li>본문을 pandoc에 표준입력으로 넘겨 LaTeX 조각을 받는다. <code>--standalone</code>을 쓰지 않으므로 <code>\documentclass</code>나 <code>\begin{document}</code>는 나오지 않는다.</li>
+<li>보관해둔 front matter로 프리앰블을 만들어 감싼다. <code>class</code>, <code>classoptions</code>, <code>preamble</code>, <code>title</code>, <code>author</code>, <code>date</code>, <code>setup:</code> 상속까지 평소와 완전히 동일하게 동작한다.</li>
+</ol>
+<p><strong><code>toplevel:</code>은 pandoc에도 전달된다.</strong> <code>part</code> / <code>chapter</code> / <code>section</code> 중 하나면 <code>--top-level-division</code>으로 넘어간다. 이게 없으면 <code>book</code> 클래스에서도 <code># 제목</code>이 <code>\section</code>으로 나가버린다. <code>subsection</code> 이하는 pandoc에 대응물이 없어 무시된다.</p>
+<p>pandoc에 추가 인자를 주는 방법은 두 가지다. 둘 다 주면 front matter 쪽이 먼저, CLI 쪽이 뒤에 붙는다.</p>
+<pre><code class="language-yaml"># front matter
+pandocoption: -f markdown-auto_identifiers --wrap=none</code></pre>
+<pre><code class="language-bash">python3 ndhmd4tex.py 책.md --pandoc="--listings --number-sections"</code></pre>
+<p>CLI에서는 <strong>반드시 <code>=</code>로 붙여 써야 한다.</strong> <code>--pandoc "--listings"</code>처럼 띄어 쓰면 값이 <code>-</code>로 시작하는 탓에 argparse가 그것을 다음 옵션으로 오해한다.</p>
+<h4 id="무시되는-옵션">무시되는 옵션<a class="anchor" href="#무시되는-옵션" aria-label="링크">#</a></h4>
+<p>프리앰블과 <code>\documentclass</code>는 이 모드에서 front matter가 정한다는 것이 전제다. 그것을 건드리려는 pandoc 옵션은 경고와 함께 버린다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>무시하는 옵션</th><th>이유</th></tr>
+</thead>
+<tbody>
+<tr><td><code>-s</code>, <code>--standalone</code></td><td>pandoc이 제 <code>\documentclass</code>를 붙인 완성 문서를 내놓는다</td></tr>
+<tr><td><code>--template</code></td><td>위와 같다 — 지정하면 standalone이 켜진다</td></tr>
+<tr><td><code>-H</code>, <code>--include-in-header</code></td><td>프리앰블 삽입. 이것도 standalone을 켠다</td></tr>
+<tr><td><code>-B</code>, <code>-A</code>, <code>--include-before-body</code>, <code>--include-after-body</code></td><td>마찬가지로 standalone을 켠다</td></tr>
+<tr><td><code>-o</code>, <code>--output</code></td><td>결과가 엉뚱한 파일로 새어나간다</td></tr>
+<tr><td><code>-t</code>, <code>--to</code>, <code>-w</code>, <code>--write</code></td><td>출력이 LaTeX이 아니게 된다</td></tr>
+<tr><td><code>--pdf-engine</code></td><td><code>-o</code>와 함께일 때만 의미가 있다</td></tr>
+<tr><td><code>--self-contained</code>, <code>--embed-resources</code></td><td>LaTeX 출력과 무관하다</td></tr>
+</tbody>
+</table></div>
+<p><code>-H</code>나 <code>-B</code>가 목록에 있는 것이 뜻밖일 수 있다. 이름만 보면 조각 모드에서도 동작할 것 같지만, pandoc은 이 옵션들을 받으면 <strong>암묵적으로 standalone을 켠다.</strong> 그대로 두면 <code>\documentclass</code>가 우리 문서 안에 한 번 더 박힌다.</p>
+<p>반대로 <code>--toc</code>, <code>-N</code>/<code>--number-sections</code>, <code>-V</code>, <code>--listings</code>, <code>--metadata</code>, <code>--top-level-division</code>, <code>--wrap</code>, <code>-f</code>는 그대로 통과한다. 프리앰블에 넣을 것이 있다면 pandoc이 아니라 front matter의 <code>preamble:</code>에 적으면 된다.</p>
+<p><code>-f markdown-auto_identifiers</code>를 권할 만하다. pandoc은 기본적으로 헤딩마다 <code>\hypertarget{...}</code>과 <code>\label{...}</code>을 붙이는데, 한글 제목이면 <code>uxbcf8uxbb38</code> 같은 알아볼 수 없는 라벨이 되고 <strong><code>preamble</code>에 <code>hyperref</code>가 없으면 컴파일이 깨진다</strong>. 끄면 <code>\chapter{본문 장}</code>처럼 깔끔하게 나온다.</p>
+<p>이 모드에서는 이 문서가 설명하는 방언 문법(<code>:::</code> 환경, <code>[[색인]]</code>, <code>[#라벨]</code>, <code>showexam</code>, 조사 매크로 등)이 <strong>하나도 동작하지 않는다.</strong> 본문은 전적으로 pandoc의 문법이다. 살아 있는 것은 front matter와 <code>{{파일}}</code> 둘뿐이다.</p>
+<h3 id="id-141---mmd-본문만-multimarkdown에-맡기기">1.4.1. <code>--mmd</code> — 본문만 MultiMarkdown에 맡기기<a class="anchor" href="#id-141---mmd-본문만-multimarkdown에-맡기기" aria-label="링크">#</a></h3>
+<p><code>--pandoc</code>과 같은 틀이다(0.20.2에서 추가). front matter(<code>---</code> YAML)는 이 스크립트가 읽고, <code>{{파일}}</code> 트랜스클루전도 먼저 풀어서 통짜 본문으로 만든 뒤 <strong>본문만</strong> <code>multimarkdown -t latex</code>에 넘긴다. 돌아온 LaTeX 조각을 front matter로 만든 프리앰블로 감싼다. 실행 파일은 PATH에서 <code>multimarkdown</code>을 먼저, 없으면 <code>mmd</code>를 찾는다.</p>
+<pre><code>python3 ndhmd4tex.py 옛문서.md --mmd --pdfxe
+python3 ndhmd4tex.py 옛문서.md --mmd="--smart"</code></pre>
+<p>추가 인자는 <code>mmdoption:</code> front matter 키로도 줄 수 있고, 둘 다 있으면 CLI가 나중에 붙는다. CLI에서는 <code>=</code>로 붙여 쓴다. 출력 형식과 조각 모드를 바꾸는 <code>-t/--to</code>, <code>-o/--output</code>, <code>-f/--full</code>, <code>-s/--snippet</code>, <code>-b/--batch</code>, <code>-e/--extract</code>는 경고하고 버린다. <code>--pandoc</code>과는 함께 쓸 수 없다.</p>
+<p><strong>헤딩 단계 — <code>toplevel</code>과 <code>Base Header Level</code>.</strong> mmd는 헤딩 단계를 문서 맨 앞 메타데이터 블록의 <code>Base Header Level: N</code>으로만 정한다. 이 스크립트는 다음 순서로 값을 정한다.</p>
+<ol>
+<li>front matter의 <code>toplevel:</code>(<code>part</code>/<code>chapter</code>/<code>section</code>)이 있으면 그것이 이긴다.</li>
+<li>없으면 front matter의 <code>baseheaderlevel:</code>(정수)을 쓴다.</li>
+<li>둘 다 없고 본문 맨 앞 메타데이터 블록에 <code>Base Header Level</code>이 있으면 손대지 않는다. 아무것도 없으면 mmd 기본값이다.</li>
+</ol>
+<p><code>toplevel</code>을 N으로 바꾸는 표는 코드에 박아 두지 않는다. mmd 버전마다 <code>#</code>이 <code>\part</code>인지 <code>\chapter</code>인지가 다를 수 있어서, 시작할 때 설치된 mmd에게 <code># ~ ######</code>을 한 번 돌려 보고 실제로 나온 명령으로 N을 계산한다. 탐침이 실패하면 경고하고 <code>part=1, chapter=2, section=3</code> 표를 쓴다. 본문의 메타데이터 블록에 이미 <code>Base Header Level</code>이 있는데 <code>toplevel</code>과 다르면 경고하고 <code>toplevel</code>에 맞춰 그 줄을 고친다. 블록이 있고 그 줄이 없으면 블록 끝에 한 줄을 더하고, 블록이 없으면 앞에 새 블록을 붙인다.</p>
+<p>주의할 점은 다음과 같다.</p>
+<ul>
+<li>mmd의 <code>Title</code>, <code>Author</code>, <code>Date</code>는 <strong>읽어 오지 않는다.</strong> mmd는 메타데이터를 <code>---</code>로 구분하지 않고 첫 줄이 <code>키: 값</code> 꼴이면 블록으로 보기 때문에, 본문에 남은 그 줄이 front matter의 것인지 mmd 쪽 것인지 이 스크립트가 가릴 수 없다. 제목과 저자는 front matter에 적는다.</li>
+<li>mmd의 <code>{{TOC}}</code>는 파일이 아니라 목차 지시자라서 트랜스클루전 해석에서 빼고 그대로 mmd에 넘긴다.</li>
+<li>mmd가 LaTeX 조각 대신 완성 문서를 내놓으면(출력의 첫 의미 있는 줄이 <code>\documentclass</code>나 <code>\input</code>일 때만 그렇게 본다) <code>\begin{document}</code> 안쪽만 취하고 경고한다. 본문에 <code>\begin{document}</code>가 verbatim 예제로 들어 있어도 오인하지 않는다.</li>
+<li>front matter의 YAML이 깨지면(예: <code>키:</code> 뒤의 탭) 그 블록은 본문으로 취급되어 mmd가 직접 읽는다. 본문 맨 앞의 <code>---</code>로 감싼 블록 안에 <code>Base Header Level</code>이 있어도 위의 규칙대로 찾아서 처리한다.</li>
+<li>mmd가 내는 LaTeX는 <code>\href</code>, <code>tabulary</code>, <code>longtable</code> 같은 것을 쓴다. 필요한 패키지는 front matter의 <code>preamble:</code>이 책임진다.</li>
+<li>이 방언의 기능(<code>||</code>, grid table, <code>showexam</code>, <code>notes:</code>, <code>:::</code> 등)은 이 모드에서 작동하지 않는다. 본문 문법은 mmd의 것이다. <code>--syncinfo</code>와 <code>--lint</code>도 마찬가지로 쓸 수 없다. <code>.tex</code> 맨 앞 출처 주석 끝에는 <code> with multimarkdown syntax</code>가 붙는다.</li>
+</ul>
+<h3 id="id-15---syncinfo-pdf에서-원본-md로-역방향-검색">1.5. <code>--syncinfo</code> — PDF에서 원본 md로 역방향 검색<a class="anchor" href="#id-15---syncinfo-pdf에서-원본-md로-역방향-검색" aria-label="링크">#</a></h3>
+<p><code>--syncinfo</code>를 주면 변환과 동시에 <code>{출력}.nmdsync</code> 파일을 함께 만든다. <code>ndhmdsync.py</code>(별도로 배포되는 짝 스크립트)와 함께 쓰면, 컴파일된 PDF의 특정 위치를 클릭했을 때 원본 <code>.md</code> 파일의 해당 위치가 편집기에서 곧바로 열리는 사슬을 완성할 수 있다.</p>
+<pre><code>PDF 클릭 --[SyncTeX]--&gt; tex 줄 --[.nmdsync]--&gt; md 줄 --[code --goto]--&gt; VS Code</code></pre>
+<pre><code class="language-bash">python3 ndhmd4tex.py 책.md --syncinfo --pdfxe</code></pre>
+<ul>
+<li><strong>synctex 옵션을 직접 챙길 필요가 없다.</strong> <code>--syncinfo</code>를 주면 컴파일 명령에 이 옵션을 자동으로 덧붙인다 — <code>ksruncltex</code>(<code>compileoption:</code>) 에는 <code>--synctex=1</code>(대시 둘, <code>ksruncltex</code>의 관례), <code>latexmk</code> (<code>latexmkoption:</code>)에는 <code>-synctex=1</code>(대시 하나, <code>latexmk</code>의 정식 문법)로 각자 맞춰서 붙인다. <code>compileoption:</code>/<code>latexmkoption:</code>에 이미 <code>-synctex=...</code>나 <code>--synctex=...</code>를 넣어 뒀다면(대시 개수 무관) 그 값을 그대로 존중하고 손대지 않는다. <code>-synctex=1</code>은 “PDF의 이 위치 → tex 파일의 이 줄”을 해결해 주는 LaTeX 엔진 자체 기능이고, <code>--syncinfo</code>는 그 뒤를 잇는 “tex 파일의 이 줄 → 원본 md의 이 줄”을 담당한다. 둘을 이어 쓰면 PDF에서 markdown까지 한 번에 갈 수 있다.</li>
+<li>PDF 뷰어(SumatraPDF, Skim, Okular 등)의 “역방향 검색” 명령에 <code>ndhmdsync.py</code>를 등록해 두면 이 사슬이 자동으로 완성된다. 기본 에디터는 VS Code, 기본 뷰어는 실행 중인 OS에 맞춰 자동 선택되지만, 다른 에디터·뷰어를 쓰거나 표준 위치가 아닌 곳에 설치했다면 <code>ndhmdsync.ini</code> 설정 파일로 바꿀 수 있다(<code>ndhmdsync.ini.example</code> 참고). 자세한 사용법은 <code>ndhmdsync.py --help</code> 참고.</li>
+<li><strong><code>.nmdsync</code> 없이 <code>.synctex.gz</code>/<code>.synctex</code>만 있는 문서(즉 이 <code>ndhmd4tex.py</code>가 아니라 손으로 쓴 LaTeX을 곧장 컴파일한 문서)도 같은 역방향 검색 설정으로 다룰 수 있다.</strong> <code>ndhmdsync.py</code>는 <code>.nmdsync</code> 를 못 찾으면 <code>.synctex.gz</code>/<code>.synctex</code>가 있는지 확인해서, 있으면 markdown 역추적은 포기하고 <code>.tex</code> 파일 자신을 그 줄에서 연다 — <code>ndhmdsync.ini</code>의 <code>[TEXEDIT]</code> 섹션에 <code>command</code>를 정해 두면 그 명령 으로(예: <code>texworks -p=%l "%f"</code>), 안 정해 뒀으면 OS가 <code>.tex</code> 확장자에 연결해 둔 기본 프로그램으로 그냥 연다(줄 이동은 안 되지만 최소한 파일은 열린다). PDF 뷰어의 역방향 검색 명령을 한 번만 등록해 두면 markdown 기반 문서든 순정 LaTeX 문서든 같은 설정으로 둘 다 다뤄진다는 뜻이다.</li>
+<li><strong>정밀도는 블록 단위다.</strong> 문단·리스트 항목·표·환경 하나하나가 원본의 몇 번째&#160;몇 번째 줄에서 왔는지는 정확하지만, 그 안에서 정확히 어느 낱말이었는지까지는 추적하지 않는다 — PDF에서 대충 클릭해도 편집기에서 근처로 이동한다는, 이 기능의 목적에는 이 정밀도로 충분하다.</li>
+<li><strong><code>{{파일}}</code>을 쓰는 문서도 지원한다.</strong> 이 방언 자체가 파일 포함을 1단계까지만(재귀 없이) 허용하도록 설계돼 있는 덕분에, 병합된 본문의 각 줄이 어느 파일의 몇 번째 줄에서 왔는지 정확히 추적할 수 있다. <code>.nmdsync</code>의 각 항목은 자기 소스 파일을 따로 가지므로, <code>ndhmdsync.py</code> 쪽은 손댈 것이 없다 — 애초에 여러 소스 파일이 섞인 <code>.nmdsync</code>를 다루도록 만들어져 있었다.
+<ul>
+<li>2단계 이상 중첩된 <code>{{...}}</code>는 이 방언의 기존 규칙 그대로 재귀 해석되지 않고 리터럴 텍스트로 남으며, sync 정보도 정확히 그 지점(중첩을 시도한 파일의 그 줄)을 가리킨다.</li>
+<li><strong>알려진 제약</strong>은 있었지만 <code>ndhmain:</code> front matter 키로 해결할 수 있다(아래 참고).</li>
+</ul>
+</li>
+<li><strong><code>--pandoc</code>, <code>--mmd</code>와 함께 쓸 수 없다.</strong> 본문 변환을 pandoc/mmd 서브프로세스에 통째로 맡기므로, 원고의 몇 줄이 결과의 몇 줄이 됐는지 이 스크립트가 알 도리가 없다. 이 경우도 경고 후 <code>.nmdsync</code> 없이 변환만 진행한다.</li>
+<li>각주 <strong>정의</strong>(<code>[^id]: ...</code>) 줄은 sync 대상에 없다 — 그 내용은 정의된 자리가 아니라 <strong>참조된 자리</strong>(<code>[^id]</code>)에 삽입되므로, 정의 줄 자체는 출력 어디에도 대응하는 곳이 없다. 참조 지점을 기준으로 찾는 편이 어차피 더 쓸모 있다.</li>
+</ul>
+<p>포함된 서브파일을 직접 열어 놓고 <code>ndhmdsync.py</code>로 정방향 검색을 하면, 출력 <code>.tex</code>/<code>.pdf</code> 경로의 기본 유추(서브파일과 같은 이름으로 찾는다)가 맞지 않는다 — 서브파일은 그 자체로 컴파일되는 게 아니라 최상위 파일에 흡수되므로 당연한 문제다. 서브파일이 자기가 어느 최상위 문서에 흡수되는지 스스로 알 도리가 없으니, 그 관계를 서브파일 자신의 front matter에 직접 적어 두는 방식으로 해결한다.</p>
+<pre><code class="language-yaml">---
+ndhmain: main.md
+---</code></pre>
+<p><code>ndhmd4tex.py</code>는 이 키를 전혀 안 읽는다(<code>{{포함}}</code>될 때 서브파일의 front matter 전체가 통째로 버려지므로 컴파일에는 아무 영향이 없다). 순전히 <code>ndhmdsync.py</code>가 정방향 검색에서 기본 출력 경로를 유추할 때만 참고하는 힌트다. 값이 없거나 자기 자신을 가리키면(identity) 평소처럼 그 파일 자신을 최상위 문서로 본다. <code>--tex</code>/<code>--pdf</code>/<code>--sync-file</code>을 명시적으로 주면 이 힌트보다 항상 우선한다.</p>
+<p>값은 상대경로로 적어도 된다. <code>main.md</code>가 <code>{{sub/ch1.md}}</code>처럼 서브폴더 안의 파일을 포함하는 흔한 구성이라면, <code>ch1.md</code> 쪽은 자기 자신을 기준으로 한 상대경로를 쓰면 된다.</p>
+<pre><code class="language-yaml">---
+ndhmain: ../main.md
+---</code></pre>
+<p><code>ndhmdsync.py</code>를 어느 작업 폴더에서 실행하든(<code>sub/</code> 안에서든, 완전히 다른 곳에서든, 절대경로로 부르든) 이 상대경로는 <code>ch1.md</code> 자신이 실제로 있는 위치를 기준으로 풀려서 언제나 정확히 <code>main.md</code>(그리고 그 옆의 <code>main.nmdsync</code>)를 찾아간다.</p>
+<h3 id="id-16---latexmk-ksruncltex-대신-표준-도구로-컴파일하기">1.6. <code>--latexmk</code> — ksruncltex 대신 표준 도구로 컴파일하기<a class="anchor" href="#id-16---latexmk-ksruncltex-대신-표준-도구로-컴파일하기" aria-label="링크">#</a></h3>
+<p><code>--pdf</code>/<code>--pdfxe</code>/<code>--pdflua</code>는 이 스크립트 저자가 만든 <code>ksruncltex</code>를 통해 컴파일한다. <code>ksruncltex</code>가 없거나, 이미 <code>latexmk</code>를 쓰고 있어서 그대로 쓰고 싶다면 <code>--latexmk</code>를 대신 쓴다.</p>
+<pre><code class="language-bash">python3 ndhmd4tex.py 책.md --latexmk</code></pre>
+<p>아무 값도 안 주면 <code>latexmk -xelatex -interaction=nonstopmode</code>가 기본으로 실행된다(이 방언이 한글을 다루므로 xelatex을 기본 엔진으로 삼는다).</p>
+<p><code>latexmk</code>는 상황(bibtex냐 biber냐, makeindex냐 xindy냐, synctex을 켤지 등)에 따라 조합이 달라지는 도구라, <code>ksruncltex</code>의 <code>compileoption:</code> 한 줄처럼 무조건 하나로 뭉뚱그릴 수 없다. 그래서 이 스크립트는 그 조합을 대신 판단하지 않는다 — <code>latexmk</code> 자신의 옵션 문자열을 그대로 받아서 검증 없이 그대로 넘길 뿐이다.</p>
+<pre><code class="language-bash">python3 ndhmd4tex.py 책.md --latexmk="--synctex=1 --xelatex"</code></pre>
+<pre><code class="language-yaml"># front matter 에 적어 두면 --latexmk 만 쳐도 매번 적용된다
+latexmkoption: "-xelatex -synctex=1"</code></pre>
+<ul>
+<li>CLI에서는 <strong>반드시 <code>=</code>로 붙여 써야 한다</strong> — <code>--pandoc</code>과 같은 이유로, 값이 <code>-</code>로 시작하면 <code>argparse</code>가 다음 옵션으로 오해한다.</li>
+<li>front matter의 <code>latexmkoption:</code>이 먼저, CLI의 <code>--latexmk="..."</code> 값이 나중에 이어붙는다(<code>pandocoption:</code>/<code>--pandoc</code>과 같은 순서 규칙). 아무 옵션도 안 주면 그때만 <code>-xelatex</code> 기본값이 붙는다 — 하나라도 주면 그 기본값은 아예 끼워 넣지 않는다(원고 작성자가 고른 엔진과 충돌하는 것을 막기 위해서다).</li>
+<li><code>-interaction=nonstopmode</code>는 옵션을 뭘 줬든 항상 추가로 붙는다 — 없으면 오류가 났을 때 <code>*latex</code> 엔진이 터미널 입력을 기다리며 멈춰 버리기 때문이다.</li>
+<li><code>latexmk</code>는 대시 한 개(<code>-xelatex</code>)가 정식 문법이지만, 대시 두 개 (<code>--xelatex</code>)도 관대하게 받아들인다(Perl의 <code>Getopt::Long</code> 특유의 동작 — 실측으로 확인했다). 다만 <strong><code>biber</code>용 옵션은 애초에 없다</strong> — <code>-biber</code>도 <code>--biber</code>도 <code>latexmk</code>가 모르는 옵션이라며 오류를 낸다. <code>biblatex</code>이 <code>.bcf</code> 파일을 만들어 두면 <code>latexmk</code>가 그 존재만 보고 알아서 <code>bibtex</code> 대신 <code>biber</code>를 쓴다.</li>
+<li>잘못된 옵션을 주면 <code>latexmk</code> 자신이 명확한 오류를 낸다 — 이 스크립트가 옵션을 대신 검증하거나 고쳐 주지 않는다. <code>ksruncltex</code>의 <code>compileoption:</code>과 같은 철학이다.</li>
+<li><code>--pdf</code>/<code>--pdfxe</code>/<code>--pdflua</code>/<code>--latexmk</code>는 서로 배타적이다(동시에 쓸 수 없다).</li>
+</ul>
+<p><strong>front matter에 <code>latexmkoption:</code>은 있고 <code>compileoption:</code>은 없으면, <code>--pdf</code>/<code>--pdfxe</code>/<code>--pdflua</code>만 쳐도 <code>--latexmk</code>를 안 붙여도 자동으로 <code>latexmk</code>가 불린다.</strong> 원고 자체가 “나는 <code>latexmk</code>로 컴파일한다”는 뜻을 담게 되는 것이다 — 엔진은 명령줄에서 고른 그대로 따라가고(<code>--pdfxe</code> → <code>-pdfxe</code>, <code>--pdf</code> → <code>-pdf</code>, <code>--pdflua</code> → <code>-pdflua</code>), 그 뒤에 <code>latexmkoption:</code>의 값이 그대로 이어붙는다.</p>
+<pre><code class="language-yaml">latexmkoption: "-synctex=1"</code></pre>
+<pre><code class="language-bash">python3 ndhmd4tex.py 책.md --pdfxe
+# 위 front matter가 있으면 실제로는 다음과 같이 실행된다:
+#   latexmk -pdfxe -synctex=1 -interaction=nonstopmode 책.tex</code></pre>
+<p>이 절의 <code>-synctex=1</code> 예시들은 <strong><code>--syncinfo</code> 없이 SyncTeX만 켜고 싶을 때</strong> 여전히 유효하다. <code>--syncinfo</code>를 함께 쓴다면 이렇게 직접 안 넣어도 된다 — 1.5절에서 설명하듯 자동으로 붙는다(이미 넣어 뒀다면 그 값을 그대로 쓴다).</p>
+<p><code>compileoption:</code>이 있으면(값이 빈 문자열이어도 <strong>키가 존재하기만 하면</strong>) 이 자동 전환은 일어나지 않는다 — 그 원고는 여전히 <code>ksruncltex</code>를 쓴다는 뜻으로 해석한다. 둘 다 없는 원고는 당연히 지금까지처럼 <code>ksruncltex</code> 그대로다. <code>--latexmk</code>를 명시적으로 쳤을 때(값을 주든 안 주든)의 동작은 이 자동 전환과 무관하게 위에서 설명한 그대로다.</p>
+<hr />
+<h2 id="id-2-front-matter">2. Front matter<a class="anchor" href="#id-2-front-matter" aria-label="링크">#</a></h2>
+<p>파일 맨 앞에 <code>---</code>로 감싼 YAML 블록을 쓴다.</p>
+<pre><code class="language-markdown">---
+title: "문서 제목"
+author: "저자명"
+date: "\today"          # 생략 시 기본값이 \today, 빈 문자열이면 \date 자체를 생략
+class: article           # 기본값 book
+classoption: "11pt,a4paper"   # classoptions 도 동의어로 허용
+toplevel: section        # 아래 "3. 헤딩" 참고
+mapping: mymap.yaml       # --config 대신 여기서 지정해도 됨
+setup: mymaster.md        # 다른 파일의 헤더를 물려받는다 (21장 참고)
+compileoption: "-shell-escape"   # --pdf 계열 컴파일 시 추가 인자
+beforestart: |            # \documentclass 보다 앞에 놓일 것
+  \DocumentMetadata{lang=ko}
+preamble: |
+  \usepackage{kotex}
+  \usepackage{amsmath}
+theme: dark               # 모르는 키 -&gt; \def\NMtheme{dark}
+---</code></pre>
+<p><strong><code>author</code> 리스트 예시:</strong></p>
+<pre><code class="language-yaml">author:
+  - Nova de Hi
+  - A. U. Thor^[thor's affiliation]</code></pre>
+<pre><code>\author{Nova de Hi \and A. U. Thor\thanks{thor's affiliation}}</code></pre>
+<ul>
+<li><code>title</code> / <code>author</code> / <code>date</code>가 있으면 각각 <code>\title{}</code> / <code>\author{}</code> / <code>\date{}</code>로 들어간다. 키가 없으면 해당 명령 자체가 생략된다. <code>date</code>는 키가 없으면 <code>\date</code>를 내보내지 않아 클래스의 기본(보통 <code>\today</code>)을 따르고, <strong>키는 있는데 값이 비어 있으면</strong>(<code>date:</code> 또는 <code>date: ""</code>) <code>\date{}</code>를 내보내 날짜를 지운다.</li>
+<li>생성된 <code>.tex</code>의 <strong>첫 줄</strong>에는 <code>% converted from ndhmd by ndhmd4tex version 0.19.1</code> 같은 출처 주석이 붙는다(<code>--pandoc</code>이면 끝에 <code> with pandoc syntax</code> 추가, 날짜·경로는 넣지 않아 같은 입력은 늘 같은 출력). <code>--default NONE</code>(본문만 출력)에는 붙지 않는다.</li>
+<li><strong><code>author</code>는 리스트도 받는다.</strong> 여러 저자를 <code>\author{A \and B}</code> 형태로 나열하는 LaTeX 관례를 그대로 따라, 항목을 <code>\and</code>로 이어붙인다. 각 항목 안의 <code>^[...]</code>(16장의 인라인 각주와 같은 문법)는 <code>\footnote</code>가 아니라 <code>\thanks</code>로 바뀐다 — 소속·연구비 등을 표시할 때 title page에서 쓰는 LaTeX 관례다. <code>title</code>과 마찬가지로 <code>author</code>도 raw 텍스트로 다룬다 — 이 <code>^[...]</code> 치환과 리스트 이어붙이기 말고는 다른 마크다운 서식을 처리하지 않는다(아래 예시 참고).</li>
+<li><code>preamble</code>은 <code>\documentclass</code> 바로 다음, <code>\begin{document}</code> 이전에 raw로 삽입된다. <code>kotex</code>, <code>amsmath</code>, <code>\newtheorem</code> 등 필요한 패키지·정의는 여기에 쓴다.</li>
+<li><code>beforestart</code>는 <strong><code>\documentclass</code>보다 앞에</strong> 놓인다. 형식은 <code>preamble</code>과 같다. <code>\DocumentMetadata</code>나 <code>\PassOptionsToPackage</code>처럼 클래스 로딩 전에 와야 뜻이 있는 명령을 위한 자리다. <code>beforestart+</code>로 상속받아 덧붙일 수도 있다.</li>
+<li><strong><code>preamble</code>과 <code>beforestart</code>의 내용은 손대지 않고 그대로 나간다.</strong> 이스케이프도 인라인 서식 처리도 하지 않으므로 expl3 문법을 그대로 쓸 수 있다.</li>
+</ul>
+<pre><code class="language-yaml">preamble: |
+  \ExplSyntaxOn
+  \tl_set:Nn \l_tmpa_tl { my string }
+  \ExplSyntaxOff</code></pre>
+<p>밑줄이 <code>\_</code>로 바뀌는 것은 <strong>본문</strong>에 적었을 때다. 본문에서 expl3 코드가 필요하면 7.1의 인라인 raw 스팬이나 10장의 <code>raw</code> 코드 펜스로 감싼다 — <code>`\ExplSyntaxOn\tl_use:N \l_tmpa_tl\ExplSyntaxOff`{=latex}</code> 처럼.</p>
+<ul>
+<li><strong><code>graphicspath</code>는 <code>preamble</code>의 맨 끝에</strong> 다음 두 줄을 붙인다.</li>
+</ul>
+<pre><code class="language-yaml">graphicspath: ["./","figures/"]</code></pre>
+<pre><code>\IfPackageLoadedTF{graphicx}{}{\usepackage{graphicx}}
+\graphicspath{{./}{figures/}}</code></pre>
+<p><code>graphicx</code>가 이미 로드돼 있으면(원고 작성자의 <code>preamble</code>이 직접 불렀든, 다른 패키지가 딸려 불렀든) 다시 부르지 않는다 — <code>\IfPackageLoadedTF</code>는 별도 패키지 없이도 쓸 수 있는 LaTeX2e 커널 내장 명령이다. 문자열 하나만 줘도 된다(<code>graphicspath: "figures/"</code>). 경로 문자열 자체는 가공 없이 그대로 <code>{}</code>로 감싸 나간다 — <code>raw=</code> 계열 속성들과 같은 태도로, 이 방언이 LaTeX 경로 문법을 대신 판단하려 들지 않는다.</p>
+<h3 id="id-21-yaml-값에-백슬래시를-쓸-때">2.1. YAML 값에 백슬래시를 쓸 때<a class="anchor" href="#id-21-yaml-값에-백슬래시를-쓸-때" aria-label="링크">#</a></h3>
+<p><code>\</code>는 YAML의 <strong>따옴표 안에서만</strong> 이스케이프 문자다. 그래서 같은 값을 두 가지로 쓸 수 있다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>표기</th><th>결과</th></tr>
+</thead>
+<tbody>
+<tr><td><code>date: \today</code></td><td><code>\today</code> — 따옴표 없이 쓰면 그대로</td></tr>
+<tr><td><code>date: "\\today"</code></td><td><code>\today</code> — 큰따옴표 안에서는 <code>\\</code>로 겹쳐 적는다</td></tr>
+<tr><td><code>date: '\today'</code></td><td><code>\today</code> — 작은따옴표 안에서는 겹치지 않는다</td></tr>
+<tr><td><code>date: "\today"</code></td><td><strong>탭 문자 + <code>oday</code></strong></td></tr>
+</tbody>
+</table></div>
+<p>마지막 줄이 함정이다. 큰따옴표 안의 <code>\t</code>는 탭, <code>\n</code>은 줄바꿈으로 해석되므로 <code>\today</code>, <code>\newpage</code>, <code>\textbf</code> 같은 명령이 조용히 다른 것이 된다. 오류가 나지 않아 알아채기 어렵다.</p>
+<p><strong>따옴표를 쓰지 않는 것이 가장 안전하다.</strong> 값에 <code>:</code>나 <code>#</code>이 들어가서 따옴표가 필요하다면 <strong>작은따옴표</strong>를 쓸 것. 여러 줄이 필요하면 <code>preamble: |</code>처럼 블록 표기를 쓰면 되고, 그 안에서는 이스케이프를 신경 쓰지 않아도 된다.</p>
+<h3 id="id-22-모르는-키는-매크로로-넘어간다">2.2. 모르는 키는 매크로로 넘어간다<a class="anchor" href="#id-22-모르는-키는-매크로로-넘어간다" aria-label="링크">#</a></h3>
+<p>스크립트가 쓰지 않는 키를 적어두면 <code>\def\NM&lt;키&gt;{값}</code>으로 프리앰블에 넘어간다. 프리앰블보다 먼저 놓이므로 프리앰블에서 그 값을 읽어 쓸 수 있다.</p>
+<pre><code class="language-markdown">---
+theme: dark
+mysize: 42
+---</code></pre>
+<pre><code>\def\NMtheme{dark}
+\def\NMmysize{42}</code></pre>
+<ul>
+<li>접두사 <code>NM</code>은 <code>mapping.yaml</code>의 <code>metadata_macro_prefix</code>로 바꾸거나, 빈 문자열로 두어 기능을 끌 수 있다. multimarkdown처럼 접두사 없이 <code>\def\theme{dark}</code>로 넘기면 원고에 흔한 낱말이 그대로 제어열 이름이 되어 클래스나 패키지의 명령을 소리 없이 덮어쓸 수 있다.</li>
+<li><strong>키는 소문자로 낮춰서</strong> 매크로를 만든다. <code>Theme: dark</code>도 <code>\NMtheme</code>이 된다. LaTeX 매크로 이름은 대소문자를 구별하므로, 원고 쪽 표기가 어떻든 프리앰블은 한 가지로 쓰면 되도록 한 것이다. 낮췄을 때 이름이 겹치면 뒤엣것만 남고 경고를 찍는다.</li>
+<li><code>Class:</code>처럼 <strong>알려진 키의 대소문자만 다른 이름</strong>을 쓰면 그 키로 쓰이지 않고 <code>\NMclass</code> 매크로만 만들어진다. 오류가 나지 않으므로 경고로 알린다.</li>
+<li><strong>키 이름이 알파벳만으로 되어 있어야</strong> 넘어간다. <code>my_size</code>나 <code>size2</code>처럼 숫자·밑줄·붙임표가 든 이름, 한글 이름은 제어열 이름이 될 수 없어 조용히 건너뛴다.</li>
+<li>값이 스칼라(문자열·수·참거짓)인 것만 넘어간다. 리스트나 사전은 건너뛴다.</li>
+<li><code>class</code> / <code>classoption</code>은 <code>\documentclass[옵션]{클래스}</code>를 구성한다.</li>
+<li>이 헤더가 문서마다 반복되어 길어지는 것이 성가시다면, 공통 부분을 다른 파일에 빼두고 <code>setup:</code> 키로 물려받을 수 있다. <strong>21장</strong>을 볼 것.</li>
+</ul>
+<h3 id="id-23-maketitle-tocloft-제목목차-자동-삽입">2.3. <code>maketitle</code> / <code>tocloft</code> — 제목·목차 자동 삽입<a class="anchor" href="#id-23-maketitle-tocloft-제목목차-자동-삽입" aria-label="링크">#</a></h3>
+<p><code>\begin{document}</code> 바로 다음에 <code>\maketitle</code>, <code>\tableofcontents</code>, <code>\listoffigures</code>, <code>\listoftables</code>를 자동으로 넣어 준다(pandoc처럼).</p>
+<pre><code class="language-yaml">maketitle: true
+tocloft:
+  toc: true
+  lof: true
+  lot: true
+  asterisk: true</code></pre>
+<pre><code>\begin{document}
+
+\maketitle
+\tableofcontents*
+\listoffigures*
+\listoftables*
+
+본문...</code></pre>
+<ul>
+<li><code>maketitle: true</code>만 켜면 <code>\maketitle</code> 한 줄만 나온다. <code>tocloft:</code>는 그 아래에 원하는 목차류만 켠다 — <code>toc</code>/<code>lof</code>/<code>lot</code> 중 켜지 않은 것은 그냥 안 나온다.</li>
+<li>순서는 언제나 <code>\maketitle</code> → <code>\tableofcontents</code> → <code>\listoffigures</code> → <code>\listoftables</code> 고정이다.</li>
+<li><strong><code>asterisk: true</code>는 <code>class</code>가 <code>memoir</code> 또는 <code>oblivoir</code>일 때만 실제로 의미가 있다.</strong> 이 두 클래스는 <code>\tableofcontents*</code>가 “그 목차 자신을 목차 항목 목록에 넣지 않는다”는 뜻으로 정확히 동작한다(<code>memoir</code>의 <code>\newlistof</code> 매크로가 제공하는 기능). 반면 <code>article</code>/<code>report</code>/<code>book</code> 같은 표준 클래스에는 이런 별표 버전이 아예 없어서, <code>\tableofcontents*</code> 를 그대로 내보내면 <strong>컴파일은 되지만 그 <code>*</code> 가 명령으로 소비되지 않고 목차 페이지에 그대로 문자로 찍힌다</strong>(실측으로 확인한 함정이다). 안전한 두 클래스가 아닐 때 <code>asterisk: true</code>를 쓰면 경고를 찍지만, 강제로 막지는 않는다 — 커스텀 클래스에 별표 버전을 직접 정의해 뒀을 수도 있기 때문이다.</li>
+<li>이 두 키도 front matter의 다른 키들처럼 <code>setup:</code>으로 상속된다.</li>
+</ul>
+<p><strong>이 기능은 캐주얼한 글이나 간단한 article 한 편에는 편리하지만, 단행본 저작에는 오히려 함정이 될 수 있다.</strong> <code>\maketitle</code>은 단순한 표지 하나를 찍을 뿐이다 — oblivoir/memoir는 그보다 훨씬 공을 들인 표지를 만들 수 있는 <code>titlingpage</code> 환경을 따로 제공하는데, 이 기능은 그쪽을 전혀 건드리지 않는다. 책 한 권 분량의 원고라면 대개 다음을 원고마다 직접 결정해야 한다.</p>
+<ul>
+<li><code>\frontmatter</code>/<code>\mainmatter</code>/<code>\backmatter</code> — 앞/본/뒤 어느 부분이냐에 따라 쪽번호 체계(로마 숫자/아라비아 숫자)와 장 번호 매김이 달라진다. 이 기능은 이 셋 중 어느 것도 대신 넣어 주지 않는다.</li>
+<li><code>\pagestyle</code>, <code>\chapterstyle</code> — 책마다 고유하게 고르는 지면·장 제목 디자인이라, 자동으로 정해 줄 수 있는 값이 없다.</li>
+</ul>
+<p>이런 것들은 front matter의 <code>preamble:</code>이나 <code>beforestart:</code>에 직접 적어 두는 편이 맞다. <code>maketitle</code>/<code>tocloft</code>는 딱 그 이름이 말하는 만큼만 한다 — 표지 한 장과 목차류 몇 개를 문서 맨 앞에 끼워 넣는 것, 그 이상도 이하도 아니다.</p>
+<hr />
+<h3 id="id-24-rtltypeset-오른쪽에서-왼쪽으로-쓰는-문자">2.4. <code>RTLtypeset</code> — 오른쪽에서 왼쪽으로 쓰는 문자<a class="anchor" href="#id-24-rtltypeset-오른쪽에서-왼쪽으로-쓰는-문자" aria-label="링크">#</a></h3>
+<p>한국어(또는 영어) 본문에 히브리어·아랍어·시리아어 낱말이나 구절이 섞이는 경우를 다룬다(0.21.0). 문제는 둘이다. 한글·라틴 글꼴에는 그 글리프가 없어서 글꼴을 바꿔야 하고, 낱말이 둘 이상이면 구간 전체를 오른쪽에서 왼쪽으로 놓아야 한다(낱말 하나는 글꼴만 바꿔도 바르게 나오지만 여러 낱말은 순서가 뒤집힌다).</p>
+<p>변환기는 RTL 구간을 찾아 한 덩어리로 감싸고, 그 명령에 필요한 줄을 <strong>프리앰블 맨 끝에</strong> 넣는다. 원고에 RTL 구간이 하나도 없으면 아무것도 하지 않으므로, 이 키를 쓰지 않는 문서의 출력은 달라지지 않는다. 키가 없을 때의 기본값은 자동 인식 + polyglossia + FreeSerif 다.</p>
+<pre><code class="language-yaml">RTLtypeset: polyglossia                  # 방식만 적는 짧은 꼴
+RTLtypeset: "babel, markup={RL:%s}"      # 쉼표로 여러 개
+RTLtypeset:                              # 풀어 쓴 꼴
+  method: polyglossia
+  detect: auto
+  font: FreeSerif
+  hebrew: {font: "Frank Ruehl CLM"}
+  arabic: {font: Amiri, lang: persian}</code></pre>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>키</th><th>값</th><th>뜻</th></tr>
+</thead>
+<tbody>
+<tr><td><code>method</code></td><td><code>polyglossia</code>(기본) / <code>babel</code> / <code>primitive</code> / <code>custom</code> / <code>none</code></td><td>무엇으로 감쌀지</td></tr>
+<tr><td><code>detect</code></td><td><code>auto</code>(기본) / <code>markup</code></td><td>RTL 구간을 어떻게 알아볼지</td></tr>
+<tr><td><code>markup</code></td><td><code>"{RL:%s}"</code></td><td><code>detect: markup</code>일 때 원고에서 쓰는 표기. <code>%s</code> 자리가 내용</td></tr>
+<tr><td><code>font</code></td><td><code>FreeSerif</code></td><td>모든 RTL 문자의 기본 글꼴</td></tr>
+<tr><td><code>hebrew</code> / <code>arabic</code> / <code>syriac</code></td><td><code>{font: …, lang: …}</code></td><td>문자별 글꼴과 언어 이름</td></tr>
+<tr><td><code>template</code></td><td><code>'\RL{%(text)s}'</code></td><td><code>method: custom</code>의 명령. <code>%(lang)s</code>도 쓸 수 있다</td></tr>
+</tbody>
+</table></div>
+<p><strong>인식.</strong> <code>auto</code>는 문자 범위로 찾는다. RTL 글자로 시작해 RTL 글자로 끝나는 구간을 한 덩어리로 잡고, 사이의 공백·숫자·기본 구두점(<code>. , ; : ! ? / -</code>)은 포함한다. 구간 바로 뒤의 숫자도 포함하고(유니코드 양방향 규칙에서 그 숫자는 구간의 왼쪽 끝에 놓인다) 앞의 숫자는 포함하지 않는다. 괄호와 따옴표는 구간을 끊는다. <code>markup</code>은 표기한 것만 감싼다 — 라틴 글자나 괄호까지 한 구간에 넣고 싶을 때 쓴다. 표기하지 않은 RTL 글자는 그대로 나가므로 글꼴이 없으면 찍히지 않는다. 코드 스팬·수식· <code>\매크로{…}</code> 안은 어느 쪽이든 건드리지 않으므로 <code>\texthebrew{…}</code>처럼 손으로 감싼 것은 다시 감싸지 않는다. 편집기가 끼워 넣는 방향 제어 문자(LRM, RLM 등)는 지운다.</p>
+<p><strong>방식.</strong> 히브리 문자를 예로 든다(아랍은 <code>arabic</code>, 시리아는 <code>syriac</code>).</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th><code>method</code></th><th>본문에 나가는 것</th><th>프리앰블에 넣는 것</th></tr>
+</thead>
+<tbody>
+<tr><td><code>polyglossia</code></td><td><code>\texthebrew{…}</code></td><td><code>\usepackage{polyglossia}</code>, <code>\setotherlanguage{hebrew}</code>, <code>\hebrewfont</code> 정의</td></tr>
+<tr><td><code>babel</code></td><td><code>\foreignlanguage{hebrew}{…}</code></td><td>babel(<code>bidi=default</code>, LuaTeX은 <code>bidi=basic</code>), <code>\babelprovide[import]{hebrew}</code>, <code>\babelfont[hebrew]{rm}{…}</code></td></tr>
+<tr><td><code>primitive</code></td><td><code>\ndhRTL{\hebrewfont}{…}</code></td><td>패키지 없이 <code>\beginR…\endR</code>(XeTeX) / <code>\textdir TRT</code>(LuaTeX)로 만든 <code>\ndhRTL</code>, <code>\hebrewfont</code> 정의</td></tr>
+<tr><td><code>custom</code></td><td><code>template</code> 그대로</td><td>없음. 프리앰블은 직접 쓴다</td></tr>
+<tr><td><code>none</code></td><td>감싸지 않는다</td><td>없음</td></tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>직접 선언한 것은 건드리지 않는다</strong>(0.21.1). <code>preamble:</code>에서 polyglossia나 babel을 이미 불렀으면 다시 부르지 않고, 그 언어를 이미 선언했으면(<code>\setotherlanguage{hebrew}</code>, <code>\babelprovide{hebrew}</code>) 언어 선언과 글꼴 지정을 건너뛴다. <code>\hebrewfont</code>를 이미 정의했으면 그것을 쓴다. 판단은 TeX 쪽 조건문으로 하므로 클래스나 다른 패키지가 부른 경우에도 맞다. babel을 직접 부를 때는 <code>bidi=</code> 옵션을 스스로 줘야 한다.</li>
+<li><code>polyglossia</code>는 XeTeX에서 <code>bidi</code> 패키지를 불러온다. <code>bidi</code>는 다른 패키지를 많이 고치므로 늦게 불러야 하고, 그래서 이 줄들을 프리앰블 맨 끝에 둔다. 클래스나 다른 패키지와 부딪히면 <code>primitive</code>로 바꿔 본다 — 낱말·구절 인용에는 그것으로 충분하다.</li>
+<li><strong>RTL 블록과 인라인 구간은 다르다</strong>(0.21.2). 인라인 구간은 LTR 문단 속의 한 토막이고, RTL 블록은 문단 자체가 오른쪽에서 시작한다. 블록이 되는 것은 두 가지다.
+<ul>
+<li><code>:::{hebrew}</code> … <code>:::</code>처럼 RTL 언어 이름(<code>hebrew</code>, <code>arabic</code>, <code>syriac</code>, 또는 <code>lang:</code>으로 바꾼 이름)을 가진 환경. 안에 <code>:::{verse}</code> 같은 환경이 겹쳐 있어도 된다.</li>
+<li>RTL 글자만 있는 독립 문단(<code>detect: auto</code>일 때). 한글·라틴 글자가 하나라도 있으면 보통 문단이고 그 안의 RTL 구간만 인라인으로 감싼다 — 히브리어 낱말로 시작하는 한국어 문장을 RTL 문단으로 오인하지 않기 위해서다.</li>
+</ul>
+</li>
+<li>블록은 <code>polyglossia</code>에서 <code>\begin{hebrew}</code>, <code>babel</code>에서 <code>\begin{otherlanguage}{hebrew}</code>로 나가고, <strong>블록 안의 그 문자는 다시 감싸지 않는다.</strong> <code>primitive</code>에는 문단 단위 RTL이 없어서 블록을 만들지 않는다(환경은 이름 그대로 나가고 경고한다. 구간은 인라인으로 감싼다).</li>
+<li><strong>아랍어 블록은 polyglossia에서 <code>\begin{Arabic}</code>이다</strong>(대문자 A, 0.21.3). <code>\arabic</code>은 LaTeX의 카운터 출력 명령이라 polyglossia가 아랍어 환경만 이름을 달리 둔다. <code>\begin{arabic}</code>은 그 카운터 명령을 불러 오류로 멈춘다. 원고에는 <code>:::{arabic}</code>이나 <code>:::{Arabic}</code> 어느 쪽으로 써도 변환기가 맞는 이름으로 낸다. raw LaTeX으로 직접 쓸 때는 <code>\begin{Arabic}</code>으로 써야 한다. 인라인 <code>\textarabic{…}</code>은 그대로다.</li>
+<li>RTL 블록 안에 섞인 한글·라틴 구간은 자동으로 감싸지 않는다. 순서가 뒤집혀 보이면 원고에서 직접 <code>\LR{…}</code>로 감싼다(polyglossia가 부르는 bidi/luabidi의 명령).</li>
+<li><code>--body-only</code>로 조각만 낼 때는 필요한 프리앰블 줄을 알림으로 보여 준다.</li>
+<li>코드 스팬 안의 RTL 글자는 감싸지 않는다(고정폭 글꼴에 글리프가 있어야 보인다). <code>title:</code>·<code>author:</code>의 RTL 글자도 감싸지 않으니 필요하면 직접 <code>\texthebrew{…}</code>로 쓴다.</li>
+<li><strong>확인한 범위</strong>: <code>polyglossia</code>(기본값)는 oblivoir 클래스에서 XeTeX와 LuaTeX 양쪽으로 인라인 RTL 구간이 바르게 조판되는 것을 확인했다. <code>primitive</code>와 <code>babel</code>은 XeTeX + fontspec(article)에서 확인했고, 이 둘의 LuaTeX 쪽과 oblivoir 조합은 확인하지 않았다.</li>
+<li><code>\DocumentMetadata</code>가 없는 문서에서 polyglossia 방식이 <code>\UseMathForPositioningText</code>가 정의되지 않았다는 오류를 내면(bidi 쪽으로 추정) <code>preamble:</code>에 <code>\providecommand\UseMathForPositioningText{}</code>를 넣는다. <code>\DocumentMetadata</code>를 선언한 문서에서는 나지 않는다.</li>
+</ul>
+<h2 id="id-3-헤딩">3. 헤딩<a class="anchor" href="#id-3-헤딩" aria-label="링크">#</a></h2>
+<pre><code class="language-markdown"># 1단계 제목
+## 2단계 제목
+### 3단계 제목 {unnumbered}
+#### 4단계 제목 {label=sec:foo}
+##### 5단계
+###### 6단계</code></pre>
+<ul>
+<li>기본 매핑(1~6단계): <code>chapter, section, subsection, subsubsection, paragraph, subparagraph</code>. <strong><code>article</code> 클래스에는 <code>\chapter</code>가 없으므로, <code>article</code>을 쓸 때는 반드시 front matter에 <code>toplevel: section</code> (또는 <code>part</code>)을 지정해서 1단계가 <code>\section</code>부터 시작하도록 맞춰야 한다.</strong></li>
+<li>헤딩 뒤 <code>{...}</code> 속성:
+<ul>
+<li><code>unnumbered</code> 또는 <code>*</code> → 번호 없는 헤딩(<code>\section*</code> 등)</li>
+<li><code>label=이름</code> 또는 <code>#이름</code> → <code>\label{이름}</code> 자동 삽입</li>
+<li><code>toc="짧은 제목"</code> → <code>\section[짧은 제목]{긴 제목}</code>. 목차와 페이지 헤더에는 짧은 쪽이, 본문에는 긴 쪽이 나가게 하고 싶을 때 쓴다. <code>unnumbered</code>와 함께 쓰면 <code>*</code>판에는 대괄호 인자 자체가 없으므로 조용히 무시된다 — LaTeX이 어차피 받지 않는 조합을 오류로 알리기보다, 번호 없는 제목은 그대로 살리는 쪽을 골랐다.</li>
+<li>예: <code>## 서론 {unnumbered, label=sec:intro}</code></li>
+<li>예: <code># 아주 긴 절 제목이지만 목차에는 짧게 {toc="짧은 제목"}</code></li>
+</ul>
+</li>
+<li>헤딩 한 줄 전체가 <code>HEADING_RE</code>에 매치되어야 하며, 헤딩 블록은 반드시 한 줄짜리 블록이어야 한다(앞뒤로 빈 줄로 구분).</li>
+</ul>
+<hr />
+<h2 id="id-4-문단과-줄바꿈">4. 문단과 줄바꿈<a class="anchor" href="#id-4-문단과-줄바꿈" aria-label="링크">#</a></h2>
+<p>같은 문단 안에서 줄을 나눠 쓰면 공백으로 이어붙여 하나의 문장으로 합쳐진다 (줄바꿈 자체는 출력에 영향을 주지 않음). <strong>줄 끝에 스페이스 두 칸</strong>을 남기면 그 지점에서 LaTeX 강제 줄바꿈(<code>\\</code>)이 삽입된다.</p>
+<pre><code class="language-markdown">이 문장은 여러 줄로 나눠 썼지만
+하나의 문단으로 합쳐진다.
+
+이 줄 끝에는 스페이스가 두 칸 있다.  
+그래서 여기서 강제로 줄이 바뀐다.</code></pre>
+<p>빈 줄로 문단을 구분한다.</p>
+<h3 id="id-41-문단을-나누지-않고-이어-붙이기">4.1. <code>||</code> — 문단을 나누지 않고 이어 붙이기<a class="anchor" href="#id-41-문단을-나누지-않고-이어-붙이기" aria-label="링크">#</a></h3>
+<p>한국어에서는 조사로 시작하는 문단(<code>라고 말하기 시작했다.</code>)이나 목록·수식 뒤에 이어지는 문단을 <strong>들여쓰기 없이</strong> 이어야 할 때가 있다. 그때 <code>\noindent</code>를 손으로 쓰는 대신, <code>||</code>만 있는 줄을 둔다.</p>
+<pre><code class="language-markdown">"간단한 발화문."
+||
+라고 말하기 시작했다.
+
+평문단이 끝나는 위치.
+||
++ this is a sample
+||
+이어지는 문단</code></pre>
+<ul>
+<li><code>||</code>는 <strong>구조상으로는 빈 줄과 같다.</strong> 앞뒤를 별개 블록으로 갈라 주므로 <code>||</code> 바로 뒤의 <code>+ 항목</code>은 빈 줄 없이도 리스트로 인식된다(11장).</li>
+<li>다만 <strong>출력에서는 빈 줄을 넣지 않는다.</strong> 그래서 LaTeX은 두 블록을 한 문단으로 이어 읽는다. 목록·수식 환경 뒤에서는 이 때문에 들여쓰기가 생기지 않는다.</li>
+<li>앞 블록과 뒤 블록이 <strong>둘 다 평문 문단이면</strong> 앞 문단 끝에 <code>%</code>를 붙인다. 줄바꿈이 공백으로 남아 <code>''라고</code>가 <code>'' 라고</code>가 되는 것을 막는 것이다. 한국어 이음을 기본으로 한 것이라 공백이 들어가는 변형은 없다.</li>
+<li><strong><code>||</code> 앞에 빈 줄이 있으면</strong> 앞 문단 끝에 <code>%</code> 대신 <code>\\</code>를 넣어 그 자리에서 행을 나눈다(앞뒤가 모두 평문 문단일 때만). 같은 문단 안에서 행만 나누고 싶을 때 <code>문장\\</code>를 손으로 쓰는 대신 쓴다. <code>||</code> <strong>뒤</strong>의 빈 줄은 뜻이 없다. 뒤 문단이 <code>[</code>나 <code>*</code>로 시작하면 <code>\\</code>가 그것을 선택 인자로 삼지 않도록 <code>{}</code>를 덧붙인다. 앞뒤가 평문 문단이 아니면(리스트·인용·헤딩 등) 빈 줄이 있어도 <code>\\</code> 없이 그냥 이어진다. 예는 아래 목록 뒤에 있다.</li>
+<li>문서의 맨 처음·끝이나 <code>||</code>가 연달아 나오면 <code>--lint</code>가 경고한다.</li>
+<li>코드 펜스 안의 <code>||</code>는 글자 그대로다. 파이프 표 안에 <code>||</code>만 있는 줄이 있으면 표가 거기서 끊긴다.</li>
+<li><code>:::</code> 환경 안에서도 쓸 수 있다.</li>
+<li><strong>새 문단이되 들여쓰기만 없애는 것이 아니다.</strong> 이음은 한 문단으로 합치는 것이라, 문단을 끊고 들여쓰기만 없애고 싶다면 지금처럼 <code>\noindent</code>를 쓴다.</li>
+</ul>
+<p><code>||</code> 앞에 빈 줄을 두면 행이 나뉜다.</p>
+<pre><code class="language-markdown">첫 행
+
+||
+둘째 행</code></pre>
+<hr />
+<h2 id="id-5-인라인-서식">5. 인라인 서식<a class="anchor" href="#id-5-인라인-서식" aria-label="링크">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>문법</th><th>결과</th></tr>
+</thead>
+<tbody>
+<tr><td><code>***굵고 기울임***</code></td><td><code>\textbf{\emph{...}}</code></td></tr>
+<tr><td><code>**굵게**</code></td><td><code>\textbf{...}</code></td></tr>
+<tr><td><code>*기울임*</code></td><td><code>\emph{...}</code></td></tr>
+<tr><td><code>~~취소선~~</code></td><td><code>\sout{...}</code></td></tr>
+<tr><td><code>^^방점^^</code></td><td><code>\dotemph{...}</code> (전통 편집물의 방점 표시; <code>preamble</code>에 <code>\dotemph</code> 정의 필요)</td></tr>
+<tr><td><code>`인라인 코드`</code></td><td><code>\texttt{...}</code> (내부는 자동 이스케이프됨)</td></tr>
+</tbody>
+</table></div>
+<p><code>**</code>/<code>*</code>/<code>~~</code>로 감싼 내부 텍스트는 <code>escape_text</code>만 거치고 재귀적으로 다시 처리되지 않는다(즉 굵게 안에 링크·각주 등을 중첩할 수 없다). 단, <strong>따옴표 스마트 변환은 예외적으로 이 서식 처리보다 먼저 실행되므로</strong> <code>**"인용문"**</code>처럼 굵게 안의 따옴표는 정상적으로 변환된다.</p>
+<h3 id="id-51-규칙-추가하기-extra_inline">5.1. 규칙 추가하기 — <code>extra_inline</code><a class="anchor" href="#id-51-규칙-추가하기-extra_inline" aria-label="링크">#</a></h3>
+<p>위 다섯 규칙은 <code>mapping.yaml</code>의 <code>inline</code>에 들어 있는데, 이 키는 리스트형이라 손대면 <strong>전체가 교체된다.</strong> 규칙 하나 더하자고 다섯 개를 통째로 베껴 오는 것은 번거롭고 기본값이 바뀌면 뒤처진다. <code>extra_inline</code>은 기본 목록을 그대로 둔 채 <strong>앞에</strong> 끼워 넣는다.</p>
+<pre><code class="language-yaml">extra_inline:
+  - name: highlight
+    pattern: '==(.+?)=='
+    template: '\hl{%s}'</code></pre>
+<ul>
+<li><strong>뒤가 아니라 앞</strong>이다. 규칙은 위에서부터 차례로 적용되므로 긴 델리미터가 먼저 와야 한다. <code>***...***</code> 규칙을 뒤에 붙이면 앞선 <code>**...**</code>가 먼저 먹어 버려 아무 일도 일어나지 않는다.</li>
+<li>뒤집어 말하면, 기본 규칙보다 <strong>짧거나 겹치는</strong> 델리미터를 앞에 두면 기본 규칙을 가려버린다. <code>*...*</code>를 앞에 두면 <code>**굵게**</code>가 깨진다. 새 델리미터를 더할 때만 쓰고, 기존 것을 바꿀 때는 <code>inline</code> 자체를 override 할 것.</li>
+<li><code>extra_inline</code> 안에서도 순서가 그대로 지켜지므로, 겹치는 규칙을 여럿 넣을 때는 긴 것을 먼저 적는다.</li>
+</ul>
+<h4 id="인자를-둘-이상-받는-규칙">인자를 둘 이상 받는 규칙<a class="anchor" href="#인자를-둘-이상-받는-규칙" aria-label="링크">#</a></h4>
+<p>캡처 그룹은 <strong>개수만큼 그대로</strong> template에 꽂힌다. 그래서 <code>%s</code>를 여럿 두면 된다.</p>
+<pre><code class="language-yaml">extra_inline:
+  - name: dialog
+    pattern: '\*\[(.+?)\]\[(.+?)\]'
+    template: '\Dialog{%s}{%s}'
+  - name: dialog_short
+    pattern: '\*\[(.+?)\]'
+    template: '\Dialog{%s}'</code></pre>
+<pre><code class="language-markdown">*[춘향][화난 목소리] 어디 계셨습니까?</code></pre>
+<pre><code>\Dialog{춘향}{화난 목소리} 어디 계셨습니까?</code></pre>
+<p>두 인자짜리를 한 인자짜리보다 <strong>먼저</strong> 적어야 한다. 순서가 바뀌면 <code>*[춘향]</code>까지만 먹고 <code>[화난 목소리]</code>가 평문으로 남는다.</p>
+<p>각 그룹은 따로 <code>escape_text</code>를 거치므로 인자 안의 <code>%</code>나 <code>&amp;</code>는 알아서 안전해진다. 매치에 참여하지 않은 선택 그룹은 빈 문자열이 되고, 그룹 수와 <code>%s</code> 수가 어긋나면 경고를 찍고 원문을 그대로 둔다.</p>
+<hr />
+<h2 id="id-6-따옴표-스마트-따옴표-변환">6. 따옴표 (스마트 따옴표 변환)<a class="anchor" href="#id-6-따옴표-스마트-따옴표-변환" aria-label="링크">#</a></h2>
+<p>LaTeX은 여는/닫는 따옴표에 다른 문자를 쓴다. 이 스크립트는 직선 따옴표(<code>"</code>, <code>'</code>)를 자동으로 변환해준다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>종류</th><th>여는 부호</th><th>닫는 부호</th><th>판정 기준</th></tr>
+</thead>
+<tbody>
+<tr><td>큰따옴표 <code>"</code></td><td><code>``</code> (백틱 2개)</td><td><code>''</code> (아포스트로피 2개)</td><td>아래 참고</td></tr>
+<tr><td>작은따옴표 <code>'</code></td><td><code>`</code> (백틱 1개)</td><td><code>'</code> (그대로)</td><td>아래 참고</td></tr>
+</tbody>
+</table></div>
+<p><strong>판정 방식</strong>: 문자열 맨 앞이거나, 공백 / <code>(</code> <code>[</code> <code>{</code> <code>*</code> <code>~</code> 바로 뒤에 오는 따옴표만 “여는” 것으로 인식해 먼저 치환한다. 그 외에 남은 따옴표는 전부 “닫는” 것으로 간주해 일괄 치환한다. <strong>닫는 따옴표 뒤에 무엇이 오는지는 검사하지 않는다</strong> — 한국어는 <code>"인용"을</code>처럼 조사가 공백 없이 바로 붙는 경우가 많아서, pandoc처럼 “뒤에 공백/구두점이 오는가”로 닫는 위치를 판정하는 방식은 쓸 수 없기 때문이다.</p>
+<pre><code class="language-markdown">그는 "안녕하세요"라고 말했다.
+→ 그는 ``안녕하세요''라고 말했다.
+
+그는 '좋다'며 웃었다.
+→ 그는 `좋다'며 웃었다.
+
+**"강조된 인용"**도 정상 변환된다.
+→ \textbf{``강조된 인용''}</code></pre>
+<p><strong>이스케이프</strong>: 스마트 변환을 원하지 않는 직선 따옴표는 <code>\"</code>, <code>\'</code>로 쓰면 백슬래시가 제거되고 문자 그대로(<code>"</code>, <code>'</code>) 출력된다.</p>
+<pre><code class="language-markdown">그는 \"진짜\" 직선따옴표를 원했다.
+→ 그는 "진짜" 직선따옴표를 원했다.</code></pre>
+<p>다음 문맥의 따옴표는 스마트 변환의 영향을 받지 않는다(이미 placeholder로 보호된 뒤이므로): 인라인 코드, 인라인/디스플레이 수식, raw 매크로, 그림/링크의 <code>{속성="값"}</code>이나 <code>(url "제목")</code>, front matter의 YAML 값.</p>
+<h3 id="id-601-quotes-결과-문자를-고르기">6.0.1. <code>quotes</code> — 결과 문자를 고르기<a class="anchor" href="#id-601-quotes-결과-문자를-고르기" aria-label="링크">#</a></h3>
+<p>위 표는 기본값 <code>quotes: tex</code>의 결과다. mapping(<code>mapping:</code>, <code>mappingrule:</code>, <code>--config</code>)의 <code>quotes</code> 키로 바꿀 수 있다(0.20.4).</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>값</th><th>큰따옴표</th><th>작은따옴표</th></tr>
+</thead>
+<tbody>
+<tr><td><code>tex</code> (기본)</td><td><code>``</code> <code>''</code></td><td><code>`</code> <code>'</code></td></tr>
+<tr><td><code>unicode</code></td><td>U+201C <code>“</code> U+201D <code>”</code></td><td>U+2018 <code>‘</code> U+2019 <code>’</code></td></tr>
+<tr><td>4글자 <code>"「」『』"</code></td><td>처음 두 글자(여는, 닫는)</td><td>뒤 두 글자(여는, 닫는)</td></tr>
+<tr><td>2글자 <code>"《》"</code></td><td>그 두 글자</td><td><code>tex</code> 방식 그대로</td></tr>
+<tr><td>리스트 <code>["&lt;&lt;", "&gt;&gt;"]</code></td><td>여러 글자짜리는 같은 길이의 리스트로</td><td>(4개 요소면 뒤의 둘)</td></tr>
+</tbody>
+</table></div>
+<p><code>unicode</code>는 4글자 <code>“”‘’</code>의 줄임말이다. 여는/닫는 판정과 이스케이프(<code>\"</code>, <code>\'</code>), 코드·수식 안의 따옴표 처리는 <code>tex</code>일 때와 똑같고 바뀌는 것은 치환 결과 문자뿐이다. 결과 문자는 뒤 단계가 건드리지 못하게 보호된다. 잘못된 값은 경고하고 <code>tex</code>로 둔다. <code>--pandoc</code>/<code>--mmd</code>에는 적용되지 않는다(pandoc의 smart 확장, mmd의 <code>--smart</code>가 맡는다).</p>
+<ul>
+<li>유니코드 따옴표는 xelatex/lualatex에서 쓰는 글꼴에 그 글리프가 있을 때 나온다. pdflatex에서는 <code>inputenc</code>가 필요하다.</li>
+<li>닫는 작은따옴표 문자는 <code>don't</code>의 아포스트로피에도 쓰인다. <code>unicode</code>에서는 U+2019라서 맞는 결과지만, <code>「」『』</code>처럼 쓰면 <code>don』t</code>가 되므로 그 자리는 <code>\'</code>로 직선을 지키거나 <code>\textquoteright{}</code>를 쓴다.</li>
+</ul>
+<h3 id="id-61-줄임표">6.1. 줄임표 (<code>...</code>)<a class="anchor" href="#id-61-줄임표" aria-label="링크">#</a></h3>
+<p>마침표 세 개는 <code>\ldots{}</code>로 바뀐다. 마침표를 그냥 나란히 찍으면 간격이 붙어버려 조판상 틀린 결과가 나오기 때문이다.</p>
+<pre><code class="language-markdown">말줄임...이렇게. 네 개....는 줄임표+마침표.</code></pre>
+<pre><code>말줄임\ldots{}이렇게. 네 개\ldots{}.는 줄임표+마침표.</code></pre>
+<p>마침표가 넷 이상이면 왼쪽부터 셋씩 먹는다.</p>
+<ul>
+<li><strong>끝의 <code>{}</code>는 장식이 아니라 필수다.</strong> 한글 음절이 letter(catcode 11)인 조판 환경에서 <code>\ldots이렇게</code>라고 나가면 TeX이 그 전체를 하나의 제어열 이름으로 읽어 <code>Undefined control sequence</code>가 난다. <code>{}</code>가 그 경계를 끊는다 (7장의 매크로 이름 종결자와 같은 이야기다).</li>
+<li>명령은 <code>mapping.yaml</code>의 <code>ellipsis</code>로 바꿀 수 있다. 한국어 조판에서 줄임표는 폰트에 따라 모양과 간격이 제각각이라 갈아끼울 일이 생긴다.</li>
+</ul>
+<pre><code class="language-yaml">ellipsis: '\dots{}'          # amsmath. 앞뒤 문맥에 따라 간격 조절
+ellipsis: '\textellipsis{}'  # 텍스트용 줄임표
+ellipsis: '……'                # 유니코드 줄임표 두 개(한국어 전통 6점)
+ellipsis: ''                 # 변환하지 않고 마침표 세 개 그대로</code></pre>
+<ul>
+<li>변환하지 않는 자리: 코드 스팬(<code>`1...5`</code>), 코드 펜스, 수식, 이미 쓰여 있는 <code>\ldots</code>, 링크의 URL, 색인어. 이 규칙이 도는 시점에는 그것들이 모두 보호되어 있다.</li>
+<li>다만 <code>[[표시...|색인어]]</code>의 <strong>표시 텍스트</strong>도 색인과 함께 raw로 취급되어 변환되지 않는다(16장 참고). 그 자리에 줄임표가 필요하면 명령을 직접 적을 것.</li>
+<li>유니코드 줄임표 <code>…</code>를 직접 입력한 것은 손대지 않고 그대로 내보낸다.</li>
+</ul>
+<hr />
+<h2 id="id-7-인라인-수식-매크로-raw-latex">7. 인라인 수식 / 매크로 / raw LaTeX<a class="anchor" href="#id-7-인라인-수식-매크로-raw-latex" aria-label="링크">#</a></h2>
+<pre><code class="language-markdown">인라인 수식: $x^2 + y^2 = 1$ 또는 \(x^2+y^2=1\)
+
+raw 매크로도 그대로 통과한다: \textbf{직접 쓴 매크로} \cite[p.10]{key}
+
+특수 이스케이프 시퀀스: \\ \, \; \% \&amp; \# \_ \{ \}</code></pre>
+<ul>
+<li><code>$...$</code>(줄바꿈 불가) 또는 <code>\(...\)</code> 는 인라인 수식으로 보호되어 그대로 출력된다.</li>
+<li><code>\명령어[선택인자]{인자}{인자}...</code> 형태의 매크로는 <strong>내용을 건드리지 않고 그대로</strong> 통과시킨다(중첩 중괄호 1단계까지 지원). 즉 필요하면 markdown 안에서 직접 LaTeX을 섞어 써도 안전하다.</li>
+<li><code>\\</code>, <code>\,</code>, <code>\;</code>, <code>\%</code>, <code>\&amp;</code>, <code>\#</code>, <code>\_</code>, <code>\{</code>, <code>\}</code> 는 짧은 이스케이프 시퀀스로 별도 인식되어 그대로 통과한다.</li>
+<li><strong>한국어 조사 매크로</strong>: <code>\은</code>, <code>\는</code>, <code>\이</code>, <code>\가</code>, <code>\을</code>, <code>\를</code>, <code>\와</code>, <code>\과</code>, <code>\으로</code>, <code>\로</code> 그리고 <code>\&lt;</code> 는 고정 리터럴 토큰으로 인식되어 그대로 통과한다(단행본 편집에서 조사 자동 처리용 매크로를 자주 쓰기 때문). 이 목록은 정확히 이 문자열만 인식하며, 뒤에 공백 없이 바로 이어지는 한글 단어를 매크로 이름에 그리디하게 포함시키지 않는다. 예시와 세부 규칙은 아래 참고.</li>
+<li><strong>매크로 이름 종결자 <code>{}</code></strong>: 이름 끝에 빈 중괄호를 붙이면 리터럴 목록에 없는 이름도 매크로로 통과한다 — <code>\이라{}고</code>, <code>\에서{}부터</code>처럼. TeX에서 제어열의 끝을 표시하면서 공백은 넣지 않는 표준 관용구이고, 영문 이름에서는 원래부터 되던 것(<code>\LaTeX{}의</code>)을 한글 이름까지 넓힌 것이다. 같은 규칙으로 <code>\강조{중요}</code>처럼 인자를 받는 한글 이름 매크로도 통과한다. 아래 참고.</li>
+<li>매크로 이름 뒤의 <strong>선택인자 대괄호는 여러 개</strong> 올 수 있다. natbib의 <code>\citep[see][p.~33]{key}</code>가 대표적이다. 다만 중괄호 <strong>뒤에</strong> 오는 대괄호는 인식하지 못한다(<code>\raisebox{2pt}[0pt][0pt]{x}</code>) — 그런 경우는 7.1의 인라인 raw 스팬을 쓴다.</li>
+<li>이 목록을 벗어나는 raw LaTeX 조각은 7.1의 인라인 raw 스팬을 쓴다.</li>
+<li>이 리터럴 토큰 목록은 <code>cfg["literal_macros"]</code>(기본값이 바로 위 목록)와 <code>cfg["extra_macros"]</code>(기본값 빈 리스트)에서 오며, 둘 다 <strong><code>mapping.yaml</code>로 커스터마이즈할 수 있다</strong>. 프로젝트별로 토큰 몇 개만 추가하고 싶으면(기존 목록을 그대로 둔 채) <code>extra_macros</code>를 쓴다. 예시는 아래 참고.</li>
+</ul>
+<p><strong>조사 매크로 그리디 매칭 방지 예시:</strong></p>
+<pre><code class="language-markdown">값\은 이렇게 된다. 값\은뭐라고말하기어렵다.</code></pre>
+<pre><code>값\은 이렇게 된다. 값\은뭐라고말하기어렵다.</code></pre>
+<p>(뒤에 붙는 “뭐라고말하기어렵다”는 매크로 이름에 먹히지 않고 그대로 남는다.) <code>\으로</code>는 <code>\로</code>보다 먼저 검사되어, 더 긴 토큰이 항상 우선 인식된다. 이 목록에 없는 조사(예: <code>\도</code>)는 일반 텍스트로 취급되어 18장의 자동 이스케이프 규칙을 그대로 받는다(백슬래시가 <code>\textbackslash{}</code>로 바뀜).</p>
+<p><strong><code>\라</code>와 <code>\이라</code>가 기본값에 없는 이유:</strong></p>
+<p>이 조사는 실제 문장에서 홀로 끝나는 일이 드물고 거의 언제나 보조사가 뒤에 덧붙는다 — <code>\이라고</code>, <code>\이라는</code>, <code>\이라도</code>, <code>\이라서</code>처럼. 리터럴 목록은 “정확히 이 문자열”만 인식하므로 그런 활용형을 규칙만으로는 감당할 수 없다.</p>
+<p>여기서 <strong>실패하는 방식이 둘로 갈리는 점을 조심해야 한다.</strong></p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>원고</th><th>결과</th><th>문제</th></tr>
+</thead>
+<tbody>
+<tr><td><code>값\라</code></td><td><code>값\textbackslash{}라</code></td><td>눈에 띄게 깨지므로 금방 찾는다</td></tr>
+<tr><td><code>값\이라</code></td><td><code>값\이라</code></td><td><strong>겉보기엔 멀쩡하지만 틀렸다</strong></td></tr>
+</tbody>
+</table></div>
+<p><code>\이라</code>가 위험한 쪽이다. <code>\이</code>가 리터럴 토큰이라 먼저 매치되고 <code>라</code>는 평문으로 남는다. 출력 문자열은 똑같아 보이지만, LaTeX은 이것을 “<code>\이</code> 조사 + 글자 라”로 읽는다. 앞말이 모음으로 끝나면 <code>\이</code>가 <code>가</code>로 전개되어 <code>이라</code>가 아니라 <code>가라</code>가 찍힌다. 오류도 경고도 없다.</p>
+<p><strong>해결책: 이름 끝에 <code>{}</code> 를 붙인다.</strong></p>
+<pre><code class="language-markdown">값\이라{}고 하고, 값\이라{}는 것, 값\이라{}도 그렇다.</code></pre>
+<pre><code>값\이라{}고 하고, 값\이라{}는 것, 값\이라{}도 그렇다.</code></pre>
+<p>빈 중괄호가 “매크로 이름은 여기까지”라는 선언이라, 스크립트는 어디까지가 이름인지 추측할 필요가 없다. 그래서 <code>\이라</code>가 리터럴 목록에 없어도 통과하고, <code>\이</code>에게 먹히지도 않는다. 활용형이 몇 가지든 목록에 등록할 필요가 없다.</p>
+<p>이건 스크립트 편의만을 위한 표기가 아니다. <strong>LaTeX 쪽에서도 어차피 필요하다.</strong> 한글 음절이 letter(catcode 11)인 조판 환경에서 <code>\이라고</code>라고 쓰면 TeX은 이를 <code>이라고</code>라는 하나의 제어열로 읽어 <code>Undefined control sequence</code>를 낸다. <code>{}</code>가 그 경계를 끊어준다. 즉 원고에 쓰는 표기와 출력이 같고, 둘 다 같은 이유로 필요하다.</p>
+<p>같은 규칙이 인자를 받는 한글 이름 매크로에도 적용된다.</p>
+<pre><code class="language-markdown">\강조{중요한 말}, \색{red}{글자}, \인용[p.10]{책}</code></pre>
+<p>중괄호가 <strong>최소 하나는 있어야</strong> 한다는 점이 핵심이다. 그게 없으면 <code>\에서부터</code> 같은 것에서 어디까지가 이름인지 알 수 없어, 리터럴 목록을 두었던 그리디 매칭 문제가 그대로 돌아온다.</p>
+<p>쓰는 활용형이 몇 개로 정해져 있어서 <code>{}</code>를 매번 타이핑하기 싫다면, 그것들을 <code>extra_macros</code>에 등록해도 된다. 길이 내림차순 자동 정렬 덕분에 순서는 신경 쓰지 않아도 된다.</p>
+<pre><code class="language-yaml">extra_macros: ['\이라고', '\라고', '\이라는', '\라는', '\이라', '\라']</code></pre>
+<p><strong><code>extra_macros</code>로 토큰 추가하는 예시:</strong></p>
+<pre><code class="language-yaml"># mapping.yaml — \&gt;, \| 를 raw 매크로로 추가
+extra_macros:
+  - "\\&gt;"
+  - "\\|"</code></pre>
+<p>기본 조사 매크로 목록 자체를 바꾸고 싶으면(드묾) <code>literal_macros</code>를 통째로 override한다(리스트형 키라 override 시 전체가 교체된다 — 19장 참고). 어느 쪽이든 새로 추가한 토큰들 사이의 프리픽스 충돌(예: <code>\ab</code>와 <code>\abc</code>를 동시에 등록)은 걱정할 필요 없다 — 매번 길이 내림차순으로 자동 정렬해서 정규식을 새로 만들기 때문에, 등록 순서와 무관하게 항상 더 긴 토큰이 먼저 매치된다. 다만 이 정렬은 <code>literal_macros</code>와 <code>extra_macros</code>를 합친 목록 안에서만 작동한다. 목록에 아예 없는 긴 형태(위의 <code>\이라</code> 같은)는 정렬의 보호를 받지 못하고 짧은 토큰에 먹힌다.</p>
+<h3 id="id-71-인라인-raw-스팬-문장-한복판의-latex">7.1. 인라인 raw 스팬 — 문장 한복판의 LaTeX<a class="anchor" href="#id-71-인라인-raw-스팬-문장-한복판의-latex" aria-label="링크">#</a></h3>
+<p>위의 매크로 통과는 <code>\명령[선택인자]{인자}</code> <strong>모양일 때만</strong> 동작한다. 그 모양을 벗어나는 조각은 일반 텍스트로 간주되어 18장의 자동 이스케이프를 맞는다. 문장 한복판에 그런 조각을 심어야 할 때 쓰는 탈출구가 인라인 raw 스팬이다. Pandoc의 raw attribute와 같은 문법으로, 코드 스팬 바로 뒤에 포맷 이름을 붙인다.</p>
+<pre><code class="language-markdown">그룹 중괄호: 이건 `{\bfseries 강조}`{=latex} 이다.
+중첩 2단: `\textbf{a \emph{b \textsc{c}}}`{=latex} 끝.
+중괄호 뒤 선택인자: `\raisebox{2pt}[0pt][0pt]{올림}`{=latex} 끝.
+인자 안 수식: `\fbox{$x^2$}`{=latex} 끝.</code></pre>
+<p>닫는 백틱과 여는 중괄호는 <strong>붙어 있어야</strong> 한다. 사이에 공백이 있으면 평범한 코드 스팬으로 처리된다.</p>
+<p>위 네 가지가 매크로 패턴으로 처리되지 않는 대표적인 경우다. 스팬 없이 그냥 쓰면 이렇게 깨진다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>그냥 썼을 때</th><th>결과</th></tr>
+</thead>
+<tbody>
+<tr><td><code>{\bfseries 강조}</code></td><td>그룹 중괄호는 매크로가 아니라서 <code>\{</code>, <code>\}</code>로 이스케이프된다</td></tr>
+<tr><td><code>\textbf{a \emph{b \textsc{c}}}</code></td><td>중첩 중괄호를 1단까지만 인식해 뒤쪽이 어긋난다</td></tr>
+<tr><td><code>\raisebox{2pt}[0pt][0pt]{올림}</code></td><td>선택인자는 매크로 이름 바로 뒤에서만 인식된다</td></tr>
+<tr><td><code>\fbox{$x^2$}</code></td><td>인자 안의 <code>$</code>와 <code>^</code>가 이스케이프된다</td></tr>
+</tbody>
+</table></div>
+<p>포맷 이름은 <code>latex</code>, <code>tex</code>, <code>raw</code>를 인정한다(<code>raw_inline_formats</code>로 바꿀 수 있다). <strong>그 밖의 포맷을 겨냥한 스팬은 통째로 버려진다</strong> — Pandoc과 같은 동작이다. LaTeX 출력에 넣을 자리가 없기 때문이다.</p>
+<pre><code class="language-markdown">앞`&lt;br&gt;`{=html}뒤</code></pre>
+<pre><code>앞뒤</code></pre>
+<p>블록 단위로 raw LaTeX을 넣을 때는 이 문법이 아니라 10장의 <code>raw</code> / <code>tex</code> / <code>latex</code> 코드 펜스를 쓴다. 이 스팬은 문단을 나눌 수 없는 <strong>문장 중간</strong>을 위한 것이다.</p>
+<h3 id="id-72-물결표-정책">7.2. 물결표(<code>~</code>) 정책<a class="anchor" href="#id-72-물결표-정책" aria-label="링크">#</a></h3>
+<p><code>~</code>와 <code>\~</code>는 <strong>둘 다 원문 그대로 LaTeX 소스에 나간다.</strong> 변환기는 자리만 지키고, 그것이 묶음빈칸인지 물결표인지는 LaTeX 쪽이 정한다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>원고</th><th>출력</th></tr>
+</thead>
+<tbody>
+<tr><td><code>그림~1</code></td><td><code>그림~1</code></td></tr>
+<tr><td><code>파일은 \~/bin</code></td><td><code>파일은 \~/bin</code></td></tr>
+<tr><td><code>1\~6단계</code></td><td><code>1\~6단계</code></td></tr>
+</tbody>
+</table></div>
+<p>이렇게 정한 이유가 있다. LaTeX에서 <code>~</code>는 묶음빈칸(<code>\nobreakspace</code>)이고 <code>\~</code>는 악센트 명령이라, 둘 다 <strong>LaTeX 쪽에서 재정의할 수 있는 것들</strong>이다. 특히 한국어 조판에서는 <code>\~</code> 뒤에 숫자나 한글이 오면 물결표로 바꿔주는 식의 패키지를 쓰기도 한다. 변환기가 <code>\~</code>를 <code>\textasciitilde{}</code>로 미리 굳혀버리면 그런 정의가 개입할 자리를 없애버린다. 그래서 의미 부여를 LaTeX에 넘긴다.</p>
+<p><code>\~</code>를 살려두려면 <strong>프리앰블에 정의가 있어야 한다.</strong> 아무 패키지도 없는 순정 LaTeX에서 <code>\~</code>는 뒤 글자에 물결 악센트를 씌우는 명령이라, <code>1\~6</code>은 <code>16</code>으로, <code>\~/bin</code>은 <code>⁄bin</code>으로 조판된다 — 물결표가 사라진 것처럼 보인다. 정의가 없는 문서라면 <code>\newcommand{\~}{\textasciitilde{}}</code>처럼 직접 잡아주거나, 아예 원고에 <code>\textasciitilde{}</code>를 쓴다.</p>
+<h4 id="wavedash-를-물결표로-쓰기"><code>wavedash</code> — <code>\~</code>를 물결표로 쓰기<a class="anchor" href="#wavedash-를-물결표로-쓰기" aria-label="링크">#</a></h4>
+<p>위 기본 동작(<code>wavedash: default</code>)은 <code>~</code>와 <code>\~</code>를 둘 다 LaTeX에 맡긴다. 한국어 원고에서 “1~3장”의 <code>\~</code>를 곧바로 파동 대시(물결표)로 쓰고 싶다면 mapping에 <code>wavedash</code>를 준다. 값이 <code>default</code>가 아니면 <strong><code>~</code>는 그대로 묶음빈칸(nobreak space)이고, <code>\~</code>만 이 값으로 바뀐다.</strong></p>
+<pre><code class="language-yaml">wavedash: FF5E                # 유니코드 코드포인트(16진수): ～ (전각 물결)
+wavedash: "U+301C"            # U+ 접두도 된다: 〜 (WAVE DASH)
+wavedash: "〜"                # 글자 그대로 한 글자
+wavedash: \koreanWaveDash     # LaTeX 매크로 (뒤에 {}가 자동으로 붙는다)
+wavedash: default             # 기본값 — 옛 동작 그대로</code></pre>
+<ul>
+<li>코드포인트는 따옴표로 감싸거나 <code>U+</code>를 붙이는 것을 권한다. <code>3030</code>처럼 숫자만 쓰면 YAML이 정수로 읽지만 16진 자리수로 해석하고, <code>0x3030</code>은 YAML이 10진 정수로 바꿔 버려 엉뚱한 글자가 된다.</li>
+<li>매크로는 프리앰블(<code>preamble:</code>)에 직접 정의해 두어야 한다. 출력은 <code>\koreanWaveDash{}</code>다.</li>
+<li>알아볼 수 없는 값이면 경고를 찍고 <code>default</code>로 처리한다.</li>
+<li>적용 범위는 본문·제목·각주·표 셀 등 변환기가 처리하는 텍스트다. 인라인 코드 스팬 안의 <code>~</code>는 아래 예외대로 항상 <code>\textasciitilde{}</code>이고, front matter 값(<code>title:</code> 등)은 원래 LaTeX 원문이라 <code>\~</code>를 바꾸지 않는다.</li>
+<li>유니코드 문자를 쓸 때는 선택한 글꼴이 그 글리프를 갖고 있어야 하고 (<code>pdflatex</code>는 입력 인코딩 설정도 필요하다), 확실하지 않으면 매크로가 안전하다.</li>
+</ul>
+<h4 id="tilde-와-의-방언"><code>tilde</code> — <code>~</code>와 <code>^</code>의 방언<a class="anchor" href="#tilde-와-의-방언" aria-label="링크">#</a></h4>
+<p>기본(<code>tilde: latex</code>)은 위에서 설명한 대로 <code>~</code>를 LaTeX에 맡기고 <code>^</code>는 <code>\textasciicircum{}</code>으로 내보낸다. 다른 마크다운 방언의 원고를 가져와 쓸 때를 위해 mapping에서 방언을 고를 수 있다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th><code>tilde:</code></th><th><code>~</code></th><th><code>^</code></th></tr>
+</thead>
+<tbody>
+<tr><td><code>latex</code> (기본)</td><td>그대로(묶음빈칸)</td><td><code>\textasciicircum{}</code></td></tr>
+<tr><td><code>pandoc</code></td><td><code>\textasciitilde{}</code>. <code>~x~</code>는 <code>\textsubscript{x}</code></td><td><code>^x^</code>는 <code>\textsuperscript{x}</code></td></tr>
+<tr><td><code>multimarkdown</code> (<code>mmd</code>)</td><td><code>a~b</code>는 <code>a\textsubscript{b}</code>, <code>~x~</code>도 아래첨자. 뒤에 글자가 없는 <code>~</code>는 <code>\ensuremath{\sim}</code></td><td><code>a^b</code>, <code>^x^</code>는 <code>\textsuperscript{}</code></td></tr>
+<tr><td><code>wavedash</code> (0.20.5)</td><td><strong>언제나</strong> wavedash. <code>wavedash:</code>로 문자를 정했으면 그것, 없으면 <code>\textasciitilde{}</code></td><td><code>latex</code>와 같다(<code>\textasciicircum{}</code>)</td></tr>
+</tbody>
+</table></div>
+<ul>
+<li>닫힌 꼴(<code>~x~</code>, <code>^x^</code>)은 안에 공백이 없어야 한다. multimarkdown의 열린 꼴 (<code>a~b</code>, <code>a^b</code>)은 뒤따르는 글자·숫자 덩어리(공백·구두점 앞)까지다.</li>
+<li><code>\~</code>는 어느 모드에서나 <code>wavedash</code> 규칙을 따른다. 그래서 multimarkdown 모드에서 <code>1~3쪽</code>이 아래첨자가 되는 것을 <code>1\~3쪽</code>으로 피할 수 있다.</li>
+<li><code>~~취소선~~</code>, <code>^^방점^^</code>, <code>^[각주]</code>, 코드 스팬, 수식, <code>\매크로{…}</code>(인자 포함)는 어느 모드에서나 먼저 처리·보호되므로 영향이 없다. 링크로 감싸지 않은 맨 URL의 <code>~</code>는 pandoc에서 <code>\textasciitilde{}</code>, multimarkdown에서는 아래첨자가 되므로 <code>&lt;…&gt;</code>나 링크 문법을 쓴다.</li>
+<li>제목 안의 <code>\textsubscript</code>·<code>\ensuremath</code>는 hyperref 책갈피 경고를 낼 수 있다.</li>
+<li>진짜 pandoc을 쓰는 <code>--pandoc</code> 옵션에서는 이 키를 무시한다(pandoc이 직접 처리한다). 값 이름 <code>pandoc</code>과 옵션 <code>--pandoc</code>은 별개다.</li>
+<li><code>wavedash</code> 모드는 <code>^</code>와 무관하다. 본문의 <code>~</code>는 첨자가 아니라 전부 물결표로 쓰겠다는 뜻이고, <code>\~</code>도 똑같이 처리되어(<code>wavedash:</code>가 <code>default</code>여도 <code>\textasciitilde{}</code>) 둘 사이에 차이가 없다. <code>~~취소선~~</code>은 먼저 처리되므로 그대로다. 코드 스팬은 위와 같이 항상 <code>\textasciitilde{}</code>이고, 수식 안의 <code>~</code>와 <code>\매크로{…}</code>는 건드리지 않는다.</li>
+<li>알 수 없는 값은 경고 후 <code>latex</code>로 처리한다.</li>
+</ul>
+<h4 id="유일한-예외-인라인-코드-스팬">유일한 예외: 인라인 코드 스팬<a class="anchor" href="#유일한-예외-인라인-코드-스팬" aria-label="링크">#</a></h4>
+<p>인라인 코드 스팬 안의 <code>~</code>만은 항상 <code>\textasciitilde{}</code>로 이스케이프된다.</p>
+<pre><code class="language-markdown">`rm -rf ~/tmp`</code></pre>
+<pre><code>\texttt{rm -rf \textasciitilde{}/tmp}</code></pre>
+<p>여기는 저자가 쓴 LaTeX이 아니라 <strong>코드를 글자 그대로 보여주는 자리</strong>이기 때문이다. <code>~</code>를 날것으로 두면 묶음빈칸이 되어 <code>rm -rf /tmp</code>처럼 물결표가 증발한다. <code>_</code>, <code>$</code>, <code>&amp;</code>, <code>{</code> 등 다른 특수문자도 여기서는 전부 이스케이프되니 <code>~</code>만 예외로 두는 편이 오히려 어색하다. 이 동작이 싫다면 스크립트의 <code>_with_tilde()</code> 한 줄을 없애면 된다. 코드 펜스 안은 verbatim/minted라 원래 아무것도 하지 않는다.</p>
+<h4 id="인라인-서식-규칙과의-관계">인라인 서식 규칙과의 관계<a class="anchor" href="#인라인-서식-규칙과의-관계" aria-label="링크">#</a></h4>
+<p>취소선 <code>~~...~~</code>처럼 <code>~</code>를 델리미터로 쓰는 규칙은 그대로 동작한다.</p>
+<p><code>\~</code>로 이스케이프한 물결표는 델리미터로 세지 않는다. <code>a\~\~b\~\~c</code>는 취소선이 아니라 <code>a\~\~b\~\~c</code> 그대로 나간다.</p>
+<p>이게 가능한 이유는 <code>\~</code>를 보호하는 지점이 앞뒤 양쪽에서 고정돼 있기 때문이다. 스마트 따옴표 변환보다는 뒤여야 하고(그래야 <code>\~"인용"</code>의 큰따옴표가 여는 모양으로 나온다), 인라인 규칙보다는 앞이어야 한다(그래야 escape한 물결표가 델리미터로 둔갑하지 않는다).</p>
+<h4 id="예전-동작으로-되돌리려면">예전 동작으로 되돌리려면<a class="anchor" href="#예전-동작으로-되돌리려면" aria-label="링크">#</a></h4>
+<p><code>mapping.yaml</code>에서 <code>escape_chars</code>에 <code>~</code>를 도로 넣으면 모든 맨 <code>~</code>가 <code>\textasciitilde{}</code>가 된다(리스트형 키라 override 시 전체가 교체되므로 나머지 문자도 함께 적어야 한다 — 19장 참고). 다만 <code>\~</code>는 이 설정과 무관하게 언제나 그대로 나간다.</p>
+<pre><code class="language-yaml">escape_chars: ["\\", "&amp;", "%", "#", "_", "$", "{", "}", "~", "^"]</code></pre>
+<hr />
+<h2 id="id-8-디스플레이-수식-raw-환경-블록-단계에서-보호">8. 디스플레이 수식 / raw 환경 (블록 단계에서 보호)<a class="anchor" href="#id-8-디스플레이-수식-raw-환경-블록-단계에서-보호" aria-label="링크">#</a></h2>
+<p>다음은 <strong>블록 파서 이전 단계</strong>에서 통째로 보호되어, 안의 내용이 이스케이프나 따옴표 변환 등 어떤 처리도 받지 않고 그대로 출력에 옮겨진다.</p>
+<pre><code class="language-markdown">$$
+\int_a^b f(x)\,dx = F(b) - F(a)
+$$
+
+\[
+E = mc^2
+\]
+
+\begin{equation}
+a^2 + b^2 = c^2
+\end{equation}
+
+\begin{align}
+x &amp;= 1 \\
+y &amp;= 2
+\end{align}</code></pre>
+<p>지원하는 raw 환경: <code>equation*?</code>, <code>align*?</code>, <code>gather*?</code>, <code>multline*?</code>, <code>eqnarray*?</code> (수식), <code>tabular</code>, <code>tabularx</code>, <code>tabulary</code>, <code>tblr</code>, <code>longtblr</code> (직접 짠 표). <code>\begin{...}</code>와 <code>\end{...}</code> 이름이 정확히 일치해야 하며, 중간에 다른 내용이 끼어 있어도(비탐욕 매칭) 하나의 블록으로 인식된다.</p>
+<hr />
+<h2 id="id-9-주석------">9. 주석 (<code>&lt;!-- --&gt;</code>)<a class="anchor" href="#id-9-주석------" aria-label="링크">#</a></h2>
+<p>pandoc과 동일하게, <code>&lt;!--</code>로 시작해서 그 뒤에 처음 나오는 <code>--&gt;</code>까지 통째로 사라진다(HTML 표준처럼 중첩은 지원하지 않는다 — 안쪽에 <code>&lt;!--</code>가 또 있어도 무시하고 바로 다음 <code>--&gt;</code>에서 닫힌다). 여러 줄에 걸쳐도 되고, 그 안에 헤딩·리스트·수식·인라인 서식이 들어 있어도 <strong>전혀 해석되지 않고 그대로 삭제</strong>된다.</p>
+<pre><code class="language-markdown">이 문장은 보인다. &lt;!-- 이 부분은 사라진다 --&gt; 이 문장도 보인다.
+
+&lt;!--
+이 블록 전체가 통째로 사라진다.
+
+## 이 헤딩도 사라진다
+
+- 이 리스트도 사라진다
+--&gt;
+
+이 문장만 남는다.</code></pre>
+<p>코드펜스나 인라인 코드 백틱으로 감싼 <code>&lt;!-- --&gt;</code>는 실제 주석으로 처리되지 않고 문법 예시 그대로 보존된다(단, 인라인 코드는 위 8장의 raw 환경과 같은 이유로, 백틱이 <code>&lt;!--</code>/<code>--&gt;</code> 바로 옆에 붙어 있어야 안전하다).</p>
+<p>주석 제거는 코드펜스 보호 바로 다음, 디스플레이 수식/raw 환경 보호보다 먼저 실행된다 — 그래야 주석 안에 우연히 들어간 <code>\begin{...}</code> 같은 텍스트가 raw 환경으로 오인식되기 전에 먼저 사라진다.</p>
+<h3 id="id-91-라인-코멘트-linecomment-true">9.1. 라인 코멘트 — <code>linecomment: true</code><a class="anchor" href="#id-91-라인-코멘트-linecomment-true" aria-label="링크">#</a></h3>
+<p>LaTeX에 익숙한 사람들이 아쉬워하는 것 중 하나가 한 줄짜리 주석이다. <code>mapping.yaml</code>에서 <code>linecomment: true</code>로 켜면, <strong>행 머리(들여쓰기 없이 정확히 첫 칸)</strong>에 <code>//</code>로 시작하는 줄이 통째로 사라진다. 기본은 꺼져 있다.</p>
+<pre><code class="language-yaml">linecomment: true</code></pre>
+<pre><code class="language-markdown">문단 하나.
+
+// 이 줄은 지워진다.
+
+문단 둘.</code></pre>
+<ul>
+<li><code>%</code>는 이스케이프 대상이자 흔한 문장부호(백분율)라 못 쓰고, <code>#</code>은 헤딩·상호참조에 이미 쓰이며, <code>--</code>는 en dash 관례(<code>1--6</code>)로 이미 뜻이 있어서 그대로 두면 충돌한다. <code>//</code>를 고른 이유다.</li>
+<li><strong>들여쓰기가 조금이라도 있으면 지워지지 않는다.</strong> <code>  // 텍스트</code>처럼 들여써진 줄은 저자가 실제로 쓰려던 텍스트일 가능성이 높다고 보고 손대지 않는다.</li>
+<li><strong>코드 펜스 안은 이 옵션을 켜도 절대 지워지지 않는다.</strong> 코드 펜스는 이 검사보다 먼저 보호되므로, C/JavaScript 예제의 <code>// 진짜 주석</code>이 첫 칸부터 시작해도 안전하다. 위험한 것은 원고 본문에 우연히 첫 칸부터 <code>//</code>로 시작하는 줄이 있는 경우뿐이라, 기본값은 꺼둔다.</li>
+<li><strong>뒤따르는 개행까지 함께 지워진다.</strong> 그래서 리스트 항목 사이에 빈 줄 없이 주석을 끼워 넣어도 리스트가 쪼개지지 않는다 — 애초에 이 기능을 만든 주된 이유가 그것이다.</li>
+</ul>
+<pre><code class="language-markdown">- 항목 하나
+// 이 항목에 대한 메모
+- 항목 둘</code></pre>
+<pre><code>\begin{itemize}
+\item 항목 하나
+\item 항목 둘
+\end{itemize}</code></pre>
+<p>빈 줄로 감싸 쓰면(<code>문단\n\n// 주석\n\n문단</code>) 그 빈 줄은 그대로 남으므로 문단이 갈리는 자리에서는 평소처럼 문단이 나뉜다.</p>
+<hr />
+<h2 id="id-10-코드-블록">10. 코드 블록<a class="anchor" href="#id-10-코드-블록" aria-label="링크">#</a></h2>
+<h3 id="id-101-일반-코드-펜스">10.1. 일반 코드 펜스<a class="anchor" href="#id-101-일반-코드-펜스" aria-label="링크">#</a></h3>
+<pre><code class="language-markdown">```python
+def f(x):
+    return x + 1
+```
+
+```text
+그냥 verbatim으로 처리됨
+```
+
+```raw
+\centering
+이 안은 이미 LaTeX이라고 가정하고 그대로 통과시킨다.
+```</code></pre>
+<ul>
+<li>언어 태그가 <code>raw</code> / <code>tex</code> / <code>latex</code> → 내용을 <strong>그대로</strong>(가공 없이) 통과.</li>
+<li>언어 태그가 없거나 <code>text</code> / <code>verb</code> → <code>\begin{verbatim}...\end{verbatim}</code>.</li>
+<li>그 외 언어 태그 → <code>\begin{minted}{언어}...\end{minted}</code> (기본 <code>codeblock_template</code>; mapping.yaml로 다른 템플릿으로 바꿀 수 있음).</li>
+<li>인라인 코드 <code>`code`</code> 는 <code>\texttt{}</code>로 변환되며 내부 특수문자는 자동 이스케이프된다(백슬래시 포함).</li>
+<li><code>\`</code>(백슬래시+백틱)는 “백틱 그 자체”를 리터럴로 출력한다. 단, 이 이스케이프는 <strong>새 코드 스팬을 찾을 때만</strong> 적용되고, 이미 열린 스팬의 닫는 델리미터 쪽에는 적용되지 않는다 — 그래서 <code>`\\`</code>처럼 내용이 백슬래시로 끝나는 정상적인 코드 스팬(예: TeX 줄바꿈 명령을 보여줄 때)은 깨지지 않는다.</li>
+<li><strong>닫는 펜스 바로 다음 줄에 빈 줄 없이 글이 이어지면, 그 글은 반드시 줄이 갈려서 나온다</strong> — <code>\end{verbatim}</code> 등과 같은 줄에 붙지 않는다. 일부 verbatim류 패키지는 <code>\end{...}</code> 뒤에 오는 내용이 같은 줄에 있으면 그 환경이 바꿔 둔 catcode가 거기까지 번지므로, 이 줄 분리가 없으면 조판이 깨질 수 있다. 원문에 실제 빈 줄이 있으면(그래서 새 문단이면) 그 빈 줄도 그대로 유지된다 — 이건 “펜스 바로 다음 줄에 곧장 이어지는 경우”만 다루는 규칙이다.</li>
+</ul>
+<pre><code class="language-markdown">이건 \`code` 처럼 실제 코드 델리미터 바로 앞에 있어도 안전하다.
+→ 이건 `code` 처럼 실제 코드 델리미터 바로 앞에 있어도 안전하다.
+
+강제 줄바꿈은 `\\` 이다.  (정상적인 코드 스팬 — 안 깨짐)
+→ 강제 줄바꿈은 \texttt{\textbackslash{}\textbackslash{}} 이다.</code></pre>
+<h3 id="id-102-showexam-원문과-변환-결과를-나란히">10.2. <code>showexam</code> — 원문과 변환 결과를 나란히<a class="anchor" href="#id-102-showexam-원문과-변환-결과를-나란히" aria-label="링크">#</a></h3>
+<p>지금 읽고 있는 이 문서처럼 “이렇게 쓰면 이렇게 나온다”를 보여줘야 하는 글을 위한 블록이다(0.2.1에서 추가). 왼쪽 상자에는 마크다운 원문이 그대로 들어가고, 오른쪽 상자에는 그 원문을 변환기에 <strong>다시 통과시킨 결과</strong>가 들어간다.</p>
+<pre><code class="language-markdown">```showexam
+&amp; $ 100% *기울임* **굵게**
+```</code></pre>
+<p>이 한 블록이 아래처럼 펼쳐진다.</p>
+<pre><code>\par\medskip\noindent
+\begin{minipage}[t]{0.4600\linewidth}\vspace{0pt}
+\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+\begin{minted}[frame=single,breaklines,breakanywhere,fontsize=\small,%
+               xleftmargin=0pt]{markdown}
+&amp; $ 100% *기울임* **굵게**
+\end{minted}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.5000\linewidth}\vspace{0pt}
+\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+\&amp; \$ 100\% \emph{기울임} \textbf{굵게}
+\end{minipage}
+\par\medskip</code></pre>
+<p>같은 원문을 두 벌 쓰는 일이라 LaTeX 쪽에서는 만들 수 없다 — verbatim으로 한 번 찍어낸 내용을 되살려 다시 조판하도록 되돌릴 방법이 없기 때문이다. 그래서 스크립트가 원문을 붙잡아 두었다가 한 번은 그대로, 한 번은 파이프라인에 태워 내보낸다.</p>
+<p>오른쪽 상자는 본문과 <strong>완전히 같은 파이프라인</strong>을 탄다. 리스트, 표, 수식, 커스텀 환경, 상호참조가 전부 그대로 동작하고, 예제 안에서 참조한 각주는 바깥 문서의 각주 정의를 찾아 쓴다.</p>
+<p>아래는 설명이 아니라 이 문서가 실제로 조판한 결과다 — 추가 패키지 없이 컴파일되도록 <code>style=verbatim</code>으로 지정했다.</p>
+<div class="showexam showexam-side">
+<pre class="showexam-src"><code class="language-markdown">**굵게**와 *기울임*, 그리고 `코드`.
+
+- 리스트도
+- 그대로 동작한다</code></pre>
+<div class="showexam-result">
+<p><strong>굵게</strong>와 <em>기울임</em>, 그리고 <code>코드</code>.</p>
+<ul>
+<li>리스트도</li>
+<li>그대로 동작한다</li>
+</ul>
+</div>
+</div>
+<h4 id="펜스-줄-옵션">펜스 줄 옵션<a class="anchor" href="#펜스-줄-옵션" aria-label="링크">#</a></h4>
+<p>펜스 줄에 <code>키=값</code>을 공백으로 나열하면 그 블록에만 적용된다.</p>
+<pre><code class="language-markdown">```showexam ratio=0.40 style=lstlisting align=c frame=none
+```</code></pre>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>옵션</th><th>기본값</th><th>뜻</th></tr>
+</thead>
+<tbody>
+<tr><td><code>ratio</code></td><td><code>0.46</code></td><td>왼쪽(원문) 상자 폭. <code>\linewidth</code> 대비 비율</td></tr>
+<tr><td><code>gap</code></td><td><code>0.04</code></td><td>두 상자 사이 여백. 오른쪽 폭은 <code>1 − ratio − gap</code></td></tr>
+<tr><td><code>align</code></td><td><code>t</code></td><td>minipage 세로 정렬. <code>t</code> / <code>c</code> / <code>b</code></td></tr>
+<tr><td><code>style</code></td><td><code>minted</code></td><td>원문 상자를 조판하는 방식(아래 표)</td></tr>
+<tr><td><code>lang</code></td><td><code>markdown</code></td><td>minted에 넘길 언어 태그</td></tr>
+<tr><td><code>frame</code></td><td><code>single</code></td><td>원문 상자의 테두리. <code>none</code>이면 안 그린다</td></tr>
+<tr><td><code>layout</code></td><td><code>side</code></td><td><code>side</code>(좌우) / <code>stack</code>(위아래) / <code>auto</code> — 아래 「위아래 배치」</td></tr>
+<tr><td><code>stack_width</code></td><td><code>36</code></td><td><code>auto</code>의 임계값. 원문 가장 긴 줄의 표시 폭(한글 2칸)</td></tr>
+<tr><td><code>sep</code></td><td><code>rule</code></td><td><code>stack</code>에서 원문과 결과 사이: <code>rule</code> / <code>space</code> / <code>none</code> / LaTeX 코드</td></tr>
+</tbody>
+</table></div>
+<p>값에 공백이 필요하면 큰따옴표로 감싼다(<code>lang="text"</code>). 이 블록 하나에만 쓸 listing 템플릿을 통째로 넘기는 <code>listing=</code> 옵션도 있지만, 템플릿에는 공백과 중괄호가 많아 펜스 줄에 쓰기 불편하다 — 그런 용도라면 <code>mapping.yaml</code>을 쓰는 편이 낫다.</p>
+<h4 id="style-선택-정말-중요한-것은-다국어-여부"><code>style</code> 선택 — 정말 중요한 것은 다국어 여부<a class="anchor" href="#style-선택-정말-중요한-것은-다국어-여부" aria-label="링크">#</a></h4>
+<p><strong><code>lstlisting</code>은 코드 안에 유니코드가 섞이면 감당하지 못한다.</strong> 소스 코드 자체는 대개 ASCII라 무리가 없지만, 주석에 한글이 한 글자라도 들어가면 <code>listings</code> 패키지가 그것을 처리하지 못한다. 한국어 코드 예제에서는 사실상 <code>minted</code>가 유일한 해법이다. <code>listings</code>가 pdfTeX 시절 폰트 인코딩 위에 지어진 패키지라 그렇다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th><code>style</code></th><th>다국어(한글 등)</th><th>긴 줄 접힘</th><th>필요한 것</th></tr>
+</thead>
+<tbody>
+<tr><td><code>minted</code></td><td><strong>된다</strong></td><td>접힘</td><td><code>minted</code> 패키지 (아래 참고)</td></tr>
+<tr><td><code>lstlisting</code></td><td><strong>안 됨</strong></td><td>접힘</td><td><code>listings</code> 패키지만 있으면 된다</td></tr>
+<tr><td><code>verbatim</code></td><td>된다</td><td><strong>안 접힘</strong></td><td>아무것도 필요 없다</td></tr>
+</tbody>
+</table></div>
+<p><code>verbatim</code>은 줄바꿈을 못 하므로, 원문에 긴 줄이 하나라도 있으면 그 줄이 오른쪽 상자를 뚫고 페이지 여백까지 넘어간다. 추가 패키지 없이 한글을 쓰고 싶다면 원문 줄을 짧게 유지하며 <code>verbatim</code>을 쓰는 수밖에 없다.</p>
+<p><code>minted</code>의 <code>-shell-escape</code> 요구 여부는 TeX Live 배포 시기에 따라 갈린다. <strong>minted 3.0부터는 pygments 호출을 <code>latexminted</code>라는 별도 파이썬 패키지가 맡고, TeX Live 2025부터 그것이 함께 배포되어 <code>-shell-escape</code> 없이도 안전하게 동작한다.</strong> 그보다 오래된 TeX Live나 3.0 미만의 <code>minted</code>에서는 여전히 <code>-shell-escape</code>가 필요하다. <code>kpsewhich latexminted.py</code>로 있는지 확인할 수 있다.</p>
+<h4 id="중첩-showexam-문법-자체를-보여주기">중첩 — <code>showexam</code> 문법 자체를 보여주기<a class="anchor" href="#중첩-showexam-문법-자체를-보여주기" aria-label="링크">#</a></h4>
+<p><code>showexam</code> 블록을 예시로 인용하려면 바깥 펜스를 백틱 4개 이상으로 연다. CommonMark와 같은 규칙이라, 백틱 개수가 더 적은 안쪽 펜스는 전부 내용으로 흡수된다. 이 절의 첫 예제가 바로 그 방식이다.</p>
+<p>반대로, 평범한 코드펜스 안에 들어 있는 showexam 펜스는 <strong>잡히지 않는다</strong>. 문법 설명 문서에서 예시로 적어둔 것을 진짜 블록으로 오인해 실행해버리는 일은 없다.</p>
+<p><code>showexam</code> 안에 다시 <code>showexam</code>을 넣는 것도 3단까지는 재귀적으로 렌더링된다. 그보다 깊어지면 안쪽은 평범한 코드펜스로 취급된다.</p>
+<h4 id="mappingyaml로-배치-바꾸기"><code>mapping.yaml</code>로 배치 바꾸기<a class="anchor" href="#mappingyaml로-배치-바꾸기" aria-label="링크">#</a></h4>
+<p><code>template</code>을 통째로 갈아끼우면 상자의 모양과 배치를 마음대로 바꿀 수 있다. <code>tcolorbox</code>의 <code>sidebyside</code>가 정확히 이 용도라 잘 맞는다.</p>
+<pre><code class="language-yaml"># mapping.yaml — preamble에 \usepackage[most]{tcolorbox} 필요
+showexam:
+  ratio: 0.42
+  frame: none     # tcolorbox가 이미 테두리를 그린다
+  template: |-
+    \begin{tcolorbox}[sidebyside,sidebyside align=top,
+                      lefthand ratio=%(ratio)s]
+    %(left)s
+    \tcblower
+    %(right)s
+    \end{tcolorbox}</code></pre>
+<p><code>frame: none</code>을 빼먹으면 <strong>상자 안에 상자</strong>가 생긴다. 기본 <code>template</code>은 테두리를 그리지 않으므로 listing이 직접 <code>frame=single</code>로 그리는데, <code>tcolorbox</code>처럼 이미 테두리가 있는 template으로 바꾸면 둘이 겹치기 때문이다. 반대로 특정 블록에서만 안쪽 테두리를 되살리고 싶으면 그 블록의 펜스 줄에 <code>frame=single</code>이라고 적으면 된다.</p>
+<p><code>sidebyside</code>와 <code>breakable</code>은 <strong>함께 쓸 수 없다</strong>. 둘 다 지정하면 tcolorbox가 조용히 세로 2단(위/아래)으로 떨어뜨린다 — 오류가 나지 않으니 알아채기 어렵다. 좌우 배치를 유지하려면 <code>breakable</code>을 빼야 한다.</p>
+<p>템플릿에 꽂히는 값은 다음과 같다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>자리표시자</th><th>내용</th></tr>
+</thead>
+<tbody>
+<tr><td><code>%(left)s</code></td><td>원문 상자. <code>verbatim</code>/<code>minted</code> 등이 이미 완성된 형태로 들어온다</td></tr>
+<tr><td><code>%(right)s</code></td><td>변환 결과</td></tr>
+<tr><td><code>%(lw)s</code> / <code>%(rw)s</code></td><td>왼쪽 / 오른쪽 폭 계수. <code>0.4600</code> 같은 소수 문자열</td></tr>
+<tr><td><code>%(ratio)s</code></td><td><code>ratio</code> 값 그대로. <code>tcolorbox</code>의 <code>lefthand ratio</code> 등에 쓴다</td></tr>
+<tr><td><code>%(align)s</code></td><td><code>t</code> / <code>c</code> / <code>b</code></td></tr>
+<tr><td><code>%(strut)s</code></td><td><code>align=t</code>일 때 <code>\vspace{0pt}</code>, 아니면 빈 문자열</td></tr>
+</tbody>
+</table></div>
+<p><code>styles</code> 항목을 손대면 <code>style</code> 이름별 listing 템플릿도 바꿀 수 있다. 여기엔 <code>%(src)s</code>(원문), <code>%(lang)s</code>, 그리고 <code>%(frame)s</code>가 들어간다. <code>%(frame)s</code>는 <code>frame=single,</code>처럼 <strong>쉼표까지 포함한 옵션 조각</strong>으로 치환되며, <code>frame</code>이 <code>none</code>이면 빈 문자열이 된다.</p>
+<p>기본 템플릿이 각 minipage 앞에 <code>%(strut)s</code>(= <code>\vspace{0pt}</code>)를 두고 <code>\topsep</code>을 0으로 만드는 데에는 이유가 있다. <code>[t]</code> 정렬은 두 상자의 “첫 줄 베이스라인”을 맞추는데, 왼쪽 listing에 <code>frame</code>이 붙거나 위쪽 여백이 얹히면 그만큼 두 단이 어긋나 보인다. 이 관용구가 정렬 기준을 “상자 윗변”으로 바꿔준다. <code>align</code>이 <code>c</code>나 <code>b</code>이면 오히려 방해가 되므로 자동으로 빠진다.</p>
+<h4 id="위아래-배치-layoutstack-0201">위아래 배치 — <code>layout=stack</code> (0.20.1)<a class="anchor" href="#위아래-배치-layoutstack-0201" aria-label="링크">#</a></h4>
+<p>한 줄이 길어서 좌우로는 비좁을 때, 원문 상자를 본문 전체 폭으로 놓고 그 아래에 결과를 잇는다. 원문과 결과 사이에는 가는 선(<code>sep=rule</code>)이 들어간다.</p>
+<pre><code>```showexam layout=stack
+긴 한 줄 …
+```</code></pre>
+<ul>
+<li><code>layout=auto</code>는 원문에서 가장 긴 줄의 표시 폭이 <code>stack_width</code>(기본 36칸)를 넘으면 stack, 아니면 side로 간다. 실제 상자 폭은 용지와 글꼴에 따라 달라서 어림셈이다. 펜스 줄의 <code>layout=</code>이 언제나 우선한다.</li>
+<li>문서 전체의 기본값은 mapping의 <code>showexam: {layout: stack}</code>으로 바꾼다. stack용 템플릿은 <code>stack_template</code>이며 <code>%(left)s %(right)s %(sep)s</code>를 쓴다.</li>
+<li><code>ratio</code>, <code>gap</code>, <code>align</code>은 stack에서 의미가 없어 무시된다(펜스 줄에 직접 적었으면 경고).</li>
+<li>stack은 minipage를 쓰지 않으므로 <strong>쪽을 넘어 이어질 수 있다</strong>. 원문 상자가 <code>lstlisting</code>이면 테두리째 쪽을 넘고, <code>minted</code>의 <code>frame=single</code>처럼 테두리 상자가 쪽을 못 넘는 조합은 <code>frame=leftline</code>이나 <code>lines</code>로 바꾸면 된다.</li>
+</ul>
+<h4 id="주의">주의<a class="anchor" href="#주의" aria-label="링크">#</a></h4>
+<ul>
+<li>좌우 배치(<code>side</code>)는 상자를 <code>minipage</code>로 만들기 때문에 <strong>페이지를 넘어 쪼개지지 않는다</strong>. 예제가 길면 통째로 다음 페이지로 밀린다. <code>tcolorbox</code>로 바꿔도 마찬가지다 — <code>breakable</code>은 <code>sidebyside</code>와 양립하지 않는다. 긴 예제는 위의 <code>layout=stack</code>을 쓴다.</li>
+<li>리스트 항목이나 인용구 <strong>안에 들여쓴 <code>showexam</code>은 지원하지 않는다</strong>. 자리표시자가 0열로 나가면서 리스트를 빠져나온다. 최상위에서만 쓴다.</li>
+<li><code>template</code>을 고칠 때 원문 상자를 <code>\fbox{...}</code>나 <code>\parbox{...}</code> 같은 <strong>매크로 인자 안에 넣으면 안 된다</strong> — <code>verbatim</code>은 인자 안에서 깨진다. <code>minipage</code>와 <code>tcolorbox</code>의 본문은 인자가 아니라 환경 본문이라 안전하고, 테두리가 필요하면 <code>minted</code>/<code>lstlisting</code>의 <code>frame=</code> 옵션을 쓰면 된다.</li>
+</ul>
+<hr />
+<h3 id="id-103-external-외부-도구의-결과를-받아오기">10.3. <code>external</code> — 외부 도구의 결과를 받아오기<a class="anchor" href="#id-103-external-외부-도구의-결과를-받아오기" aria-label="링크">#</a></h3>
+<p>코드 블록의 내용을 외부 프로그램에 넘겨 돌리고, 그 결과를 그림이나 글로 그 자리에 받아온다(0.22.0). 악보(lilypond), 그래프(graphviz), 계산 결과 같은 것에 쓴다.</p>
+<pre><code>```external tool=lilypond, caption="주제 선율", label=fig:theme, width=0.8\linewidth
+\relative c' { c4 d e f }
+```</code></pre>
+<p><strong>도구는 mapping에 등록한 것만 쓸 수 있다.</strong> 펜스에는 도구의 이름만 쓰고, 실제 명령은 mapping의 <code>external:</code>에 둔다. 원고에 명령줄을 쓰게 하면 원고를 변환하는 것만으로 아무 명령이나 돌게 되기 때문이다.</p>
+<pre><code class="language-yaml">external:
+  lilypond:
+    run: "lilypond --pdf -dcrop -o %(base)s %(src)s"
+    ext: ly
+    result: pdf
+    output: "%(base)s.cropped.pdf"
+  dot:
+    run: "dot -Tpdf -o %(out)s %(src)s"
+    ext: dot
+  calc:
+    run: "python3 %(src)s"
+    ext: py
+    result: markdown</code></pre>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>키</th><th>기본값</th><th>뜻</th></tr>
+</thead>
+<tbody>
+<tr><td><code>run</code></td><td>(필수)</td><td>실행할 명령. 셸을 거치지 않고 낱말로 나눠 실행한다</td></tr>
+<tr><td><code>ext</code></td><td><code>txt</code></td><td>블록 내용을 저장할 파일의 확장자</td></tr>
+<tr><td><code>result</code></td><td><code>pdf</code></td><td>그림: <code>pdf</code> <code>png</code> <code>svg</code> <code>jpg</code> <code>eps</code> / 글: <code>text</code> <code>markdown</code> <code>tex</code> <code>math</code></td></tr>
+<tr><td><code>output</code></td><td><code>%(base)s.&lt;result&gt;</code></td><td>도구가 결과 파일을 두는 곳. 글 결과에서 생략하면 표준 출력을 받는다</td></tr>
+<tr><td><code>crop</code></td><td><code>false</code></td><td><code>true</code>면 PDF 결과에 <code>pdfcrop</code>을 돌린다</td></tr>
+<tr><td><code>timeout</code></td><td><code>60</code></td><td>제한 시간(초)</td></tr>
+<tr><td><code>web</code>, <code>web_output</code></td><td>없음</td><td><code>ndhmd2html</code>용 그림(PNG)을 만드는 명령과 그 결과 파일</td></tr>
+</tbody>
+</table></div>
+<p>명령에 쓸 수 있는 자리는 <code>%(src)s</code>(블록 내용을 저장한 파일), <code>%(base)s</code>(확장자 없는 출력 경로), <code>%(out)s</code>(출력 파일), <code>%(dir)s</code>(캐시 폴더)다. 명령은 원고가 있는 폴더에서 실행된다.</p>
+<p>펜스 줄의 옵션은 <code>tool</code>(필수)과 <code>crop</code>, <code>timeout</code>(도구 정의를 덮어쓴다)이 이 기능의 것이고, 나머지는 그림 속성으로 넘어간다 — <code>caption</code>, <code>label</code>, <code>width</code>, <code>height</code>, <code>place</code> 등 15장의 속성을 그대로 쓴다.</p>
+<p><strong>결과가 놓이는 방식.</strong></p>
+<ul>
+<li>그림 결과는 <code>![캡션](_external/…){속성}</code>으로 바뀌어 보통 그림과 똑같이 처리된다. 캡션이 있으면 번호 붙은 그림이 되고 <code>[F:라벨]</code>로 참조할 수 있다.</li>
+<li><code>text</code>는 출력을 그대로 보이는 블록으로, <code>markdown</code>은 이 방언의 원고로 보고 다시 변환해서, <code>tex</code>는 raw LaTeX으로 넣는다.</li>
+<li><code>math</code>는 출력을 <code>\ensuremath{…}</code>로 감싸 수식 모드로 넣는다(0.22.1). 계산한 숫자나 식을 수식 글꼴로 낼 때 쓴다. 출력이 여러 줄이면 한 줄로 잇고, 비어 있으면 오류다. <code>ndhmd2html</code>에서는 <code>\(…\)</code> 인라인 수식이 된다.</li>
+<li><strong>결과를 문장 안에 넣으려면 <code>||</code>로 잇는다</strong>(4.1). 블록의 결과는 원래 독립된 문단으로 들어가지만, 앞뒤 문단과 <code>||</code>로 이으면 한 문단이 된다.</li>
+</ul>
+<pre><code>값은
+||
+```external tool=calc
+print(6*7)
+```
+||
+이다.</code></pre>
+<p><code>math</code> 결과는 앞뒤 글과 공백 하나를 두고 이어진다(<code>값은 42 이다.</code>). <code>markdown</code> 결과는 보통 문단이므로 <code>||</code>의 원래 규칙대로 공백 없이 붙는다. <code>||</code> 바로 옆에는 변환기가 빈 줄을 끼우지 않으므로, 원고에 없는 줄바꿈이 생기지 않는다(0.22.2).</p>
+<p><strong>실행 규칙.</strong></p>
+<ul>
+<li><strong>기본은 실행하지 않는다.</strong> <code>--external</code> 옵션을 줘야 도구를 돌린다(LaTeX의 <code>--shell-escape</code>와 같은 약속이다). 옵션 없이 실행이 필요한 블록을 만나면 오류로 멈춘다.</li>
+<li>결과는 원고 폴더의 <code>_external/</code>에 <code>도구이름-내용해시</code> 이름으로 저장한다. 블록 내용이나 도구 정의가 바뀌어야 다시 돌린다. <strong>결과가 이미 있으면 <code>--external</code> 없이도 그것을 쓴다</strong> — 실행할 일이 없기 때문이다. 처음부터 다시 만들려면 <code>_external/</code>을 지운다.</li>
+<li><strong>실패하면 변환을 멈춘다.</strong> 등록되지 않은 도구, 실행 파일 없음, 0이 아닌 종료 코드, 시간 초과, 결과 파일 없음이 모두 오류다. <code>.tex</code>는 만들어지지 않는다.</li>
+<li>블록마다 프로세스를 따로 띄운다. 블록 사이에 변수나 상태는 이어지지 않는다.</li>
+<li>문법을 설명하려고 더 긴 펜스(백틱 4개) 안에 넣은 <code>external</code> 예제는 실행하지 않는다. <code>showexam</code> 안에 넣으면 원문과 실행 결과가 함께 나온다.</li>
+<li><code>--syncinfo</code>에서는 결과 전체가 여는 펜스 줄에 대응한다.</li>
+<li><code>--pandoc</code>, <code>--mmd</code> 모드에는 적용되지 않는다.</li>
+</ul>
+<p><strong><code>ndhmd2html</code>.</strong> 같은 규칙과 같은 캐시를 쓴다(<code>--external</code>도 같다). 글 결과는 그대로 들어가고 <code>tex</code>만 생략된다. 그림 결과가 PDF면 같은 이름의 PNG를 옆에 만들어 그것을 쓴다. 만드는 방법은 도구 정의의 <code>web</code> 명령이 먼저이고, 없으면 PySide6의 QtPdf, <code>pdftocairo</code>, <code>pdftoppm</code>, <code>gs</code> 가운데 쓸 수 있는 것을 차례로 쓴다. 어느 것도 없으면 오류로 멈춘다. PySide6는 있을 때만 쓰며, 이 스크립트를 PyInstaller로 묶어도 Qt가 딸려 들어가지 않게 동적으로 부른다.</p>
+<h2 id="id-11-리스트">11. 리스트<a class="anchor" href="#id-11-리스트" aria-label="링크">#</a></h2>
+<pre><code class="language-markdown">- **첫 항목**: 이 문장은 여러 줄에 걸쳐
+  이어서 작성해도 하나의 항목 본문으로
+  합쳐진다.
+- 둘째 항목
+  - 중첩 항목 A
+  - 중첩 항목 B
+    - 더 깊은 중첩
+
+1. 번호 리스트
+2. 다음 항목
+1) 괄호 스타일도 가능
+
+- 불릿 안에 번호를 넣어도 되고
+  1. 이렇게
+  2. 종류가 단계마다 바뀌어도 된다
+     - 이렇게도
+
+{용어} ::   설명 (권장 표기 — 중괄호 + 공백 둘 이상)
+{다른 용어} ::  다른 설명
+
+용어 :: 설명 (예전 표기, 아직 인정된다)</code></pre>
+<ul>
+<li>불릿 기호: <code>-</code>, <code>*</code>, <code>+</code>. 번호는 <code>1.</code> 또는 <code>1)</code> 둘 다 인식(번호 자체 값은 무시하고 LaTeX <code>enumerate</code>가 자동 채번).</li>
+<li><strong>항목 이어쓰기</strong>: 불릿/번호/<code>::</code> 마커가 없는 후속 줄은 직전 항목의 본문에 공백(또는 줄 끝 스페이스 두 칸이면 <code>\\</code>)으로 이어붙는다.</li>
+<li><strong>중첩</strong>: 더 깊게 들여쓴 마커 줄만 하위 리스트로 재귀 처리된다. 하위 리스트의 종류는 <strong>그 줄의 마커가 스스로 정한다</strong> — 불릿 안에 번호를, 번호 안에 불릿을, 어느 쪽에든 설명 리스트를 넣을 수 있고, 단계마다 종류가 바뀌어도 된다.</li>
+<li>한 단계 안에 서로 다른 마커가 섞이면 그 단계의 <strong>첫 항목</strong>이 환경을 정한다. 설명 리스트 안에 불릿 항목이 끼어들면 라벨 없는 <code>\item</code>으로 떨어진다.</li>
+<li>항목 첫 줄에 <code>{!옵션}</code>을 붙이면 리스트 전체의 <code>\begin{itemize}[옵션]</code>에 반영된다. <strong>느낌표(<code>!</code>)로 시작하는 중괄호만 옵션이다</strong> — <code>!</code> 없는 <code>{...}</code>는 옵션이 아니라 항목 본문의 일부이고, 다른 본문 속 중괄호와 같이 글자 그대로 찍힌다. <code>!</code>는 제거된다. 쉼표로 추가 텍스트를 붙이면(<code>{!1., \firmlist}</code>처럼) <code>\begin{enumerate}[1.] \firmlist</code> 식으로 뒤에 그대로 덧붙는다. 리스트의 <strong>첫 항목에서만</strong> 인식한다.</li>
+<li><strong><code>enumitem</code>처럼 옵션 자체가 쉼표로 여러 개 나열되는 패키지를 쓸 때는 대괄호 안에 들어갈 부분 전체를 큰따옴표로 감싼다.</strong> 그냥 <code>{!1., \firmlist}</code>처럼 첫 쉼표에서 나누면, <code>nosep,label={\arabic*}, ref=\arabic*</code>처럼 옵션 자체가 쉼표투성이인 경우 첫 쉼표에서 엉뚱하게 잘려 버린다. 예시는 아래를 볼 것.</li>
+</ul>
+<pre><code class="language-markdown">1. {!"nosep,label={\arabic*},ref=\arabic*",\tightlist} 항목</code></pre>
+<pre><code>\begin{enumerate}[nosep,label={\arabic*},ref=\arabic*] \tightlist</code></pre>
+<p>따옴표 <strong>안</strong>의 쉼표는 전혀 구분자로 보지 않고 통째로 대괄호 안에 들어간다. 닫는 따옴표 바로 뒤에 오는 쉼표부터가 그 뒤에 그대로 붙는 raw LaTeX이다. 옵션 블록 안에 <code>label={\arabic*}</code>처럼 중괄호가 중첩돼 있어도 정확히 짝을 맞춰 읽으므로 안전하다.</p>
+<ul>
+<li><strong>항목 안의 블록 요소는 지원하지 않는다.</strong> 항목 본문에 빈 줄을 두고 둘째 문단이나 코드 블록을 넣으면, 그 지점에서 리스트가 닫히고 블록이 밖으로 나온 뒤 새 리스트가 다시 열린다. 항목 본문은 언제나 인라인 한 덩어리다 (22장 참고).</li>
+<li><strong>문단이 우연히 리스트 마커처럼 보이는 글자로 시작할 때는 중괄호로 감싸서 리스트 인식을 피한다.</strong> <code>1. 소요 시간은...</code>처럼 문장이 숫자와 마침표로 시작하면, 의도와 무관하게 번호 리스트로 인식된다. 마커 글자를 중괄호로 감싸면(구두점은 중괄호 밖에) 리스트로 인식되지 않고 그 글자 그대로 찍힌다. 이 검사는 문단의 <strong>첫 줄에서만</strong>, 그리고 실제 마커(<code>UL_RE</code>/<code>OL_RE</code>)를 검사하기 <strong>전에</strong> 이루어진다 — 그래서 이스케이프를 벗겨낸 결과가 다시 리스트로 오인될 걱정은 없다. 마커 뒤에 진짜로 리스트 옵션 블록(<code>{!옵션}</code>)을 쓰는 것과는 전혀 다른 상황이라 서로 충돌하지 않는다 — 옵션 블록은 이미 인식된 마커 <strong>뒤에</strong> 오지만, 이 이스케이프는 마커 <strong>대신</strong> 줄 맨 앞에 온다.</li>
+</ul>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>쓰기</th><th>찍히는 것</th></tr>
+</thead>
+<tbody>
+<tr><td><code>{-}</code> / <code>{*}</code> / <code>{+}</code></td><td><code>-</code> / <code>*</code> / <code>+</code></td></tr>
+<tr><td><code>{1}.</code></td><td><code>1.</code></td></tr>
+<tr><td><code>{1})</code></td><td><code>1)</code></td></tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>설명 리스트에는 두 표기가 있다.</strong> 새로 쓰는 원고에는 중괄호형을 권한다.</li>
+</ul>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>표기</th><th>조건</th></tr>
+</thead>
+<tbody>
+<tr><td><code>{용어} ::  설명</code></td><td>줄 첫머리에 <code>{..}</code>, <code>::</code> 뒤에 공백/탭 <strong>두 개 이상</strong></td></tr>
+<tr><td><code>용어 :: 설명</code></td><td>아래 세 조건 (예전 표기)</td></tr>
+</tbody>
+</table></div>
+<ul>
+<li>중괄호형은 산문이 우연히 그 꼴이 될 일이 없어 <strong>오인식이 사실상 없다.</strong> 덤으로 용어에 공백이나 콜론을 넣을 수 있다 — <code>{C++의 std::vector} ::  동적 배열</code> 처럼. <code>mapping.yaml</code>에 <code>description_syntax: braces</code>를 적으면 중괄호형만 인정하고, 예전 표기를 만나면 <strong>경고를 찍는다.</strong> 조용히 문단으로 퇴화하지 않으므로 기존 원고를 옮길 때 자리를 찾을 수 있다.</li>
+<li><strong>예전 표기가 인식되는 조건</strong>은 셋이다. (1) <code>::</code> 앞에 공백이 하나 이상 있고, (2) <code>::</code>가 더 긴 콜론 덩어리(<code>:::</code> 등)의 일부가 아니며, (3) 용어가 비어 있지 않을 것. 그래서 <code>std::vector</code>, <code>12::30</code>, <code>:::{name}</code> 같은 것은 걸리지 않는다. 인라인 코드 스팬 안의 <code>::</code>도 무시하므로 <code>`용어 :: 설명`</code>처럼 문법 자체를 예로 드는 문장도 안전하다.</li>
+<li>그래도 <code>그는 말했다 :: 아니다</code>처럼 <strong>공백으로 둘러싸인 <code>::</code>가 산문에 들어가면</strong> 예전 표기로 오인된다. 이 경우는 문법상 구분할 방법이 없다. 그런 문장이 나올 만한 원고라면 <code>description_syntax: braces</code>로 아예 막는 편이 낫다.</li>
+<li><strong>설명 리스트도 첫 항목에 <code>{옵션}</code> 블록을 쓸 수 있다.</strong> itemize/enumerate와 똑같은 <code>{!옵션}</code> 문법(11장 위쪽 참고)을 설명 뒤(<code>::</code> 다음)에 쓰면 <code>\begin{description}[옵션]</code>으로 뽑힌다. Beamer에서 <code>\begin{description} [&lt;+-| alert@+&gt;]</code>처럼 오버레이 기본형을 설명 리스트 자체에 줘야 할 때 이 자리가 필요하다. 예시는 아래를 볼 것.</li>
+</ul>
+<pre><code class="language-markdown">{uncover} ::  {!"&lt;+-| alert@+&gt;"} 주어진 슬라이드에서 visible.
+{only} ::  주어진 슬라이드에서 show.</code></pre>
+<pre><code>\begin{description}[&lt;+-| alert@+&gt;]
+\item[uncover] 주어진 슬라이드에서 visible.
+\item[only] 주어진 슬라이드에서 show.
+\end{description}</code></pre>
+<p>옵션 블록은 그 항목의 <strong>설명에서 뽑혀 사라진다</strong> — 용어(<code>{uncover}</code>)에는 영향이 없다. 쉼표를 포함한 옵션을 통째로 넣고 싶으면 itemize/enumerate와 같은 큰따옴표 표기(<code>{!"a,b,c"}</code>)를 그대로 쓸 수 있다.</p>
+<ul>
+<li><strong>항목이 진짜 대괄호로 시작하면, 마커와 대괄호 사이의 공백 유무로 뜻이 갈린다.</strong> LaTeX은 <code>\item</code> 바로 뒤에 오는 <code>[...]</code>를 그 항목의 커스텀 라벨로 삼는다 — 편리한 기능이지만, 항목 본문을 정말로 대괄호로 시작하고 싶을 때는 훼방꾼이 된다(<code>\item \relax [...]</code>로 막는 것이 LaTeX 자체의 특이 케이스다). 이 방언은 마커에 대괄호를 붙여 쓰는지 띄어 쓰는지로 이 둘을 구분한다. 예시는 아래를 볼 것.</li>
+</ul>
+<pre><code class="language-markdown">-[정의] 이 대괄호는 라벨이 된다
+- [보통 텍스트] 이 대괄호는 그냥 본문이다</code></pre>
+<pre><code>\item [정의] 이 대괄호는 라벨이 된다
+\item \relax [보통 텍스트] 이 대괄호는 그냥 본문이다</code></pre>
+<p>이 판정은 <strong>인라인 처리를 다 마친 뒤 대괄호가 실제로 리터럴로 남아 있을 때만</strong> 적용된다 — <code>- [표시](url) 로 시작하는 항목</code>처럼 대괄호가 링크·각주 등 다른 문법으로 이미 소비됐다면 <code>\relax</code>는 끼어들 이유가 없다(문제 자체가 없으므로). 중첩 리스트에서도 같은 규칙이 그대로 적용된다. <code>enumerate</code>(번호 리스트)도 동일하다 — <code>\item[라벨]</code>은 번호 리스트에서도 똑같이 커스텀 라벨이기 때문이다.</p>
+<hr />
+<h2 id="id-12-인용구blockquote">12. 인용구(blockquote)<a class="anchor" href="#id-12-인용구blockquote" aria-label="링크">#</a></h2>
+<pre><code class="language-markdown">&gt; 인용문 첫 줄
+&gt; 인용문 둘째 줄</code></pre>
+<p>내부는 다시 <code>render_blocks</code>로 재귀 처리된다. <strong>단, 그냥 이어서 <code>&gt;</code> 줄만 쭉 쓰면 전부 하나의 문단으로 합쳐진다.</strong> 인용구 안에 리스트·헤딩 등 별개의 블록을 넣으려면, 일반 문단처럼 빈 줄로 구분해야 하는데 인용구 안에서는 그 “빈 줄”도 <code>&gt;</code> 단독 줄로 표시해야 한다.</p>
+<pre><code class="language-markdown">&gt; 첫 문단
+&gt;
+&gt; - 인용구 안 리스트 항목 A
+&gt; - 인용구 안 리스트 항목 B</code></pre>
+<p>(<code>&gt;</code> 뒤에 아무것도 없는 줄이 있어야 두 번째 문단/리스트가 별개 블록으로 분리된다. 이게 없으면 리스트 마커 <code>-</code>까지 그냥 평문 텍스트로 흡수되어 버린다.)</p>
+<h3 id="id-121-quote와-quotation">12.1. <code>quote</code>와 <code>quotation</code><a class="anchor" href="#id-121-quote와-quotation" aria-label="링크">#</a></h3>
+<p>감싸는 환경은 <strong>인용이 몇 문단인가</strong>에 따라 갈린다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>인용</th><th>환경</th></tr>
+</thead>
+<tbody>
+<tr><td>한 문단</td><td><code>quote</code></td></tr>
+<tr><td>두 문단 이상 (가운데에 <code>&gt;</code> 단독 줄이 있음)</td><td><code>quotation</code></td></tr>
+</tbody>
+</table></div>
+<p>LaTeX의 관례가 그렇다. <code>quote</code>는 문단 들여쓰기가 없어 짧은 한 문단 인용에 맞고, <code>quotation</code>은 각 문단의 첫 줄을 들여쓰므로 여러 문단짜리 긴 인용에 맞는다.</p>
+<pre><code class="language-markdown">&gt; 첫 문단이다.
+&gt;
+&gt; 둘째 문단이다.</code></pre>
+<pre><code>\begin{quotation}
+첫 문단이다.
+
+둘째 문단이다.
+\end{quotation}</code></pre>
+<ul>
+<li>판정은 <strong>처음과 끝의 빈 줄을 뺀</strong> 범위에서 한다. <code>&gt;</code> 단독 줄로 시작하거나 끝나는 인용은 여전히 <code>quote</code>다.</li>
+<li>진짜 빈 줄(<code>&gt;</code>도 없는 줄)은 블록 자체를 끊어 <strong>인용구 두 개</strong>가 된다. 한 인용 안의 문단 구분은 반드시 <code>&gt;</code> 단독 줄로 적어야 한다.</li>
+<li>환경 이름은 <code>mapping.yaml</code>에서 바꿀 수 있다. 둘을 같은 값으로 두면 이 구분이 사라진다.</li>
+</ul>
+<pre><code class="language-yaml">blockquote_env: quote
+blockquote_multi_env: quotation</code></pre>
+<hr />
+<h2 id="id-13-구분선">13. 구분선<a class="anchor" href="#id-13-구분선" aria-label="링크">#</a></h2>
+<pre><code class="language-markdown">---     ← \noindent\rule{\linewidth}{0.5pt} (기본값, mapping.yaml의 hr 로 변경 가능)
+
+***     ← \bigskip (기본값, mapping.yaml의 asterism 으로 변경 가능)</code></pre>
+<p>한 줄 전체가 <code>-</code>만 3개 이상이거나 <code>*</code>만 3개 이상이어야 한다.</p>
+<p><strong>문장 중간의 <code>---</code></strong>(독립된 줄이 아니라 다른 텍스트와 같은 줄에 섞여 있는, 앞뒤에 다른 대시가 붙지 않은 정확히 3개짜리)는 위 구분선과는 다르게 처리된다: 기본값 <code>\textemdash{}</code>로 치환된다(원고에서 em-dash 효과로 흔히 쓰이기 때문). 표준 LaTeX 명령이므로 <code>preamble</code>에 아무것도 정의하지 않아도 그대로 컴파일된다.</p>
+<pre><code class="language-markdown">이것은 문장 중간에---강조를 위해---쓰이는 경우다.
+→ 이것은 문장 중간에\textemdash{}강조를 위해\textemdash{}쓰이는 경우다.
+
+이건 en dash 스타일 -- (2개)나 ---- (4개 이상)는 건드리지 않는다.</code></pre>
+<p>세 가지(가로줄 <code>hr</code>, asterism <code>asterism</code>, 문장 중 대시 <code>mdash</code>) 모두 <code>mapping.yaml</code>로 바꿀 수 있다. <code>DEFAULT_CONFIG</code>에는 없고 코드에 폴백으로만 있으므로, <code>sample_mapping.yaml</code>의 해당 절(주석 참고)을 보고 필요한 것만 적으면 된다.</p>
+<pre><code class="language-yaml">hr: '\hrulefill'                      # 더 가벼운 가로줄
+asterism: '\fancybreak{* * *}'        # 별 세 개를 실제로 조판(memoir, preamble에 정의 필요)
+mdash: '\ndhmdash{}'                  # 자체 매크로(preamble에 정의 필요)</code></pre>
+<hr />
+<h2 id="id-14-표">14. 표<a class="anchor" href="#id-14-표" aria-label="링크">#</a></h2>
+<pre><code class="language-markdown">| 이름 | 나이 | 비고 |
+|:---|:---:|---:|
+| 철수 | 20 | 왼쪽/가운데/오른쪽 정렬 |
+| 영희 | 21 | 두 번째 줄이 구분선(`---`)이어야 표로 인식됨 |</code></pre>
+<ul>
+<li>첫 줄=헤더, 둘째 줄=정렬 구분선(<code>:---</code>, <code>:---:</code>, <code>---:</code>, <code>---</code>), 그 다음이 본문 행. <code>\begin{tblr}{정렬}...\end{tblr}</code> (booktabs 스타일 <code>\toprule</code> / <code>\midrule</code> / <code>\bottomrule</code> 사용, <code>tabularray</code> 패키지 필요)로 변환된다.</li>
+<li>열 개수는 <strong>헤더 행의 열 개수</strong>로 고정되며, 본문 행이 모자라면 빈 칸으로 채우고 넘치면 잘린다.</li>
+<li><strong>긴 셀은 자동으로 줄바꿈된다.</strong> 표의 추정 폭이 줄 폭을 넘을 것 같으면 폭이 큰 열(대략 한글 8자 이상)만 <code>l/c/r</code> 대신 tabularray의 <code>X[l]</code>/<code>X[c]</code>/ <code>X[r]</code>(폭 비율을 <code>co=</code>로 준다)로 바꿔서 그 열 안에서 줄바꿈되게 한다. 추정 폭은 한글·CJK 한 글자를 2, 그 밖을 1로 세는 근사값이고, 이 값이 기준 <code>tablewrap</code>(기본 70 ≈ 한글 35자) 이하인 표는 <strong>전혀 바뀌지 않는다.</strong> <code>X</code> 열이 하나라도 있으면 tabularray가 표를 줄 폭 전체로 늘리기 때문에, 넘칠 것 같은 표에만 적용하는 것이다. 폭이 큰 열이 없는데 짧은 열만 많아 넘치는 표는 이 규칙으로 해결되지 않는다(raw <code>tblr</code>로 직접 짠다). <code>tablewrap</code>은 <strong>mapping 키</strong>다(front matter가 아니다): <code>mapping.yaml</code> 또는 <code>mappingrule:</code>에서 <code>tablewrap: 60</code>처럼 바꾸고, <code>0</code>/<code>false</code>면 끈다. 이 규칙은 파이프 표에만 적용되며 raw <code>tblr</code>/<code>tabular</code>는 건드리지 않는다.</li>
+<li><strong>표 속성 줄 — 쪽나눔 표(<code>longtblr</code>).</strong> 마지막 행 <strong>바로 다음 줄</strong>(빈 줄 없이)에 <code>{…}</code>만 쓴 줄을 두면 그 표의 속성이 된다.</li>
+</ul>
+<pre><code class="language-markdown">| 구분 | 두보 | 이하 |
+|:---:|:---:|:---:|
+| … | … | … |
+{env=long, caption="두 시인의 비교", label=tbl:cmp}</code></pre>
+<p><code>env=long</code>(또는 <code>longtblr</code>)이면 <code>\begin{longtblr}[caption={…},label={…}] {colspec={…},rowhead=1}</code>로 나가서 표가 쪽을 넘어 이어지고, 머리글 행이 쪽마다 되풀이된다(<code>rowhead=0</code>으로 끔). <code>caption</code>/<code>label</code>은 <code>longtblr</code> 자신의 선택 인자라서 float 래퍼(<code>:::{table}</code>) 없이도 캡션과 <code>[#tbl:cmp]</code> 참조가 된다. <code>env</code>를 안 주거나 <code>tblr</code>이면 지금처럼 <code>tblr</code>이고, 이때 <code>caption</code>/<code>label</code>은 쓸 곳이 없어 경고하고 무시한다(캡션이 필요하면 <code>:::{table}</code>). 알 수 없는 키도 경고한다. 속성 줄과 표 사이에 빈 줄을 두면 속성이 아니라 평범한 문단이다. <code>longtblr</code>는 쪽 나눔을 맞추려 두 번 컴파일되어야 하는데 <code>--latexmk</code>나 ksruncltex는 알아서 되풀이한다. 위 <code>tablewrap</code>의 <code>X</code> 열 자동 줄바꿈도 그대로 적용된다. 본문 앞뒤 간격을 <code>\AddToHook{env/tblr/before}{…}</code>로 잡아 둔 문서라면 <code>longtblr</code>용으로 <code>env/longtblr/before</code>/<code>after</code> 훅도 같이 걸어야 간격이 맞는다(기본 헤더에는 그런 훅이 없다). - 셀 안에 세로줄 문자를 그대로 쓰려면 <code>\|</code>로 이스케이프한다. 일반 마크다운과 같은 규칙이고, 구분자로 쓰이지 않은 채 그 자리에 <code>|</code>가 남는다. - 이미 직접 짠 raw <code>tabular</code>/<code>tblr</code> 등은 8장의 raw 환경 규칙으로 그대로 보호되어 통과한다.</p>
+<h3 id="id-141-grid-표-병합-셀과-여러-줄-셀">14.1. grid 표 — 병합 셀과 여러 줄 셀<a class="anchor" href="#id-141-grid-표-병합-셀과-여러-줄-셀" aria-label="링크">#</a></h3>
+<p>pandoc의 grid table도 읽는다. 셀 병합(행·열)과 여러 줄 셀이 필요할 때 쓴다. 파이프 표와 달리 셀 안에 <code>|</code>를 이스케이프 없이 쓸 수 있다.</p>
+<pre><code class="language-markdown">+---------------------+-----------------------+
+| Location            | Temperature 1961-1990 |
+|                     | in degree Celsius     |
+|                     +-------+-------+-------+
+|                     | min   | mean  | max   |
++=====================+=======+=======+=======+
+| Antarctica          | -89.2 | N/A   | 19.8  |
++---------------------+-------+-------+-------+</code></pre>
+<ul>
+<li><strong>인식:</strong> 표의 첫 줄이 <code>+----+----+</code> 꼴이면 grid 표 후보다. 앞뒤에 빈 줄이 필요하다(파이프 표와 같다).</li>
+<li><strong>머리글·바닥글:</strong> 첫 <code>=</code> 줄 위쪽이 머리글(여러 줄 가능)이고, 두 번째 <code>=</code> 줄이 있으면 그 아래가 바닥글이다(<code>\midrule</code>로 나뉜다). <code>=</code> 줄이 없으면 머리글이 없는 표다.</li>
+<li><strong>정렬:</strong> 머리글 구분선(<code>=</code> 줄)의 콜론으로 정한다 — <code>+:====+</code>(왼쪽), <code>+:===:+</code>(가운데), <code>+====:+</code>(오른쪽). 머리글이 없으면 맨 윗줄의 콜론을 본다. pandoc과 같은 규칙이다.</li>
+<li><strong>선:</strong> <code>-</code> 줄을 모두 긋지는 않는다. 파이프 표와 같이 booktabs 세 줄(위, 머리글 아래, 아래)만 긋고, 머리글 안쪽의 부분 구분선(위 예의 <code>Temperature</code> 아래)만 <code>\cmidrule</code>로 옮긴다.</li>
+<li><strong>셀 안의 글:</strong> 줄은 공백으로 합쳐지고, 빈 줄은 문단 나눔(<code>\par</code>)이 된다. 셀 안에는 평문과 인라인 서식만 쓸 수 있다 — 리스트·인용 등 블록 요소는 아직 해석하지 않는다.</li>
+<li><strong>열 너비:</strong> 기본은 <strong>자연 너비</strong>(정렬 글자만)이며, 파이프 표와 같이 넘칠 열만 <code>X</code>로 바꾸는 <code>tablewrap</code>이 적용된다. pandoc처럼 테두리의 대시 수 비율로 모든 열을 <code>X[정렬,co=폭]</code>로 두려면 표 바로 뒤 줄에 <code>{widths=dash}</code>를 쓴다.</li>
+<li><strong>속성 줄:</strong> 파이프 표와 같다. <code>{env=long, caption=…, label=…, rowhead=N}</code>. <code>rowhead</code>의 기본값은 머리글 줄 수다. <code>widths</code>는 grid 표에서만 쓴다.</li>
+<li><strong>한글:</strong> 열 경계는 문자 번호가 아니라 <strong>화면 칸</strong>(한글 2칸)으로 맞춘다. 고정폭 에디터에서 눈으로 맞춘 표가 그대로 읽힌다. 화면 칸으로 해석되지 않으면 한글을 1칸으로 센 표도 읽는다.</li>
+<li><strong>오류:</strong> 모서리가 닫히지 않았거나 <code>|</code> 위치가 위아래 줄과 어긋난 표는 <code>--lint</code>가 오류로 알리고(몇 번째 줄인지 포함), 변환하면 표가 아니라 평범한 문단이 된다(경고가 함께 나온다).</li>
+</ul>
+<hr />
+<h2 id="id-15-그림">15. 그림<a class="anchor" href="#id-15-그림" aria-label="링크">#</a></h2>
+<pre><code class="language-markdown">![캡션 텍스트](path/to/image.png){width=0.75\linewidth, label=fig:foo, place=htbp}
+
+![](path/to/image.png)   ← 캡션·라벨 없이 \includegraphics 만 출력
+
+![""](path/to/image.png) ← figure 환경으로 감싸되 \caption 은 없음</code></pre>
+<ul>
+<li><code>{...}</code> 안은 쉼표로 구분된 <code>key=value</code> 또는 단독 키. <code>label</code>, <code>place</code>, <code>align</code> 셋은 특별 취급되어 각각 <code>\label{}</code>, <code>\begin{figure}[place]</code>의 배치 옵션, 그림 앞의 정렬 명령으로 빠지고, <strong>나머지는 모두 <code>\includegraphics[...]</code>의 옵션으로 들어간다</strong>. <code>place</code> 기본값은 <code>htbp</code>, <code>align</code> 기본값은 <code>\centering</code>이다.</li>
+<li><code>align</code> 값은 raw로 나가므로 LaTeX 명령을 그대로 적는다 (<code>align="\raggedleft"</code>). <code>align=""</code>처럼 빈 값을 주면 정렬 명령 자체가 빠진다. 17.1의 <code>:::{figure}</code> 환경과 같은 규칙이다.</li>
+<li>특별 취급되는 셋 말고는 전부 <code>\includegraphics</code>로 넘어간다는 점을 기억할 것. graphicx가 모르는 키를 주면 <code>Package keyval Error: ... undefined</code>로 컴파일이 깨진다.</li>
+<li>대체텍스트와 <code>label</code>에 따라 세 갈래로 갈린다.</li>
+</ul>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>원고</th><th>출력</th></tr>
+</thead>
+<tbody>
+<tr><td><code>![](x.jpg)</code></td><td><code>\includegraphics</code>만. 플로트로 감싸지 않는다</td></tr>
+<tr><td><code>![텍스트](x.jpg)</code></td><td><code>figure</code> 환경 + <code>\caption{텍스트}</code></td></tr>
+<tr><td><code>![""](x.jpg)</code></td><td><code>figure</code> 환경, <code>\caption</code> 없음</td></tr>
+</tbody>
+</table></div>
+<ul>
+<li>세 번째가 <strong>캡션 없는 그림 플로트</strong>를 만드는 방법이다. 대체텍스트가 빈 따옴표 한 쌍(<code>""</code>, <code>''</code>, <code>“”</code>, <code>‘’</code>)뿐일 때만 적용된다. 따옴표 안에 무엇이든 들어 있으면 그냥 캡션이다.</li>
+<li><strong>따옴표는 캡션 구분자가 아니다.</strong> <code>!["텍스트"](x.jpg)</code>는 따옴표까지 포함한 <code>\caption{``텍스트''}</code>가 된다(17장의 스마트 따옴표 변환을 거친다). 특별 취급되는 것은 속이 완전히 빈 따옴표 쌍뿐이다.</li>
+<li><strong>대체텍스트 자리에 링크를 하나 중첩할 수 있다.</strong> <code>![[표시](url)](x.jpg)</code>처럼 쓰면 그림 캡션 자체가 링크가 된다(예시는 아래). 대괄호를 한 겹까지만 품으므로 그 이상 중첩하면 인식되지 않는다. <code>url</code> 안의 <code>%</code>는 자동으로 이스케이프된다(16장 참고). 이 표기는 대체텍스트 자리에서만 동작하고, <code>caption=</code> 속성 값 안에서는 <code>[표시](url)</code>를 다시 처리해 주지 않는다 — 속성 값은 그 환경의 raw 텍스트라서, 링크가 필요하면 <code>\href{...}{...}</code>를 직접 적어야 한다.</li>
+<li><strong><code>caption=</code> 속성과 대체텍스트는 다른 것을 뜻한다.</strong> 대체텍스트는 <code>figure</code>로 띄우고, <code>caption=</code>은 띄우지 않고 그 자리에 두면서 캡션만 단다(dry caption). 아래 표 참고. <code>\captionof</code>는 <code>capt-of</code>(또는 <code>caption</code>) 패키지가 주며, 번호와 <code>\label</code>은 떠다니는 그림과 같은 흐름을 이어받는다. 로딩은 저자 몫이다. 
+<pre><code class="language-markdown">![[원주율](https://ko.wikipedia.org/wiki/%EC%9B%90%EC%A3%BC%EC%9C%A8)](pi.png)</code></pre></li>
+</ul>
+<pre><code>\begin{figure}[htbp]
+\centering
+\includegraphics{pi.png}
+\caption{\href{https://ko.wikipedia.org/wiki/%EC%9B%90%EC%A3%BC%EC%9C%A8}{원주율}}
+\end{figure}</code></pre>
+<ul>
+<li><strong><code>inline</code></strong> 단독 키를 주면 <code>\inlinegraphics</code>로 나간다. 줄글 중간에 작은 그림을 끼울 때 쓰며 <code>inlinegraphicx</code> 패키지가 필요하다(로딩은 저자 몫). <code>inlinespec=</code> 값은 그 명령의 대괄호 인자로 <strong>그대로</strong> 넘어가고, 없으면 다른 속성들이 그 자리에 들어간다. 명령 이름은 <code>mapping.yaml</code>의 <code>inline_graphics_cmd</code>로 바꾼다.</li>
+<li><strong><code>wrap</code></strong> 단독 키를 주면 떠다니는 <code>figure</code> 대신 본문이 그림을 둘러싸는 배치가 된다(<code>wrapstuff</code> 패키지 필요 — 로딩은 저자 몫).</li>
+</ul>
+<pre><code class="language-markdown">![](x.png){wrap, wrapspec="type=figure,width=5cm", caption="test",
+           label="fig:wrap", width=3cm, align="\centering"}
+본문이 이어진다. 그림 줄 다음에 빈 줄을 두지 않는다.</code></pre>
+<pre><code>\begin{wrapstuff}[type=figure,width=5cm]
+\centering
+\includegraphics[width=3cm]{x.png}
+\caption{test}
+\label{fig:wrap}
+\end{wrapstuff} 본문이 이어진다. ...</code></pre>
+<ul>
+<li><code>wrapspec=</code> 값은 환경의 대괄호 인자로 <strong>그대로</strong> 넘어간다. 이 스크립트가 해석하지 않으므로 환경이 무엇을 받든 저자가 정한다. 값에 쉼표가 들어가므로 반드시 따옴표로 감쌀 것.</li>
+<li>이 배치는 <strong>환경이 문단 첫머리에 와야</strong> 한다. 원고에서 그림 줄 바로 다음에 빈 줄 없이 본문을 이어 쓰면 그렇게 된다 — 그림 마크업은 인라인으로 처리되어 뒤따르는 본문과 같은 문단에 남기 때문이다.</li>
+<li><code>wrap</code>일 때 <code>place</code>는 쓰이지 않는다(떠다니지 않으므로). 환경 이름은 <code>mapping.yaml</code>의 <code>wrap_env</code>로 바꿀 수 있다.</li>
+<li><strong><code>href=</code></strong> 를 주면 그림 자체에 링크가 걸린다(아래 참고). 캡션이나 라벨이 아니라 <code>\includegraphics</code> 만 감싼다. <code>figure</code>로 감싸질 때도, <code>wrap</code> 배치일 때도 마찬가지다. URL에 <code>%</code>, <code>#</code>, <code>&amp;</code>가 들어가도 hyperref가 알아서 다루므로 그대로 적으면 된다. <code>\href</code> 는 hyperref가 주므로 로딩은 저자 몫이다(기본 헤더에 넣어두면 편하다).</li>
+<li><code>\includegraphics</code>로 넘어가는 옵션 중 <code>center</code> 같은 것은 graphicx가 아니라 <code>adjustbox</code>(<code>\usepackage[export]{adjustbox}</code>)가 제공한다. 역시 저자 몫이다.</li>
+<li>캡션 없이 <code>label</code>만 주면 <code>\label</code>이 번호를 이어받지 못해 <code>\ref</code>가 엉뚱한 값(직전 카운터 값)을 낸다. 경고를 찍는다. 띄우지 않으면서 참조하고 싶으면 <code>caption=</code>을 함께 줄 것 — <code>\captionof</code>가 번호를 맡는다.</li>
+<li>캡션 텍스트는 재귀적으로 <code>process_inline</code>을 다시 거치므로 캡션 안에서도 굵게·기울임·따옴표 변환 등이 모두 정상 동작한다.</li>
+</ul>
+<p><strong>캡션과 띄우기:</strong></p>
+<p><strong>띄울지 말지는 대체텍스트 자리로만 정한다.</strong> 대괄호가 비어 있으면 <code>{}</code> 안에 무엇을 적든 <code>figure</code>로 감싸지 않는다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>원고</th><th>결과</th></tr>
+</thead>
+<tbody>
+<tr><td><code>![캡션](x.png)</code></td><td><code>figure</code> 환경 + <code>\caption</code></td></tr>
+<tr><td><code>![""](x.png)</code></td><td><code>figure</code> 환경, 캡션 없음</td></tr>
+<tr><td><code>![](x.png){caption="캡션"}</code></td><td>그 자리에 + <code>\captionof{figure}</code></td></tr>
+<tr><td><code>![](x.png)</code></td><td><code>\includegraphics</code>만</td></tr>
+</tbody>
+</table></div>
+<pre><code class="language-markdown">![](myfig.png){caption="dry caption", label=fig:d}</code></pre>
+<pre><code>\includegraphics{myfig.png}
+\captionof{figure}{dry caption}
+\label{fig:d}</code></pre>
+<p><strong>줄글 중간의 작은 그림:</strong></p>
+<pre><code class="language-markdown">![](smallfig.png){inline, inlinespec="scale=1.5,strut={()}"}</code></pre>
+<pre><code>\inlinegraphics[scale=1.5,strut={()}]{smallfig.png}</code></pre>
+<p><strong>그림에 링크 걸기:</strong></p>
+<pre><code class="language-markdown">![](image.png){scale=.3, href="https://ctan.org"}</code></pre>
+<pre><code>\href{https://ctan.org}{\includegraphics[scale=.3]{image.png}}</code></pre>
+<h3 id="id-151-그림-내려받기와-형식-변환">15.1. 그림 내려받기와 형식 변환<a class="anchor" href="#id-151-그림-내려받기와-형식-변환" aria-label="링크">#</a></h3>
+<p>세 가지를 서로 다른 스위치로 나눠 두었다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>걱정</th><th>스위치</th><th>기본</th></tr>
+</thead>
+<tbody>
+<tr><td>네트워크 접근</td><td><code>--fetch-images</code></td><td>꺼짐</td></tr>
+<tr><td>형식 변환</td><td>없음 (Pillow가 있으면 한다)</td><td>켜짐</td></tr>
+<tr><td>애니메이션</td><td><code>--animation[=N]</code></td><td>꺼짐</td></tr>
+</tbody>
+</table></div>
+<p>다운로드만 옵트인인 이유는 재현성이 아니라 <strong>보안</strong>이다. 남이 준 <code>.md</code>를 변환하는 것만으로 임의 주소에 요청이 나가면 곤란하다. 반면 형식 변환은 파일 하나를 더 만드는 일일 뿐이고, 로컬 <code>.webp</code>를 쓴 사람이 URL도 안 쓰면서 다운로드 옵션을 켜야 하는 것은 이상하다.</p>
+<h4 id="url-그림">URL 그림<a class="anchor" href="#url-그림" aria-label="링크">#</a></h4>
+<pre><code class="language-bash">python3 ndhmd4tex.py 회람.md --pdfxe --fetch-images</code></pre>
+<p>평소 명령에 플래그 하나만 더하면 된다. 받은 파일은 원고 옆 <code>_images/</code>에 <strong>URL 해시 + 실제 확장자</strong>로 저장된다. URL 마지막 조각을 쓰지 않는 이유는 <code>330px-...</code> 같은 이름이 출처마다 겹치고, 퍼센트 인코딩과 유니코드가 파일 이름이 되면 그것대로 골칫거리이기 때문이다.</p>
+<ul>
+<li>이미 받아둔 것이 있으면 네트워크를 쓰지 않는다. <strong>두 번째 빌드부터는 오프라인에서도 된다.</strong></li>
+<li><strong><code>--fetch-images</code> 없이도 <code>_images/</code>에 받아둔 것이 있으면 그것을 쓴다.</strong> 이 옵션이 막으려는 것은 바깥으로 나가는 요청이지, 이미 손에 있는 파일을 쓰는 일이 아니다. 그래서 한 번 받아둔 뒤로는 평소 명령 그대로 빌드된다.</li>
+<li>확장자는 <code>Content-Type</code>을 먼저 믿는다. URL 경로의 확장자는 없거나 틀릴 수 있고, 404 페이지가 200으로 오기도 한다.</li>
+<li><code>--fetch-images</code>도 없고 받아둔 것도 없으면 그 그림만 원문 그대로 두고 오류를 알린다. 변환 자체는 계속된다.</li>
+</ul>
+<p><code>\graphicspath</code>로 위치를 조절할 수 있으니 <code>_images/</code>가 거슬리면 옮겨도 된다.</p>
+<p>경로는 <strong>언제나 슬래시로</strong> 내보낸다. LaTeX 소스의 경로 구분자는 운영체제와 무관하게 <code>/</code>이고, 윈도우에서 역슬래시가 섞여 나가면 <code>_images\dn.jpg</code>의 <code>\d</code>가 정의되지 않은 명령으로 읽혀 컴파일이 깨진다.</p>
+<h4 id="형식-변환">형식 변환<a class="anchor" href="#형식-변환" aria-label="링크">#</a></h4>
+<p>LaTeX이 그대로 받는 것은 <code>.pdf</code> <code>.png</code> <code>.jpg</code> <code>.eps</code> <code>.bmp</code> 정도다. (<code>.bmp</code>가 되는 것은 실측 결과다 — 흔한 오해와 달리 xelatex은 받는다.)</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>형식</th><th>처리</th></tr>
+</thead>
+<tbody>
+<tr><td><code>.tif</code> <code>.tiff</code> <code>.webp</code> <code>.gif</code></td><td>Pillow로 PNG 변환</td></tr>
+<tr><td><code>.svg</code> <code>.ai</code> <code>.psd</code></td><td>받아만 두고 알림</td></tr>
+</tbody>
+</table></div>
+<p>변환본은 <strong>원본 옆에 나란히</strong> 만든다. <code>사진.webp</code> → <code>사진-webp.png</code>. 원본 확장자를 이름에 남기는 것은 <code>p.webp</code>와 <code>p.tiff</code>가 둘 다 <code>p.png</code>가 되어 서로 덮어쓰는 것을 막기 위해서다. 원본을 지우지 않으므로 나중에 더 나은 도구로 다시 변환할 여지가 남고, 링크가 죽어도 복구할 수 있다.</p>
+<p><strong>Pillow는 선택적 의존성이다.</strong> 없어도 도구는 정상 동작하며, 변환이 필요한 형식을 만났을 때만 설치를 안내한다. 필요하면 <code>pip install Pillow</code>.</p>
+<p><code>.svg</code>는 벡터라 래스터화가 손해이고, PDF로 바꾸려면 inkscape나 rsvg-convert가 있어야 하는데 그 보장이 없다. 그래서 변환하지 않고 파일만 손에 쥐어준다 — PDF로 바꾸든, <code>\usepackage{svg}</code>와 <code>-shell-escape</code>를 쓰든, 다른 그림으로 바꾸든 저자가 고르면 된다.</p>
+<h4 id="애니메이션-내세울-것은-못-된다">애니메이션 (내세울 것은 못 된다)<a class="anchor" href="#애니메이션-내세울-것은-못-된다" aria-label="링크">#</a></h4>
+<p><strong>재생되는 뷰어가 거의 없다.</strong> <code>animate</code> 패키지는 JavaScript를 쓰므로 Adobe Acrobat이나 PDF-XChange 정도에서만 움직이고, Preview·Skim·Okular·브라우저 내장 뷰어에서는 첫 프레임만 보인다. 그것을 알고 쓸 것.</p>
+<pre><code class="language-bash">python3 ndhmd4tex.py 글.md --animation      # 앞에서부터 40 프레임
+python3 ndhmd4tex.py 글.md --animation=12   # 앞에서부터 12 프레임
+python3 ndhmd4tex.py 글.md --animation=all  # 전부 (파일 수는 감당할 것)</code></pre>
+<pre><code>\animategraphics[width=3cm]{10}{anim-gif-frames/}{0}{4}</code></pre>
+<ul>
+<li>프레임은 <code>원본이름-gif-frames/</code>에 <code>0.png</code>부터 저장된다. 프레임 하나가 파일 하나이므로 30프레임 GIF 세 개면 90개가 쌓인다. 기본 상한 40은 그래서 있다.</li>
+<li><strong>프레임별 지연은 살릴 수 없다.</strong> GIF는 프레임마다 지연이 다를 수 있는데 <code>\animategraphics</code>는 단일 fps만 받는다. 값은 <code>mapping.yaml</code>의 <code>animation_fps</code>로 바꾼다(기본 10).</li>
+<li>앞에서부터 자른다. 고르게 솎으면 루프는 온전해지지만 타이밍이 한 번 더 뭉개지는데, 이미 fps로 한 번 뭉갠 뒤다.</li>
+<li><code>--animation</code> 없이 애니메이션 GIF를 만나면 첫 프레임만 쓰고 그렇게 알린다.</li>
+<li><strong>이미 뽑아둔 프레임은 재활용한다.</strong> 필요한 개수만큼 이미 있으면 다시 인코딩하지 않는다. <code>--animation=all</code>처럼 상한을 늘려 부족분이 생기면 처음부터 다시 뽑고, 상한을 줄이면 이미 있는 것을 그대로 쓴다(그 폴더에 남는 초과분 프레임 파일은 무해하다). 원본 GIF를 바꿨는데 새 버전이 우연히 프레임 수까지 같다면 갱신되지 않으니, 그럴 땐 <code>*-frames/</code> 폴더를 지우고 다시 실행할 것.</li>
+</ul>
+<h3 id="id-156-참조로-여러-번-쓰기-tagged-reference">15.6. 참조로 여러 번 쓰기 — tagged reference<a class="anchor" href="#id-156-참조로-여러-번-쓰기-tagged-reference" aria-label="링크">#</a></h3>
+<p>같은 그림(또는 링크)을 여러 번 가리켜야 할 때, MultiMarkdown식으로 경로/URL을 한 곳에 정의해 두고 짧은 라벨로 재사용할 수 있다.</p>
+<pre><code class="language-markdown">![그림 설명][myfig]
+...
+[myfig]: figurename.png width=3cm,respectratio
+
+자세히 알고 싶으면 [][Markdown]을 보라.
+...
+[Markdown]: https://en.wikipedia.org/wiki/MultiMarkdown</code></pre>
+<pre><code>\begin{figure}[htbp]
+\centering
+\includegraphics[width=3cm,respectratio]{figurename.png}
+\caption{그림 설명}
+\end{figure}
+...
+자세히 알고 싶으면 \url{https://en.wikipedia.org/wiki/MultiMarkdown}을 보라.</code></pre>
+<ul>
+<li><strong>정의는 <code>[라벨]: 값</code> 한 줄</strong>이다(여러 줄로 이어 쓰는 건 지원하지 않는다 — 그림 경로+속성이나 URL이 한 줄을 넘길 일은 실무에서 거의 없다고 보았다. 여러 줄로 쓰면 둘째 줄부터는 그냥 평범한 본문으로 남는다 — 조용히 사라지는 게 아니라 화면에 그대로 보이므로 실수를 바로 알아챌 수 있다). 문서 어디에나(참조보다 앞이든 뒤든) 둘 수 있고, 렌더링되는 본문에서는 빠진다(각주 정의와 같은 대우).</li>
+<li><strong>사용처마다 다른 <code>label</code>/속성은 참조 뒤 <code>{…}</code>로 준다.</strong> 정의 줄의 속성은 “이미지의 공유 기본값”(경로, <code>width</code> 등)이고, <code>]</code> 바로 뒤에 붙인 <code>{…}</code>는 “이 그림 인스턴스만의 값”이다 — <code>![캡션](x.png){…}</code>와 같은 규칙이다(띄어 쓰면 속성이 아니라 본문).</li>
+</ul>
+<pre><code class="language-markdown">![첫 사용][myfig]{label=fig:a}
+![다른 곳][myfig]{label=fig:b,width=60pt}
+
+[myfig]: mmd.png width=100pt</code></pre>
+<p>같은 키는 사용처가 이긴다. 값을 비우면(<code>{label=}</code>) 정의에 있던 그 속성이 지워진다(<code>align</code>만은 빈 값이 “정렬 명령 없음”이라는 뜻이라 그대로 덮어쓴다). <code>\label</code>은 그림 하나에 하나뿐이어야 하므로, 정의 줄에 <code>label=</code>을 두면 그 정의를 <strong>한 번만</strong> 쓸 때만 안전하다 — 두 번 이상 쓰면서 사용처가 <code>label</code>을 따로 주지 않으면 <code>\label</code> 중복(LaTeX의 “multiply defined”)이 되므로 경고한다. 참조의 이름(<code>myfig</code>)은 정의를 찾는 키일 뿐 LaTeX 라벨과는 별개다. 링크 참조(<code>[text][라벨]</code>)에는 속성이 없으므로 해당 없다. - <strong>그림 참조와 링크 참조는 라벨 풀을 공유한다.</strong> <code>[라벨]: 값</code> 하나를 이미지로도 링크로도 쓸 수 있다 — 어느 쪽으로 해석할지는 참조하는 쪽(<code>![alt][라벨]</code>인지 <code>[text][라벨]</code>인지)이 정한다. 그림 정의의 값은 “경로 + (있으면) 속성”(<code>figurename.png width=3cm,respectratio</code>, 15.1의 <code>{width=...}</code> 속성과 같은 문법을 중괄호 없이 그대로 쓴다), 링크 정의의 값은 URL 하나다. - <strong>대괄호 한 겹짜리 shortcut(<code>[Markdown]</code> 단독)은 일부러 지원하지 않는다.</strong> 산문에서 강조나 메모 삼아 대괄호 하나만 쓰는 경우와 구별할 방법이 없어서, 이 방언의 “명시적 문법만 인정한다”는 태도와 어긋난다. 대신 <strong>대괄호 두 겹</strong>(<code>][</code> 시퀀스)만 받는다 — <code>[][라벨]</code>(표시 텍스트 비움) 또는 <code>[텍스트][라벨]</code>. 이 시퀀스는 일반 산문에 사실상 나타나지 않아 모호함이 없고, <code>[[용어]]</code>(색인)·<code>[^id]</code>(각주)·<code>[#id]</code>(상호참조) 어느 것과도 시작 문자가 달라 충돌하지 않는다. - <code>[][라벨]</code>(표시 텍스트를 비움)은 <code>[](url)</code>과 완전히 같은 규칙을 따른다 — 링크라면 <code>\url{...}</code>, 그림이라면 캡션 없는 삽입이 된다. 매번 URL이나 파일명을 두 번 타이핑하지 않아도 되는 게 이 문법의 핵심이다. - 정의되지 않은 라벨을 참조하면(오타 등) 오류로 멈추지 않고 <strong>경고를 띄운 뒤 원문 그대로 남긴다</strong> — <code>![][없는라벨]</code>이라고 썼다면 결과물에도 <code>![][없는라벨]</code>이 그대로 나온다. 컴파일 자체를 막지 않으면서도 눈에 띄게 알려주려는 절충이다.</p>
+<hr />
+<h2 id="id-16-링크-각주-상호참조-색인">16. 링크 / 각주 / 상호참조 / 색인<a class="anchor" href="#id-16-링크-각주-상호참조-색인" aria-label="링크">#</a></h2>
+<h3 id="id-161-아무-데나-라벨-id">16.1. 아무 데나 라벨 — <code>{#id}</code><a class="anchor" href="#id-161-아무-데나-라벨-id" aria-label="링크">#</a></h3>
+<p><code># 제목 {label=...}</code>(3장)과 <code>![캡션](x){label=...}</code>(15장)은 각각 헤딩과 그림 전용 속성 문법이다. 그런데 리스트 항목이나 각주처럼 속성 문법 자체가 없는 자리에 라벨을 달고 싶을 때가 있다. <code>{#id}</code>는 그 자리를 메운다 — <strong>인라인 어디서든</strong> <code>\label{id}</code>로 바뀐다.</p>
+<pre><code class="language-markdown">- 항목 하나{#item:a}
+- 항목 둘
+
+각주 내용도{#fn:a} 라벨을 받는다.
+
+[^f1]: 각주 정의 안에서도{#fn:b} 된다.
+
+참조: [#item:a]</code></pre>
+<pre><code>\begin{itemize}
+\item 항목 하나\label{item:a}
+\item 항목 둘
+\end{itemize}
+
+각주 내용도\label{fn:a} 라벨을 받는다.
+...
+참조: \ref{item:a}</code></pre>
+<ul>
+<li>라벨 이름은 영숫자·<code>:</code>·<code>_</code>·<code>-</code>·<code>.</code> 만 받는다. 그 형식을 벗어나면(공백 등) 라벨로 바뀌지 않고 <code>{#...}</code> 글자 그대로 남는다 — 오류 없이 조용히 통과하므로, 라벨이 안 걸린다면 이름에 허용되지 않은 문자가 있는지부터 볼 것.</li>
+<li>코드 스팬 안(<code>`{#not:a}`</code>)은 건드리지 않는다.</li>
+<li>헤딩과 그림에는 이미 전용 문법이 있으므로, 그 자리에서는 계속 <code>{label=...}</code>나 <code>{#...}</code> (속성으로서의 <code>#</code>, 3장 참고)를 쓴다. 이 절의 <code>{#id}</code>와는 형태가 비슷해도 다른 자리에서 동작하는 별개의 문법이다.</li>
+<li><strong>별행수식 바로 뒤에 쓰면 죽은 라벨이 된다.</strong> <code>\label</code>은 그 자리에서 가장 최근에 갱신된 카운터를 받아가는데, <code>align</code>/<code>equation</code>을 벗어나는 순간 그 상태가 사라져서 <code>\ref</code>가 빈 값을 낸다. 수식 번호를 참조하려면 라벨은 <strong>환경 안에서</strong> 달 것(raw로 직접 <code>\label{...}</code>을 적으면 된다). 이 절의 <code>{#id}</code>는 산문·리스트·표처럼 그 위치 자체가 참조 대상인 자리를 위한 것이지, 별행수식의 대체 문법이 아니다.</li>
+</ul>
+<pre><code class="language-markdown">\begin{align}
+a &amp;= b + c \label{eq:good}   ← 여기서는 정상
+\end{align}
+{#eq:bad}                    ← 여기서는 죽은 라벨</code></pre>
+<pre><code class="language-markdown">[표시 텍스트](https://example.com)
+[표시 텍스트](https://example.com "제목은 파싱만 되고 버려짐")
+[](https://example.com)              ← 빈 라벨이면 \url{} 로
+[](#sec:intro)                       ← url 자리가 #으로 시작하면 라벨 링크
+[여기 보기](#sec:intro)              ← \hyperref[sec:intro]{여기 보기}</code></pre>
+<p><code>(#라벨)</code>처럼 괄호 안이 <code>#</code>으로 시작하면 외부 URL이 아니라 문서 안 라벨을 가리키는 것으로 본다. 진짜 URL은 <code>http://</code>, <code>https://</code>, <code>mailto:</code>, 상대경로 파일명 등으로 시작하지 <code>#</code>으로 시작하는 법이 없으므로 구분에 모호함이 없다. <code>\ref</code>가 아니라 <code>\hyperref[라벨]{...}</code>를 쓰는 이유는 뜻이 다르기 때문이다 — <code>\ref</code>는 번호만 내놓지만, 이 문법이 원하는 것은 “그 절로 가는 클릭 가능한 링크” 자체다. 라벨이 비어 있으면(<code>[](#id)</code>) 라벨 이름 자체를 링크 텍스트로 쓴다. <code>hyperref</code> 로딩은 저자 몫이다. <code>[#라벨]</code>(대괄호 하나짜리 상호참조 문법, 아래 참고)과는 형태가 아예 달라 충돌하지 않는다.</p>
+<pre><code class="language-markdown">본문에서 각주 참조[^note1]를 단다.
+
+[^note1]: 각주 내용은 여기.  ← id 는 라틴 알파벳·숫자·_·-·한글만
+    두 번째 줄부터는 스페이스 4칸(또는 탭)으로 들여써서
+    이어서 쓸 수 있다.
+
+본문에서 바로[^이렇게 각주 본문을 적어도 된다] 쓸 수 있다.
+본문에서 바로^[Pandoc 표기도 같은 뜻이다] 쓸 수도 있다.
+
+[#sec:intro] 를 참고하라.   → \ref{sec:intro}
+[page:sec:intro] 쪽 참고.   → \pageref{sec:intro}
+[@smith2020] 인용.          → \cite{smith2020}
+[@t:smith2020]은 말했다.     → \citet{smith2020}     (natbib/biblatex)
+근거가 있다 [@p:smith2020].  → \citep{smith2020}
+[@a:smith2020] ([@y:smith2020]) → \citeauthor{} (\citeyear{})
+[title:sec:intro] 참고.     → \titleref{sec:intro}
+[name:sec:intro] 참고.      → \nameref{sec:intro}
+[E:eq:euler] 참고.          → \eqref{eq:euler}      (amsmath)
+[F:fig:sample] 참고.        → \figurename~\ref{fig:sample}   → 그림 1
+[T:tab:sample] 참고.        → \tablename~\ref{tab:sample}    → 표 1
+[C:sec:intro] 참고.         → \Cref{sec:intro}
+[C:sec:a,sec:b] 참고.       → \Cref{sec:a,sec:b}   (cleveref의 콤마 다중 라벨)
+
+[[Term]]                     → Term\index{Term}
+[[표시|색인어]]                → 표시\index{색인어}
+[[|색인어만]]                  → \index{색인어}
+[[TeX|typesetting!TeX]]       → TeX\index{typesetting!TeX}   (makeindex 계층)
+[[LaTeX|LaTeX@\LaTeX]]        → LaTeX\index{LaTeX@\LaTeX}    (makeindex 정렬키)</code></pre>
+<ul>
+<li><strong><code>[표시](url)</code>의 <code>url</code> 안 <code>%</code>는 자동으로 <code>\%</code>로 이스케이프된다.</strong> <code>\href</code>가 hyperref의 verbatim 스캔 트릭으로 첫 인자를 읽는데, 그 트릭은 인자가 최상위 토큰 스트림에서 바로 읽힐 때만 통한다. 이 링크가 <code>\caption{...}</code> 처럼 <strong>한 번 더 매크로 인자로 감싸이면</strong>(15장의 <code>caption=</code> 속성이 바로 이 경우다) verbatim 스캔이 아니라 보통의 매크로 확장을 거치므로, <code>url</code> 안의 <code>%</code>부터 그 줄 나머지가 LaTeX 주석으로 통째로 사라진다. 최종 PDF의 실제 링크 대상에는 영향이 없다 — <code>\%</code>는 hyperref 안에서 원래의 <code>%</code>로 복원된다. 빈 라벨(<code>\url{}</code>)은 애초에 이 문제가 없어 손대지 않는다.</li>
+<li><strong>본문에 직접 적은 <code>\href{...%...}{...}</code>는 이 보호를 받지 못한다.</strong> 예를 들어 <code>caption="..."</code> 속성 값 안에 저자가 raw LaTeX으로 <code>\href</code>를 직접 적었다면, 그 안의 <code>%</code>는 스크립트가 건드리지 않는 raw 텍스트이므로 저자가 직접 <code>\%</code>로 이스케이프해야 한다.</li>
+<li><strong>같은 링크(또는 그림)를 여러 번 써야 한다면 <code>[텍스트][라벨]</code> 형태의 참조를 쓸 수 있다</strong> — URL이나 파일명을 한 곳에만 적어 두고 라벨로 재사용한다. 자세한 내용은 15.6절.</li>
+<li><strong>색인 명령은 <code>index_template</code>으로 통째로 바꿀 수 있다.</strong> TeX의 <code>\index</code>는 인자를 특수하게 읽는 탓에 사용자가 재정의하기 몹시 까다로운데, 직접 정의한 매크로를 쓰고 싶은 경우가 있어서다. <code>%(text)s</code>에 표시 텍스트가, <code>%(term)s</code>에 색인어가 들어간다. 표시 텍스트를 어디에 놓을지까지 템플릿이 정하므로, <code>[[|색인어만]]</code>처럼 표시가 없는 경우에는 <code>%(text)s</code>가 빈 문자열이 되어 세 경우가 템플릿 하나로 처리된다. 알 수 없는 자리표시자를 쓰면 경고를 찍고 기본 <code>\index</code> 형태로 폴백한다. 예시는 아래 참고.</li>
+<li><strong>색인어와 표시 텍스트는 raw 그대로 나간다</strong> — 이스케이프도, 인라인 서식 처리도 거치지 않는다. makeindex가 <code>\index</code> 인자 안에서 <code>!</code>(계층), <code>@</code>(정렬키), <code>|</code>(서식)을 특수하게 쓰기 때문에 손대면 그 문법을 못 쓰게 된다. 대신 색인어에 <code>%</code>나 <code>&amp;</code> 같은 문자를 넣어야 한다면 직접 이스케이프해야 하고, <code>[[**굵게**|색인]]</code>처럼 표시 텍스트에 마크다운 서식을 써도 변환되지 않는다.</li>
+<li><strong>별행 정의의 식별자에는 라틴 알파벳·숫자·밑줄(<code>_</code>)·붙임표(<code>-</code>)·한글 음절만 쓸 수 있다</strong>(<code>[A-Za-z0-9_\-가-힣]+</code>). <code>[^note1]</code>, <code>[^ndh-2024]</code>, <code>[^fn_3]</code>, <code>[^주석1]</code>은 되고 <code>[^두 단어]</code>(공백 포함)는 안 된다. 공백을 뺀 것이 핵심이다 — <code>[^...]</code>는 “참조”와 “그 자리에서 바로 쓰는 인라인 각주 본문”을 똑같은 대괄호 모양으로 겸하는데(바로 아래 참고), 이 둘을 가르는 것은 오직 “안의 문자열이 이미 정의된 식별자와 일치하는가”뿐이다. 공백이 들어가면 “짧은 참조 식별자”와 “여러 단어짜리 즉석 각주 본문”이 구분이 안 된다 — 반대로 공백 없는 한글은 ASCII 식별자와 성격이 같아서 이런 모호성 없이 안전하게 허용된다.</li>
+<li>이 규칙을 어기면 <strong>조용히 이중으로 깨진다.</strong> 정의 줄이 수집되지 않아 본문에 그대로 남고, 그 줄마저 인라인 각주 규칙에 걸려 <code>\footnote</code>로 둔갑한다. 참조 쪽도 정의를 못 찾아 식별자 자체가 각주 본문이 된다. 그래서 정의처럼 생겼는데 식별자가 규칙을 벗어난 줄을 만나면 경고를 찍는다 — 각주 번호가 이상하게 늘어났다면 이 경고부터 확인할 것.</li>
+<li><strong>각주는 참조와 인라인 두 가지로 쓸 수 있다.</strong> <code>[^...]</code> 안의 내용이 수집된 각주 정의의 식별자와 일치하면 그 정의를 가리키는 참조이고, 아니면 그 내용을 각주 본문으로 그대로 읽는다. 정의 식별자는 <code>[A-Za-z0-9_-]+</code>로 제한되므로 한글이나 공백이 섞인 내용은 참조일 수가 없다 — 두 용법이 서로 헷갈릴 일이 없는 이유다.</li>
+<li>Pandoc과 같은 <code>^[각주 본문]</code> 표기도 받는다. 참조와 헷갈릴 여지가 아예 없는 형태라, 새로 쓰는 원고에서 의도를 분명히 하고 싶을 때 쓴다. <code>^^방점^^</code>과는 충돌하지 않는다(대괄호 유무로 갈린다).</li>
+<li>각주 본문에는 인라인 서식이 그대로 먹는다. <code>[^**굵게**와 *기울임*]</code>은 <code>\footnote{\textbf{굵게}와 \emph{기울임}}</code>이 된다. 대괄호도 <strong>한 겹까지</strong> 들어가므로 <code>[^각주에 [#sec:a] 참조]</code>처럼 상호참조를 넣을 수 있다. 두 겹 이상 중첩하거나 줄바꿈을 넣는 것은 안 된다.</li>
+<li><strong><code>^[</code>가 방점(<code>^^...^^</code>) 바로 뒤에 붙으면 각주로 보지 않는다.</strong> <code>^^르베그 적분^^[[|르베그 측도]]</code>에서 닫는 캐럿의 뒤엣것이 대괄호와 붙어 각주로 오인되던 것을 막기 위해서다. 덕분에 방점 뒤에 색인이나 상호참조가 바로 오는 조합(<code>^^강조^^[#sec:a]</code>)이 모두 정상 동작한다. 방점 뒤에 진짜 인라인 각주를 붙이려면 사이를 한 칸 띄운다 — <code>^^방점^^ ^[각주]</code>.</li>
+<li><strong>주의</strong>: 참조 식별자에 오타를 내면 경고 없이 그 오타가 각주 본문으로 조판된다. <code>[^ndh2024x]</code>가 “ndh2024x”라는 각주가 되는 식이다. 이 동작이 부담스러우면 <code>mapping.yaml</code>에서 <code>inline_footnote: false</code>로 끄면 되고, 그러면 예전처럼 정의되지 않은 참조에 경고를 찍고 원문을 그대로 남긴다.</li>
+<li>각주 정의는 <strong>문서 아무 곳에나</strong> 둘 수 있고, 참조보다 먼저 나오지 않아도 된다(변환 전 단계에서 전부 수집됨). 정의되지 않은 <code>[^id]</code>를 참조하면 stderr에 경고만 찍고 원문 그대로 둔다.</li>
+<li><code>E:</code>는 amsmath의 <code>\eqref</code>다. 프리픽스 이름을 <code>eq:</code>로 하지 않은 데는 이유가 있다. 프리픽스는 라벨에서 <strong>잘려나가므로</strong>, <code>eq:</code>로 두면 관례대로 이름 붙인 <code>\label{eq:c}</code>를 <code>[eq:c]</code>로 가리킨 것이 <code>\eqref{c}</code>가 되어버린다. <code>[eq:eq:c]</code>라고 겹쳐 적어야 하는데 그럴 이유가 없어 <code>C:</code>/<code>F:</code>/<code>T:</code>와 같은 꼴로 두었다.</li>
+<li><code>F:</code>와 <code>T:</code>는 memoir의 <code>\fref</code>/<code>\tref</code>를 흉내낸 것이다. 참조할 때마다 “그림”, “표”를 손으로 적는 수고를 던다. <code>\figurename</code>/<code>\tablename</code>은 어느 클래스나 정의하고 kotex·babel이 언어에 맞게 바꿔주므로, 한국어 문서에서는 <code>cleveref</code>(<code>C:</code>)보다 오히려 손이 덜 간다. 이름과 번호 사이를 <code>~</code>로 묶어 그 자리에서 줄이 갈리지 않는다.</li>
+<li><code>@t:</code>(<code>\citet</code>), <code>@p:</code>(<code>\citep</code>), <code>@a:</code>(<code>\citeauthor</code>), <code>@y:</code>(<code>\citeyear</code>)는 natbib·biblatex 계열 명령이다. 단행본에서는 본문 흐름에 저자를 끌어들이는 <code>\citet</code>과 괄호 안에 넣는 <code>\citep</code>의 구분이 사실상 필수라 기본값에 넣었다. 프리픽스는 쓰일 때만 발동하므로 그 패키지를 쓰지 않는 문서에는 아무 부담이 없다.</li>
+<li><strong>페이지 지정처럼 인자가 붙는 인용은 <code>{rawopt=…}</code>로 준다.</strong> 닫는 <code>]</code> 바로 뒤에 붙인 <code>{rawopt="…"}</code>의 값이 <strong>원문 그대로</strong> 명령과 <code>{키}</code> 사이에 들어간다.</li>
+</ul>
+<pre><code class="language-markdown">[@Allen04]{rawopt="[p.~50]"}          →  \cite[p.~50]{Allen04}
+[@Allen04]{rawopt="[see][p.~23]"}     →  \cite[see][p.~23]{Allen04}
+[@p:Allen04]{rawopt="[cf.][ch.~2]"}   →  \citep[cf.][ch.~2]{Allen04}</code></pre>
+<p>값은 따옴표로 감싸도 되고(따옴표 안에는 <code>]</code>나 <code>}</code>가 있어도 된다) 감싸지 않아도 된다(<code>{rawopt=[p.~7]}</code>). 값이 <code>[</code>로 시작하지 않으면 <code>[…]</code>로 자동으로 감싼다(<code>{rawopt="p.~3"}</code> → <code>\cite[p.~3]{key}</code>). <code>[</code>로 시작하는 값은 해석하지 않고 그대로 넣으므로 대괄호를 <strong>직접 맞춰 적어야</strong> 한다 — <code>"[see][p.~23"</code>처럼 닫는 대괄호를 빠뜨리면 <code>\cite[see][p.~23{Allen04}</code>가 그대로 나가 컴파일이 깨진다. 모든 프리픽스에 쓸 수 있고(<code>@t:</code>, <code>@p:</code> 등), 템플릿에 <code>{%s}</code>가 없는 사용자 정의 프리픽스에서는 경고하고 무시한다. <code>{rawopt=</code> 로 시작하지 않는 중괄호는 인용과 상관없는 본문으로 남는다. 본문에 <code>\citep[p.~33]{key}</code>라고 직접 써도 7장의 매크로 규칙으로 그대로 통과한다. - <code>[프리픽스라벨]</code> 형태의 상호참조/인용 문법은 <code>cfg["refcite"]</code>(기본값은 위 13개 프리픽스)에서 프리픽스 → LaTeX 템플릿 매핑을 가져오며, 이 매핑은 <strong><code>mapping.yaml</code>로 얼마든지 바꿔치기할 수 있다</strong> — 예컨대 <code>\nameref</code> 대신 프로젝트에서 직접 정의한 <code>\hbref</code>를 쓰고 싶다면 아래처럼 <code>name:</code> 항목만 override하면 되고, 나머지 기본 프리픽스는 그대로 유지된다(19장의 deep merge 참고). 새 프리픽스를 아예 추가하는 것도 가능하다(예: <code>"eq:": '\eqref{%s}'</code>). - <code>title:</code>과 <code>name:</code>은 결과적으로 둘 다 “제목 참조”를 가리키지만, 편집 관행상 별도 매크로 이름으로 구분해 쓰는 경우가 있어 기본적으로 둘 다 제공한다. <code>name:</code>은 <code>hyperref</code>가 제공하는 표준 <code>\nameref</code>를 쓰고, <code>title:</code>은 <code>\dotemph</code>와 마찬가지로 <strong><code>preamble</code>에 직접 정의해야 하는 매크로</strong>(<code>\titleref</code>)를 가정한다. - <code>C:</code>(cleveref의 <code>\Cref</code>)는 <code>preamble</code>에 <code>\usepackage{cleveref}</code>가 필요하다. 여러 라벨을 한 번에 참조하려면 <code>[C:a,b,c]</code>처럼 콤마로 이어 쓰면 cleveref가 그대로 처리한다. <code>\crefrange{a}{b}</code>처럼 인자가 둘로 나뉘는 “범위” 참조는 이 대괄호 문법으로 지원하지 않는다 — 7장의 raw 매크로 통과 규칙 덕분에 본문에 <code>\crefrange{sec:a}{sec:b}</code>를 직접 써도 그대로 통과되므로 그렇게 쓰면 된다. - <code>C:</code>처럼 짧은 프리픽스는 원고 본문에 우연히 같은 모양의 텍스트(예: 윈도우 경로 <code>[C:\Users\...]</code>)가 있으면 오인식될 수 있다는 점은 감안할 것. 문제가 되면 바로 아래 예시처럼 <code>mapping.yaml</code>에서 더 안전한 프리픽스(예: <code>"cref:"</code>)로 바꿔 쓸 수 있다.</p>
+<pre><code class="language-yaml"># mapping.yaml — name: 프리픽스만 project 전용 매크로로 교체하는 예
+refcite:
+  "name:": '\hbref{%s}'</code></pre>
+<p><strong>색인 명령 교체 예시:</strong></p>
+<pre><code class="language-yaml"># 명령 이름만 바꾸기
+index_template: '%(text)s\myidx{%(term)s}'
+
+# 표시 텍스트와 색인어를 인자 둘로 받는 매크로
+index_template: '\myidx{%(text)s}{%(term)s}'</code></pre>
+<hr />
+<h3 id="id-162-각주의-종류-notes와-꼬리표">16.2. 각주의 종류 — <code>notes</code>와 꼬리표<a class="anchor" href="#id-162-각주의-종류-notes와-꼬리표" aria-label="링크">#</a></h3>
+<p>기본은 모든 각주가 <code>\footnote{…}</code>다. memoir의 <code>\sidefootnote</code>, <code>\pagenote</code>, <code>\footnoteA</code>/<code>\footnoteB</code>처럼 <strong>종류가 여럿</strong>이어야 할 때(비평판 등)는 mapping의 <code>notes</code>에 종류를 등록하고, 본문의 각주 바로 뒤에 <code>{이름}</code> 꼬리표로 고른다.</p>
+<pre><code class="language-yaml">notes:                       # 기본 등록분(default, side, page, sidepar, sidebar, verb)에 더해진다
+  A: '\footnoteA%(opt)s{%(text)s}'
+  B: '\footnoteB%(opt)s{%(text)s}'
+  default: '\footnoteA%(opt)s{%(text)s}'   # 꼬리표 없는 각주의 종류를 바꾸려면</code></pre>
+<pre><code>이문이 많다.^[갑본은 "仁"으로 적었다.]{A} 한편 …[^k1]{B}</code></pre>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>꼬리표</th><th>뜻</th></tr>
+</thead>
+<tbody>
+<tr><td><code>{A}</code></td><td><code>notes</code>에 등록한 이름. 인라인 <code>^[…]</code>와 참조 <code>[^id]</code> 둘 다 받는다</td></tr>
+<tr><td><code>{A, opt=3}</code></td><td>번호 지정: <code>\footnoteA[3]{…}</code> (<code>opt="[3]"</code>도 된다)</td></tr>
+<tr><td><code>{sym}</code></td><td><code>\fnsymbol</code> 기호 각주(<code>*</code>, <code>†</code>, <code>‡</code>…). 번호는 문서 안 등장 순서대로 1, 2, 3…</td></tr>
+<tr><td><code>{sym=3}</code></td><td>기호 번호를 직접 지정(이후 자동 번호는 4부터 이어짐). <code>{sym=1}</code>로 다시 시작</td></tr>
+<tr><td><code>{A, sym}</code></td><td>종류와 함께: <code>\footnoteA</code> 계열에 같은 방식</td></tr>
+</tbody>
+</table></div>
+<ul>
+<li>템플릿에는 <code>%(text)s</code>(본문)와 <code>%(opt)s</code>(<code>[3]</code> 또는 빈 문자열)를 쓴다. 예전 꼴 <code>%s</code> 하나만 써도 된다.</li>
+<li><strong><code>sym</code>은 일반 번호 카운터를 건드리지 않는다.</strong> 내부적으로 <code>{\renewcommand{\thefootnote}{\fnsymbol{footnote}}\footnote[N]{…}}</code>로 나가며, 번호를 지정한 <code>\footnote[N]</code>은 카운터를 올리지 않기 때문에 저장·복원 코드가 필요 없다. <code>\fnsymbol</code>은 기호가 9개뿐이라 10번째부터 경고한다. 보장하는 것은 <code>\footnote</code> 계열(<code>\footnoteA</code> 포함)뿐이다.</li>
+<li>등록되지 않은 이름(<code>{sidee}</code>)은 꼬리표로 읽지 않고 <strong>경고 후 본문에 그대로 남는다</strong>(LaTeX에서는 조용히 사라지므로 오타를 알려 주는 것이다). 이 경고는 변환할 때 나온다 — <code>--lint</code>는 mapping을 읽지 않아 등록 여부를 알 수 없다. <code>{\bfseries x}</code>처럼 역슬래시가 든 것이나 <code>{}</code>는 꼬리표가 아니므로 경고 없이 예전처럼 본문에 남는다.</li>
+<li><code>\footnoteA</code>는 프리앰블에 <code>\newfootnoteseries{A}</code>, <code>\pagenote</code>는 <code>\makepagenote</code>와 <code>\printpagenotes</code>가 있어야 한다. <code>preamble:</code>에 직접 쓴다.</li>
+<li><code>\verb|…|</code>(와 <code>\verb*|…|</code>) 구간은 <strong>본문 어디서나</strong> 변환 없이 그대로 통과한다(0.19.3부터). <code>\verbfootnote</code>(<code>{verb}</code>)가 주된 쓰임이다.</li>
+</ul>
+<hr />
+<h2 id="id-17-커스텀-환경">17. 커스텀 환경 (<code>:::</code>)<a class="anchor" href="#id-17-커스텀-환경" aria-label="링크">#</a></h2>
+<pre><code class="language-markdown">:::{theorem}
+정리 본문. `preamble`에 `\newtheorem{theorem}{정리}[section]`이
+정의되어 있어야 한다.
+:::
+
+:::{quote}
+사전 정의된 quote 환경.
+:::
+
+:::{center}
+가운데 정렬.
+:::
+
+:::{tcolorbox title="주의" colback=yellow!10}
+mapping.yaml 이나 attrs 를 이용한 커스텀 박스도 가능.
+:::
+
+:::{adjustwidth raw={1cm}{1cm}}
+왼쪽·오른쪽 여백을 1cm씩 넓힌 본문. adjustwidth처럼 이름 없는(positional)
+인자를 받는 환경에 쓴다.
+:::</code></pre>
+<ul>
+<li><strong>문법은 반드시 <code>:::{이름 속성}</code> 처럼 <code>:::</code> 바로 뒤에 공백 없이 <code>{</code>가 와야 인식된다.</strong> <code>::: {이름}</code>처럼 공백이 있으면 매치되지 않고 일반 텍스트로 흘러 들어간다(현재 알려진 제약사항).</li>
+<li><strong><code>:::{이름}[인자]</code>처럼 대괄호를 바로 붙이는 문법은 지원하지 않는다.</strong> 인자가 필요하면 아래 <code>title=</code>/<code>raw=</code> 방식을 쓸 것.</li>
+<li>닫는 줄은 <code>:::</code> 단독으로 한 줄.</li>
+<li><code>quote</code>, <code>center</code>, <code>table</code>, <code>figure</code>, <code>thebibliography</code>, <code>hverse</code>, <code>verse</code>는 기본 제공 매핑이 있고, 그 외 이름은 전부 <code>\begin{이름}...\end{이름}</code>로 생성된다(그 환경이 실제 LaTeX에 정의돼 있어야 함 — <code>\newtheorem</code>이든 패키지 제공 환경이든).</li>
+<li><strong>등록되지 않은 환경에 속성을 주면 그 속성은 버려진다.</strong> <code>default</code> 템플릿이 쓰는 것은 <code>%(name)s</code>와 <code>%(raw)s</code>뿐이기 때문이다. 이런 경우 경고를 찍는다 — <code>:::{mybox title="주의"}</code>처럼 써놓고 <code>title</code>이 왜 안 나오는지 몰라 헤매는 일을 막기 위해서다.</li>
+<li>속성은 <code>key=value</code>, <code>key="따옴표로 감싼 값"</code> 형태로 <code>parse_attrs</code>가 파싱하며, <code>mapping.yaml</code>의 <code>environments.&lt;이름&gt;.begin/end</code> 템플릿 안에서 <code>%(key)s</code>로 참조할 수 있다.</li>
+<li><strong>따옴표로 감싼 값 안에 따옴표 자체를 넣고 싶으면 두 번 겹쳐 쓴다</strong> (CSV/SQL 문자열 리터럴과 같은 관례). <code>title="A --- ""B"""</code>이면 값이 정확히 <code>A --- "B"</code>가 된다. <code>\"</code>(백슬래시)는 안 통한다 — 이 파서는 애초에 이스케이프라는 개념 자체가 없어서, <code>\"</code>를 만나도 그 앞의 백슬래시와 무관하게 바로 다음 <code>"</code>에서 값을 끊어버린다. <code>title=</code>처럼 인라인 처리를 거치는 속성이라면, 겹따옴표로 살아난 안쪽 <code>"..."</code>도 스마트 따옴표(``…’’)로 정상 변환된다.</li>
+<li><strong>속성 사이 구분자는 쉼표를 권한다.</strong> 15장 그림의 <code>{width=..., label=...}</code>, 4장 헤딩의 <code>{unnumbered, label=...}</code>가 모두 쉼표 구분이라 표기가 통일된다. 파서가 <code>key=value</code> 조각을 훑는 방식이라 공백 구분도 그대로 동작하지만, 한 문서 안에서는 한쪽으로 통일하는 편이 읽기 좋다. 따옴표 없는 값에서는 쉼표가 값에 딸려 들어가지 않도록 공백과 쉼표 앞까지만 읽는다. 값 자체에 쉼표가 필요하면 따옴표로 감싼다(<code>raw="{1cm},{2cm}"</code>). <strong>속성 값은 이스케이프나 인라인 서식 처리를 거치지 않고 raw 그대로 템플릿에 꽂힌다</strong> — 값에 LaTeX 특수문자(<code>&amp;</code>, <code>%</code>, <code>_</code> 등)가 있으면 직접 이스케이프해서 써야 한다.</li>
+<li><code>\begin{theorem}[피타고라스의 정리]</code>처럼 <strong>이름 있는(named) 대괄호 인자</strong>가 필요하면, <code>mapping.yaml</code>에 해당 환경을 등록해두고 속성으로 값을 채운다(아래 예시 참고). 속성을 아예 안 주면 <code>%(title)s</code>를 요구하는 템플릿이 <code>KeyError</code>를 내는데, 이 경우 경고를 찍고 대괄호 없는 기본 <code>\begin{theorem}...\end{theorem}</code>로 자동 폴백한다.</li>
+<li><code>adjustwidth</code>처럼 <strong>이름 없는(positional) 인자를 여러 개 받는 환경</strong>은 <code>key=value</code> 속성 문법과 안 맞는다(인자에 이름이 없으므로). 이런 경우를 위해 <strong><code>raw</code>라는 속성 이름을 예약어로 취급</strong>한다: <code>raw</code> 값은 이스케이프 없이 그대로 <code>\begin{이름}</code> 바로 뒤에 붙는다(기본 환경 템플릿 자체가 <code>\begin{%(name)s}%(raw)s</code>이기 때문에, <code>mapping.yaml</code>에 아무것도 등록하지 않아도 바로 동작한다 — 아래 예시 참고). <code>raw</code>를 안 쓰는 환경에는 전혀 영향이 없다.</li>
+<li><code>raw</code> 값에 공백이 들어가야 하면(예: <code>\hspace{1cm} {1cm}</code>) 따옴표로 감싸서 <code>raw="\hspace{1cm} {1cm}"</code>처럼 쓴다 — 따옴표 없는 값은 공백 전까지만 읽힌다.</li>
+<li><code>:::</code> 블록은 중첩 가능(<code>depth</code> 카운팅)하며, 내부는 다시 <code>render_blocks</code>로 재귀 처리되어 리스트·헤딩·표 등을 자유롭게 넣을 수 있다.</li>
+<li><strong>닫는 <code>:::</code> 바로 다음 줄에 빈 줄 없이 글이 이어지면, 그 글은 새 문단으로 찍히지 않는다.</strong> 재귀 처리를 위해 내부적으로는 블록이 갈리지만(그래야 안쪽 내용이 독립적으로 처리된다), 원문에 빈 줄이 없었다는 사실 자체가 “이건 새 문단이 아니다”라는 원고 작성자의 뜻이므로 줄바꿈만 하고 들여쓰기되는 새 문단으로는 만들지 않는다. 빈 줄을 실제로 넣으면 그때는 당연히 새 문단이 된다.</li>
+</ul>
+<pre><code class="language-markdown">:::{quote}
+텍스트
+:::
+라는 예처럼, 인용을 끝내고 바로 문장을 이어갈 수 있다.</code></pre>
+<pre><code>\begin{quote}
+텍스트
+\end{quote}
+라는 예처럼, 인용을 끝내고 바로 문장을 이어갈 수 있다.</code></pre>
+<p>- <strong>리스트 항목 안에는 <code>:::</code> 블록을 넣지 말 것.</strong> <code>:::</code>/코드펜스처럼 빈 줄이 낀 다중 줄 구조를 리스트 항목 중간에 넣으면, 그 지점에서 블록이 끊겨 뒤따르는 리스트 항목들이 리스트에서 이탈해 통째로 한 문단으로 뭉쳐버린다(11장 리스트 항목 이어쓰기는 “빈 줄 없는 하나의 블록” 안에서만 성립하기 때문). 코드펜스 예시나 <code>:::</code> 블록은 리스트 밖에 독립된 블록으로 두는 것이 안전하다. - <strong>빈 줄 없는 코드펜스 하나 정도는 리스트 항목 안에 둘 수 있지만, 1단계 리스트까지만이다.</strong> 코드펜스는 문서 맨 앞 기준 절대 들여쓰기가 0&#160;3칸일 때만 펜스로 인식된다(CommonMark 규칙) — 1단계 리스트 항목의 들여쓰기 (2&#160;3칸)는 이 범위 안이라 괜찮지만, 2단계 이상 중첩되면 들여쓰기가 필연적으로 4칸을 넘어서서 펜스 자체가 인식되지 않고 백틱이 그대로 리터럴 텍스트로 남는다. 깊이 중첩된 리스트 안에 코드를 보여줘야 한다면, 위 항목처럼 코드펜스를 리스트 밖 독립된 블록으로 빼는 것이 안전하다.</p>
+<p><strong>이름 있는 대괄호 인자 예시</strong> (<code>title=</code> → <code>mapping.yaml</code>에 등록):</p>
+<pre><code class="language-yaml"># mapping.yaml
+environments:
+  theorem:
+    begin: '\begin{theorem}[%(title)s]'
+    end: '\end{theorem}'</code></pre>
+<h3 id="id-171-떠다니는-상자-table과-figure">17.1. 떠다니는 상자 — <code>table</code>과 <code>figure</code><a class="anchor" href="#id-171-떠다니는-상자-table과-figure" aria-label="링크">#</a></h3>
+<p><code>table</code>과 <code>figure</code>는 기본 제공이라 <code>mapping.yaml</code>에 아무것도 등록하지 않아도 바로 동작한다.</p>
+<pre><code class="language-markdown">:::{table place="htbp", caption="T/B/L/R 도우미로 그린 표", label="tab:1"}
+\begin{tblr}{colspec={lcr}}
+  Head A &amp; Head B &amp; Head C \\
+  Data 1 &amp; Data 2 &amp; Data 3 \\
+\end{tblr}
+:::</code></pre>
+<pre><code>\begin{table}[htbp]
+\centering
+\caption{T/B/L/R 도우미로 그린 표}
+\label{tab:1}
+\begin{tblr}{colspec={lcr}}
+  Head A &amp; Head B &amp; Head C \
+  Data 1 &amp; Data 2 &amp; Data 3 \
+\end{tblr}
+\end{table}</code></pre>
+<p>인식하는 속성은 넷이다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>속성</th><th>기본값</th><th>비고</th></tr>
+</thead>
+<tbody>
+<tr><td><code>place</code></td><td><code>htbp</code></td><td><code>\begin{table}[...]</code>의 배치 옵션</td></tr>
+<tr><td><code>align</code></td><td><code>\centering</code></td><td>값이 raw로 나가므로 LaTeX 명령을 적는다</td></tr>
+<tr><td><code>caption</code></td><td>(없음)</td><td>없으면 <code>\caption</code> 줄 자체가 빠진다</td></tr>
+<tr><td><code>label</code></td><td>(없음)</td><td>없으면 <code>\label</code> 줄 자체가 빠진다</td></tr>
+</tbody>
+</table></div>
+<p><code>figure</code>도 같은 속성을 받지만 <strong>캡션과 라벨이 내용 아래</strong>에 놓인다. 표는 위, 그림은 아래가 조판 관례이기 때문이다. 직접 그린 TikZ 그림처럼 15장의 <code>![](...)</code> 문법으로 표현할 수 없는 것을 감쌀 때 쓴다.</p>
+<p>기본값을 끄고 싶으면 빈 값을 명시한다. <code>:::{table align=""}</code>이면 <code>\centering</code> 줄이 사라진다.</p>
+<p>내용 부분은 재귀적으로 처리되므로 14장의 마크다운 표를 넣어도 되고, 위 예시처럼 직접 짠 raw <code>tblr</code>을 넣어도 된다(8장 raw 환경 규칙으로 보호된다).</p>
+<h3 id="id-172-thebibliography-원고에-직접-쓰는-문헌-목록">17.2. <code>thebibliography</code> — 원고에 직접 쓰는 문헌 목록<a class="anchor" href="#id-172-thebibliography-원고에-직접-쓰는-문헌-목록" aria-label="링크">#</a></h3>
+<p><code>.bib</code> 파일과 biber/bibtex를 쓴다면 이 절은 필요 없다(그쪽은 이 스크립트의 소관이 아니다). 문헌 목록을 원고에 직접 적어야 할 때 쓴다.</p>
+<pre><code class="language-markdown">:::{thebibliography widest="99"}
+
+\bibitem{ndh2024} Nova de Hi, 2024, *What is markdown?*
+
+\bibitem{kitty2026} Kitty the Cat, *Please Make me Pleasant,* 2026
+
+:::</code></pre>
+<pre><code>\begin{thebibliography}{99}
+\bibitem{ndh2024} Nova de Hi, 2024, \emph{What is markdown?}
+
+\bibitem{kitty2026} Kitty the Cat, \emph{Please Make me Pleasant,} 2026
+\end{thebibliography}</code></pre>
+<p><code>widest</code>는 <code>\begin{thebibliography}{...}</code>의 인자, 즉 <strong>가장 넓은 라벨</strong>이다. 항목이 아홉 개 이하면 <code>9</code>, 백 개 미만이면 <code>99</code> 식으로 자릿수를 맞춘다. 생략하면 <code>99</code>가 쓰인다.</p>
+<p>항목 자체는 <code>\bibitem</code>을 직접 쓴다. 마크다운 문법을 따로 만들지 않은 이유는 두 가지다. 첫째, <code>\bibitem</code> 뒤 본문에는 <code>*이탤릭*</code> 같은 인라인 서식이 그대로 먹으므로 손으로 쓰는 것은 <code>\bibitem{키}</code> 조각 하나뿐이다. 둘째, 목록의 번호를 citekey로 삼으면 목록을 한 번만 재정렬해도 모든 인용이 조용히 다른 문헌을 가리키게 된다. 번호는 LaTeX이 매기게 두고 키는 의미 있는 이름을 쓰는 편이 안전하다.</p>
+<p><code>\bibitem[표시 라벨]{키}</code> 형태도 그대로 통과한다(natbib의 저자-연도 표시).</p>
+<h3 id="id-173-운문-hverse와-verse">17.3. 운문 — <code>hverse</code>와 <code>verse</code><a class="anchor" href="#id-173-운문-hverse와-verse" aria-label="링크">#</a></h3>
+<p>보통 환경의 내용은 본문과 똑같이 처리된다. 즉 빈 줄로 나뉘지 않은 여러 줄은 <strong>한 문단으로 이어붙는다.</strong> 산문에서는 그것이 옳지만 시에서는 행이 곧 의미라서 원문이 망가진다.</p>
+<p><code>hverse</code>와 <code>verse</code>는 그래서 특례다. 원문의 <strong>행 구조를 그대로</strong> 넘긴다.</p>
+<pre><code class="language-markdown">:::{hverse}
+
+죽는 날까지 하늘을 우러러
+한 점 부끄럼이 없기를,
+
+별을 노래하는 마음으로
+모든 죽어 가는 것을 사랑해야지
+
+:::</code></pre>
+<pre><code>\begin{hverse}
+죽는 날까지 하늘을 우러러
+한 점 부끄럼이 없기를,
+
+별을 노래하는 마음으로
+모든 죽어 가는 것을 사랑해야지
+\end{hverse}</code></pre>
+<ul>
+<li>빈 줄은 <strong>연(stanza) 구분</strong>으로 그대로 남는다.</li>
+<li><code>:::</code> 바로 다음과 바로 앞의 빈 줄은 떼어낸다. 원고에서 그 자리를 비워 두는 편이 읽기 좋은데, 그대로 나가면 빈 연이 생기기 때문이다.</li>
+<li>인라인 서식과 매크로는 정상 동작한다. <code>**굵게**</code>, <code>값\은</code>, 각주 모두 된다. 행을 이어붙이지 않을 뿐, 각 행은 평소처럼 처리된다.</li>
+<li>블록 문법(리스트, 표, 중첩 <code>:::</code>)은 이 안에서 동작하지 않는다. 행 파서를 아예 태우지 않기 때문이다.</li>
+</ul>
+<p><code>hverse</code>는 oblivoir-misc가 제공하며 행 끝에 <code>\\</code>를 요구하지 않는다. 표준 <code>verse</code>는 요구하므로 자동으로 붙여 준다. 연의 마지막 행에는 붙이지 않는다.</p>
+<pre><code>\begin{verse}
+첫 행 \\
+둘째 행
+
+새 연 첫 행
+\end{verse}</code></pre>
+<p>다른 환경에도 같은 특례를 줄 수 있다. <code>mapping.yaml</code>에서 <code>lines: keep</code>을 적으면 되고, 행 끝에 붙일 것이 있으면 <code>line_end</code>로 지정한다.</p>
+<pre><code class="language-yaml">environments:
+  mypoem:
+    begin: '\begin{mypoem}'
+    end: '\end{mypoem}'
+    lines: keep
+    line_end: ' \\'</code></pre>
+<h3 id="id-174-완전히-raw-lines-raw">17.4. 완전히 raw — <code>lines: raw</code><a class="anchor" href="#id-174-완전히-raw-lines-raw" aria-label="링크">#</a></h3>
+<p><code>lines: keep</code>도 각 행에 인라인 서식과 매크로 처리는 그대로 돌린다. 그런데 어떤 환경은 그 처리 자체가 방해가 된다 — 특히 raw LaTeX이나 외부 언어의 코드를 그대로 박아 넣는 환경이 그렇다.</p>
+<p>TikZ가 대표적인 예다.</p>
+<pre><code class="language-markdown">:::{tikzpicture raw="remember picture,overlay"}
+\draw[very thick,-&gt;,&gt;=latex] (NoteY-S)to[out=-90,in=90](NoteZ-N) ;
+:::</code></pre>
+<p><code>[out=-90,in=90](NoteZ-N)</code> 부분이 마크다운 링크 문법 <code>[표시](url)</code>와 우연히 같은 모양이라, 아무 지정도 없으면 <code>\href{NoteZ-N}{out=-90,in=90}</code>로 잘못 바뀐다. 그림 코드 안에는 <code>%</code>, <code>_</code>, <code>$</code>, <code>**</code>처럼 마크다운이 손대는 문자가 얼마든지 나올 수 있으므로, 이런 충돌은 TikZ에 국한되지 않는다.</p>
+<p><code>lines: raw</code>는 인라인 처리 자체를 건너뛰고 원문을 글자 그대로(들여쓰기·개행 포함) 붙인다.</p>
+<pre><code class="language-yaml">environments:
+  tikzpicture:
+    begin: '\begin{tikzpicture}[%(raw)s]'
+    end: '\end{tikzpicture}'
+    lines: raw</code></pre>
+<pre><code>\begin{tikzpicture}[remember picture,overlay]
+\draw[very thick,-&gt;,&gt;=latex] (NoteY-S)to[out=-90,in=90](NoteZ-N) ;
+\end{tikzpicture}</code></pre>
+<ul>
+<li>매크로도, 수식도, 각주도, 색인도, 인라인 서식도 <strong>전혀 해석되지 않는다.</strong> 정의상 “전부 raw”이기 때문이다.</li>
+<li>이 보호는 해당 환경 <strong>안에만</strong> 적용된다. 환경 밖으로 나오면 문서의 나머지 부분은 평소대로 처리된다.</li>
+<li><code>lines: keep</code>과는 정반대다. <code>keep</code>은 행마다 여전히 <code>**굵게**</code>나 조사 매크로 같은 것이 살아있길 원할 때(운문), <code>raw</code>는 그 무엇도 건드리지 않길 원할 때(그림 코드, 외부 언어) 쓴다.</li>
+<li><code>%(raw)s</code> 자리표시자(7장 참고)와는 별개다. 그건 환경 여는 줄의 <strong>속성 값</strong>을 raw로 넘기는 것이고, <code>lines: raw</code>는 환경의 <strong>본문 전체</strong>를 raw로 다루는 것이다. 위 예시처럼 둘을 함께 쓸 수 있다 — <code>raw="..."</code> 속성으로 <code>\begin{tikzpicture}[...]</code>의 대괄호 내용을 정하고, <code>lines: raw</code>로 그 안의 그림 코드를 보호한다.</li>
+</ul>
+<h3 id="id-175-선택적-속성-기본값과-줄">17.5. 선택적 속성 — 기본값과 <code>?</code> 줄<a class="anchor" href="#id-175-선택적-속성-기본값과-줄" aria-label="링크">#</a></h3>
+<p><code>%(key)s</code>는 그 속성을 <strong>반드시</strong> 요구한다. 빠지면 경고와 함께 템플릿 전체가 기본 <code>\begin{이름}</code>으로 폴백한다. 캡션이나 라벨처럼 있을 수도 없을 수도 있는 속성에는 이것으로 부족해서, 템플릿에 두 가지 표기를 더 쓸 수 있다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>표기</th><th>뜻</th></tr>
+</thead>
+<tbody>
+<tr><td><code>%(key|기본값)s</code></td><td>속성이 없으면 기본값을 대신 꽂는다</td></tr>
+<tr><td>줄 앞의 <code>?</code></td><td>그 줄이 참조하는 속성이 하나라도 비면 <strong>줄을 통째로 버린다</strong></td></tr>
+</tbody>
+</table></div>
+<p><code>?</code>는 줄을 남길 때 떼어낸다. 진짜 물음표로 시작하는 줄이 필요하면 <code>??</code>로 적는다. 기본값도 <code>?</code>도 없는 속성이 빠졌을 때의 폴백 동작은 그대로다.</p>
+<p>기본값 판정 기준은 “값이 비었는가”가 아니라 <strong>“속성이 주어졌는가”</strong>다. 그래서 <code>align=""</code>처럼 빈 값을 명시하면 기본값이 적용되지 않고, 그 줄이 <code>?</code> 줄이라면 통째로 사라진다.</p>
+<p><code>end</code> 템플릿에서도 똑같이 쓸 수 있다. 17.1의 <code>figure</code>가 캡션을 아래에 놓는 것이 그 활용이다.</p>
+<p>바로 위 <code>table</code> 기본값이 이 표기로 만들어져 있다.</p>
+<pre><code class="language-yaml"># 기본 제공되는 table 환경의 정의
+environments:
+  table:
+    begin: |-
+      \begin{table}[%(place|htbp)s]
+      ?%(align|\centering)s
+      ?\caption{%(caption)s}
+      ?\label{%(label)s}
+    end: '\end{table}'</code></pre>
+<p>속성을 생략하면 해당 줄만 사라진다.</p>
+<ul>
+<li><code>:::{table caption="캡션만"}</code> — <code>\label</code> 줄이 빠지고, <code>place</code>는 기본값 <code>htbp</code>가 쓰인다.</li>
+<li><code>:::{table}</code> — 아무 속성도 안 주면 <code>\begin{table}[htbp]</code>과 <code>\centering</code>만 남는다.</li>
+</ul>
+<p><code>align="center"</code>처럼 LaTeX 명령이 아닌 값을 쓰면 그대로 <code>center</code>라는 글자가 나가므로 주의할 것 — 이 스크립트는 속성 값을 해석하지 않는다.</p>
+<p>다음처럼 쓰면</p>
+<pre><code class="language-markdown">:::{theorem title="피타고라스의 정리"}
+...
+:::</code></pre>
+<p>이렇게 변환된다.</p>
+<pre><code>\begin{theorem}[피타고라스의 정리]
+...
+\end{theorem}</code></pre>
+<p><strong>이름 없는(positional) 인자 예시</strong> (<code>raw=</code> → 등록 없이 바로):</p>
+<p>다음처럼 쓰면</p>
+<pre><code class="language-markdown">:::{adjustwidth raw={1cm}{1cm}}
+...
+:::</code></pre>
+<p>이렇게 변환된다.</p>
+<pre><code>\begin{adjustwidth}{1cm}{1cm}
+...
+\end{adjustwidth}</code></pre>
+<hr />
+<h2 id="id-18-자동-이스케이프되는-특수문자">18. 자동 이스케이프되는 특수문자<a class="anchor" href="#id-18-자동-이스케이프되는-특수문자" aria-label="링크">#</a></h2>
+<p>일반 텍스트에 그대로 쓴(즉 위의 어떤 보호 문법에도 걸리지 않은) 다음 문자는 자동으로 안전한 LaTeX 표현으로 바뀐다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>문자</th><th>출력</th></tr>
+</thead>
+<tbody>
+<tr><td><code>\</code></td><td><code>\textbackslash{}</code></td></tr>
+<tr><td><code>&amp;</code></td><td><code>\&amp;</code></td></tr>
+<tr><td><code>%</code></td><td><code>\%</code></td></tr>
+<tr><td><code>#</code></td><td><code>\#</code></td></tr>
+<tr><td><code>_</code></td><td><code>\_</code></td></tr>
+<tr><td><code>$</code></td><td><code>\$</code></td></tr>
+<tr><td><code>{</code></td><td><code>\{</code></td></tr>
+<tr><td><code>}</code></td><td><code>\}</code></td></tr>
+<tr><td><code>^</code></td><td><code>\textasciicircum{}</code></td></tr>
+</tbody>
+</table></div>
+<p>즉 수식이나 매크로로 의도한 게 아니라면 <code>$</code>, <code>%</code>, <code>&amp;</code>, <code>_</code> 등을 마크다운 본문에 그냥 타이핑해도 안전하다.</p>
+<p><strong><code>~</code>(물결표)는 이 목록에 없다.</strong> <code>~</code>도 <code>\~</code>도 이스케이프하지 않고 LaTeX으로 그대로 흘려보낸다 — 자세한 내용과 이유는 7.2를 볼 것.</p>
+<h3 id="id-181-m-소스-자체에-강제-개행-넣기">18.1. <code>^^M</code> — 소스 자체에 강제 개행 넣기<a class="anchor" href="#id-181-m-소스-자체에-강제-개행-넣기" aria-label="링크">#</a></h3>
+<p><code>^^M</code>이라고 쓰면 그 자리에 <strong>생성되는 .tex 파일 자체의 진짜 개행 문자</strong>가 들어간다.</p>
+<pre><code class="language-markdown">\linecommand 여기부터 인자^^M다음 문장은 평범하게 이어진다.</code></pre>
+<pre><code>\linecommand 여기부터 인자
+다음 문장은 평범하게 이어진다.</code></pre>
+<ul>
+<li>이 방언은 평문의 줄바꿈을 전부 공백으로 합쳐 버리므로(한 문단은 결국 한 줄로 나간다), <code>\def\linecommand#1^^M{...}</code>처럼 <strong>그 입력 줄의 끝까지를 인자로 삼는 TeX 매크로</strong>를 쓸 방법이 원래 없었다. <code>^^M</code>은 정확히 그럴 때만 쓰는, 아주 드문 탈출구다. <code>^^M</code>이라는 표기 자체도 TeX이 개행 문자(캐리지리턴, 문자 코드 13)를 캐럿 표기법으로 나타낼 때 쓰는 바로 그 표기를 그대로 가져온 것이다.</li>
+<li><strong>이건 어디까지나 소스의 개행이지, LaTeX에게 “여기서 줄바꿈하라”는 뜻이 아니다.</strong> 화면에 보이는 줄바꿈이 필요하면 <code>\\</code>나 <code>\newline</code>을 쓴다(6장). <code>^^M</code>은 순수하게 “TeX이 이 지점을 파일의 줄 끝으로 보게 하라”는 것뿐이다.</li>
+<li><strong><code>^^방점^^</code>(18장이 아니라 정확히는 <code>extra_inline</code> 기본값의 방점 표시)과 표기가 비슷해 보이지만 충돌하지 않는다.</strong> 방점은 반드시 닫는 <code>^^</code>가 있어야 매치되는데, <code>^^M</code>은 짝이 없는 캐럿 두 개+M이라 그 패턴에 안 걸린다. 이 처리 자체도 방점보다 먼저 끝나므로, 뒤쪽 어딘가에 진짜 방점(<code>^^강조^^</code>)이 있어도 <code>^^M</code>의 캐럿과 잘못 짝지어지는 일이 없다.</li>
+<li>인라인 코드 스팬(<code>`^^M`</code>)이나 코드 펜스 안에서는 그대로 리터럴 텍스트로 남는다 — 예시로 보여줄 때 걱정 없이 그대로 쓰면 된다.</li>
+</ul>
+<hr />
+<h2 id="id-19-mappingyaml-로-매핑-재정의">19. <code>mapping.yaml</code> 로 매핑 재정의<a class="anchor" href="#id-19-mappingyaml-로-매핑-재정의" aria-label="링크">#</a></h2>
+<p>기본 설정(<code>DEFAULT_CONFIG</code>)에 대해 깊은 병합(deep merge)되므로, 바꾸고 싶은 키만 적으면 된다.</p>
+<pre><code class="language-yaml"># mapping.yaml
+headings:
+  1: part
+  2: chapter
+inline:
+  - name: bold
+    pattern: '\*\*(.+?)\*\*'
+    template: '\textbf{%s}'
+environments:
+  warning:
+    begin: '\begin{tcolorbox}[colback=red!5,title=주의]'
+    end: '\end{tcolorbox}'
+refcite:
+  "name:": '\hbref{%s}'
+codeblock_template: "\\begin{lstlisting}[language=%(lang)s]\n%(body)s\n\\end{lstlisting}"
+hr: '\hrulefill'
+showexam:
+  ratio: 0.42
+  style: lstlisting
+  frame: none</code></pre>
+<p>front matter의 <code>mapping: mapping.yaml</code>로 지정하거나 CLI에서 <code>--config mapping.yaml</code>로 넘긴다(<code>--config</code>가 우선).</p>
+<p><strong>딕셔너리형 키는 항목만 추가하면 저절로 병합된다.</strong> <code>environments</code>, <code>refcite</code>가 그렇다 — 이들은 <code>{이름: 값, ...}</code> 형태의 딕셔너리이므로, 깊은 병합이 항목 단위로 일어난다. 위 예시의 <code>environments.warning</code>이 그 경우다: <code>warning</code> 하나만 적었을 뿐인데 <code>quote</code>, <code>table</code> 같은 기본 환경은 그대로 남아 있다. <code>extra_macros</code>, <code>extra_inline</code> 같은 “extra_” 접두사가 붙은 키가 따로 있는 이유는 정반대다 — <code>literal_macros</code>나 <code>inline</code>은 <strong>리스트</strong>라서 통째로 교체되므로, 항목만 보태고 싶을 때 기본값을 전부 베껴 오지 않도록 별도의 “추가 전용” 키를 마련해 둔 것이다. <code>environments</code>는 이미 딕셔너리라 그런 별도 키(<code>extra_environments</code> 같은)가 필요 없다.</p>
+<h3 id="id-191-원고-안에-바로-mappingrule">19.1. 원고 안에 바로 — <code>mappingrule:</code><a class="anchor" href="#id-191-원고-안에-바로-mappingrule" aria-label="링크">#</a></h3>
+<p>바꿀 것이 한두 항목뿐이라면 파일을 따로 두는 것 자체가 아깝다. <code>mappingrule:</code> 은 front matter 안에 YAML 조각을 직접 적으면 그 자리에서 병합해 준다.</p>
+<pre><code class="language-yaml">---
+title: 예시
+class: article
+mappingrule: |
+  environments:
+    warning:
+      begin: '\begin{tcolorbox}[colback=red!5,title=주의]'
+      end: '\end{tcolorbox}'
+  extra_inline:
+    - name: doubleline
+      pattern: '\=\=(.+?)\=\='
+      template: '\uuline{%s}'
+  ellipsis: '\kswdashCdots{}'
+  hr: '\fancybreak{* * *}'
+---</code></pre>
+<ul>
+<li>다른 front matter 키와 같은 규칙을 따른다. <code>setup:</code>으로 상속되고, <code>mappingrule+:</code>로 상속받은 것에 덧붙일 수 있다(21장).</li>
+<li>우선순위는 <code>mapping:</code> 파일 <strong>위에</strong> 얹히고, <code>--config</code>가 그 위에 다시 얹힌다 — <code>--config</code> &gt; <code>mappingrule:</code> &gt; <code>mapping:</code> 순이다. <code>--config</code>가 명령줄에서 준 것이라 가장 뚜렷한 의도로 본다는, <code>--config</code>가 <code>mapping:</code>을 이기는 것과 같은 원칙이다.</li>
+<li>안의 YAML이 깨졌거나 <code>key: value</code> 형태가 아니면 오류로 멈춘다 — 매핑 설정이 조용히 무시되면 원인을 찾기 어렵기 때문이다.</li>
+</ul>
+<p><code>mapping.yaml</code> 파일 전체를 복사해 올 필요가 없다는 것이 요점이다. 바꿀 항목만 적으면 나머지 기본값은 그대로 남는다.</p>
+<hr />
+<h2 id="id-20-파일-포함-filename">20. 파일 포함 (<code>{{filename}}</code>)<a class="anchor" href="#id-20-파일-포함-filename" aria-label="링크">#</a></h2>
+<p>multimarkdown의 트랜스클루전 문법을 본떠, 다른 <code>.md</code> 파일의 본문을 그 자리에 끼워넣을 수 있다. 여러 챕터 파일을 하나의 최상위 문서에서 모아 단행본을 조판할 때 쓴다.</p>
+<pre><code class="language-markdown"># 서문
+
+머리말 본문.
+
+{{chapter1.md}}
+
+{{sub/chapter2.md}}
+
+{{/absolute/path/appendix.md}}</code></pre>
+<ul>
+<li><strong>포함되는 파일의 YAML front matter는 무시된다.</strong> 본문만 그 자리에 삽입된다(포함되는 파일에 <code>title</code>, <code>mapping</code> 등을 적어놔도 최상위 문서 설정에 아무 영향을 주지 않는다).</li>
+<li><strong>확장자를 반드시 정확히 써야 한다.</strong> <code>{{chapter1}}</code>처럼 확장자를 생략하면 <code>.md</code>를 자동으로 붙여주지 않는다 — <code>chapter1.md</code>가 실제로 존재해도, <code>chapter1</code>이라는 이름의 파일을 그대로 찾다가 없으면 그냥 오류로 처리된다.</li>
+<li><strong>경로 규칙</strong>: <code>{{chapter1.md}}</code>처럼 경로 없이 파일 이름만 쓰면 <strong>포함하는 파일(=최상위 입력 파일)과 같은 폴더</strong> 기준으로 찾는다. <code>{{sub/chapter2.md}}</code> 처럼 상대 경로를 쓰면 마찬가지로 최상위 입력 파일의 폴더를 기준으로 결합하고, 절대 경로를 쓰면 그대로 사용한다.</li>
+<li>파일을 찾지 못하면 변환을 중단하고, “포함 파일을 찾을 수 없습니다: <code>{{...}}</code>  (확인한 경로: …)” 형태의 오류를 stderr에 출력한 뒤 종료 코드 1로 끝난다.</li>
+<li><strong>재귀적으로 해석된다 — 포함된 파일 안에 또 <code>{{서브서브.md}}</code>가 있어도 (그 안에 또 있어도, …) 계속 파고든다.</strong> 상대 경로는 재귀 깊이와 무관하게 언제나 <strong>최상위 입력 파일의 폴더</strong> 기준이다 — 2단계, 3단계로 중첩된 파일 안에서 상대 경로로 또 다른 파일을 가리키고 싶어도, 그 경로는 자기 자신의 폴더가 아니라 최상위 파일 기준으로 풀어서 적어야 한다(“포함 관계가 몇 단계든, 경로만은 언제나 한 기준점에서 잰다”는 일관된 태도다).
+<ul>
+<li><strong>순환 포함</strong>(A가 B를, B가 다시 A를 포함하는 식 — 자기 자신을 직접 포함하는 것도 포함해서)은 즉시 오류로 멈추고, 무엇이 무엇을 순환 포함했는지 사슬 전체를 보여준다.</li>
+<li><strong>너무 깊은 재귀는 피하는 것이 좋다.</strong> 순환이 없어도 포함 사슬이 20단계를 넘으면 오류로 멈춘다 — 이건 순전히 안전장치일 뿐, 정상적인 원고가 이 깊이까지 갈 일은 없다. 경로 기준이 항상 최상위 파일 하나로 고정돼 있어서, 깊이 중첩할수록 “이 내용이 실제로 어느 파일에서 왔는지” 원고 작성자 스스로도 추적하기 어려워진다 — 2&#160;3 단계 정도로 얕게 쓰는 것을 권장한다.</li>
+<li><code>--lint</code>와 <code>--syncinfo</code>도 이 재귀를 그대로 따라간다 — 몇 단계로 쪼개 놓았든 모든 서브파일이 빠짐없이 린트되고, PDF ↔ md 역방향 검색(1.5절)도 서브서브파일까지 정확한 줄로 안내한다. <code>ndhmain:</code> (16장)도 몇 단계에 있는 서브파일이든 똑같이 붙이면 된다 — “이 서브파일이 궁극적으로 어느 최상위 문서의 일부인지”만 알면 되므로, 중간 단계가 몇 겹이든 상관없다.</li>
+</ul>
+</li>
+<li>코드펜스(<code>```</code>) 안이나, 백틱에 바로 붙은 인라인 코드(<code>`{{file.md}}`</code>) 안의 <code>{{...}}</code>는 문법을 보여주는 예시로 간주되어 치환되지 않는다(9·10장의 raw 보호 규칙과 동일한 방식).</li>
+<li><strong>주석 <code>&lt;!-- ... --&gt;</code> 안의 <code>{{...}}</code>도 치환하지 않는다</strong>(0.20.6). 포함을 잠시 꺼 두려고 <code>&lt;!-- {{ch3.md}} --&gt;</code>처럼 감싸면 그 파일은 읽지도 않으므로, 없는 파일이어도 오류가 나지 않고 <code>--lint</code>도 검사하지 않는다. 한 줄에서는 주석 바깥의 <code>{{...}}</code>만 치환된다. 이전 버전은 주석이 지워지기 전에 포함을 먼저 풀었기 때문에, 주석 속의 없는 파일이 변환을 멈추게 하거나 포함된 파일 속의 <code>--&gt;</code>가 주석을 일찍 닫아 뒷부분을 본문으로 흘리는 버그가 있었다. 닫히지 않은 <code>&lt;!--</code>는 주석으로 보지 않는다(변환기의 주석 규칙과 같다).</li>
+<li><strong><code>{{file.md}}</code>는 앞뒤로 빈 줄을 두고 독립된 한 줄로 쓰는 것을 권장한다.</strong> 포함되는 파일이 여러 문단·헤딩을 담고 있을 수 있는데, 지시자가 다른 문단 텍스트 중간에 섞여 있으면 블록 파싱이 예상과 다르게 동작할 수 있다.</li>
+</ul>
+<h3 id="id-201-날-latex-파일-그대로-끼워넣기-texfilename">20.1. 날 LaTeX 파일 그대로 끼워넣기 (<code>{{tex:filename}}</code>)<a class="anchor" href="#id-201-날-latex-파일-그대로-끼워넣기-texfilename" aria-label="링크">#</a></h3>
+<p><code>{{tex:filename.tex}}</code>처럼 <code>tex:</code> 접두사를 붙이면, 그 파일을 마크다운으로 해석하지 않고 <strong>한 글자도 바꾸지 않은 채</strong> 그 자리에 그대로 끼워넣는다. 직접 짠 표지(title page)나 손으로 다듬은 LaTeX 조각을 그대로 문서에 박아 넣고 싶을 때 쓴다.</p>
+<pre><code class="language-markdown">{{tex:titlepage.tex}}
+
+# 서문
+
+본문...</code></pre>
+<ul>
+<li>마크다운 처리를 <strong>전혀</strong> 거치지 않는다. <code>*</code>, <code>_</code>, <code>[표시](url)</code>, <code>{{또다른포함}}</code> 같은 이 방언의 문법이 그 파일 안에 있어도 전부 글자 그대로 남는다 — 강조도, 링크도, 중첩 포함도 되지 않는다.</li>
+<li><strong>YAML front matter라는 개념 자체가 없다.</strong> 일반 <code>{{file.md}}</code>와 달리 앞부분을 헤더로 떼어내려 하지 않는다 — <code>.tex</code> 파일이 우연히 <code>---</code>로 시작해도 그 줄 그대로 삽입된다.</li>
+<li><strong><code>\documentclass</code>, <code>\begin{document}</code>, <code>\end{document}</code> 같은 것이 파일 안에 있어도 스크립트는 아무것도 손대지 않는다.</strong> 이런 것을 걷어내거나 검증하는 일은 하지 않는다 — 그 파일에 뭘 넣을지는 전적으로 문서 작성자의 책임이라는 것이 이 방언의 원칙이다. 결과가 컴파일되지 않는다면 그건 파일 내용의 문제이지 이 스크립트가 나서서 고쳐 줄 일이 아니다.</li>
+<li>경로 규칙과 오류 처리는 20장의 일반 <code>{{file.md}}</code>와 동일하다(최상위 입력 파일 기준 상대경로, 절대경로 지원, 못 찾으면 오류로 중단).</li>
+<li>재귀 포함을 지원하지 않는 것도 동일하다 — <code>tex:</code>로 끌어온 파일 안에 <code>{{...}}</code>가 있어도 해석되지 않고 그대로 남는다(애초에 마크다운으로도 안 보므로 당연하다).</li>
+<li><code>--syncinfo</code>는 이 파일 전체를 “그 tex 파일 자신, 1번째 줄”로 근사해 기록한다 — raw LaTeX은 원본이 마크다운이 아니므로 “정확히 몇 번째 줄”이라는 대응 자체가 의미가 없기 때문이다. 역방향 검색을 하면 이 tex 파일 자체가 열린다.</li>
+<li><code>--pandoc</code> 모드에서도 그대로 지원된다(pandoc의 raw-attribute 코드펜스로 감싸 전달하므로, pandoc 쪽에서도 마크다운으로 해석되지 않는다).</li>
+</ul>
+<h3 id="id-202-여러-파일을-한-번에-파일패턴물음표목록">20.2. 여러 파일을 한 번에 (<code>{{파일패턴;물음표=목록}}</code>)<a class="anchor" href="#id-202-여러-파일을-한-번에-파일패턴물음표목록" aria-label="링크">#</a></h3>
+<p><code>sub01.md</code>부터 <code>sub20.md</code>처럼 번호만 다른 파일을 20줄 늘어놓지 않고 한 줄로 쓸 수 있다.</p>
+<pre><code class="language-markdown">{{sub??.md;??=01-20}}</code></pre>
+<p><code>{{sub01.md}}</code>부터 <code>{{sub20.md}}</code>까지를 빈 줄로 갈라 늘어놓은 것과 정확히 같다 — 트랜스클루전이 “앞뒤로 빈 줄을 둔 독립된 줄”일 때 가장 안전하게 인식되므로, 그 규칙을 그대로 지켜서 펼쳐진다.</p>
+<p><strong>콤마로 여러 조각을 늘어놓으면 불연속 범위도 된다.</strong></p>
+<pre><code class="language-markdown">{{sub??.md;??=01-10,12-20}}</code></pre>
+<p><code>01</code>부터 <code>10</code>, 그리고 <code>12</code>부터 <code>20</code>까지만 쓰이고 <code>11</code>은 정확히 빠진다. 조각 하나는 “숫자” 하나(<code>7</code>)여도, “숫자-숫자” 범위(<code>01-10</code>)여도 된다 — 섞어서 <code>?=1-3,7,9-10</code>처럼 쓸 수도 있다. 조각이 하나뿐이면(콤마가 없으면) 그냥 기존 단순 범위와 완전히 같은 모양이므로, 콤마 지원 이전에 쓰던 <code>{{sub??.md;??=01-20}}</code> 표기는 손볼 필요 없이 그대로 동작한다. 조각은 적힌 순서 그대로 이어붙는다 — 정렬하거나 중복을 걸러내지 않으므로, 겹치는 범위를 일부러 적으면(<code>1-5,3-7</code>) 3, 4, 5가 두 번 나온다.</p>
+<ul>
+<li><strong>자리 수는 물음표 개수로 정한다.</strong> <code>??</code>는 언제나 2자리로 0을 채운다 (01, 02, …, 20). <code>?</code> 하나뿐이면 자리 채움 없이 그대로(1, 2, …, 9). 자릿수가 넘어가도(예: <code>{{sub?.md;?=1-15}}</code>) 잘리지 않고 자연스럽게 1, 2, …, 9, 10, …, 15로 나온다 — 채움은 항상 “최소 자릿수”만 보장할 뿐, 그보다 큰 수를 억지로 줄이지 않는다. 이 폭은 목록 전체에 하나로 통일 적용된다.</li>
+<li><strong><code>?</code>/<code>??</code> 자리는 숫자 전용이다.</strong> 셸의 glob(<code>?</code>가 “아무 글자 하나”를 뜻하는 것)이나 정규식의 와일드카드와는 다르다 — 이건 어디까지나 정수(범위)를 자릿수만큼 0으로 채워 넣는 문법이지, 일반적인 패턴 매칭이 아니다. 문자 범위(<code>a-z</code>)나 그 밖의 와일드카드는 지원하지 않는다.</li>
+<li>물음표가 파일 이름 패턴 안에 없거나(<code>{{sub##.md;??=01-20}}</code>처럼), 목록의 어느 조각이든 숫자·범위 형식이 아니거나, 범위의 시작이 끝보다 크면 오류로 멈춘다.</li>
+<li><code>{{tex:sub??.tex;??=01-03}}</code>처럼 <code>tex:</code> 접두사와도 함께 쓸 수 있다 — 펼쳐진 각 이름(<code>tex:sub01.tex</code> 등)이 그대로 20.1절의 규칙을 따른다.</li>
+<li><code>--lint</code>는 펼쳐진 이름 하나하나의 존재를 확인하고, 하위 파일 재귀 검사(19장 근처 <code>--lint</code> 설명 참고)에도 펼쳐진 파일들이 전부 들어간다.</li>
+<li><code>--syncinfo</code>도 완전히 지원한다 — 펼쳐진 각 파일의 내용이 각자 정확한 원본 줄 번호로 추적된다. 파일과 파일 사이에 끼워 넣는 구분용 빈 줄만 정답이 없는 자리라 근사한다(대략 이 근처라는 뜻).</li>
+<li>이 문법 자체는 재귀 확장이 아니다 — 펼쳐진 각 이름을 읽어들이는 방식은 평범한 단일 <code>{{파일}}</code>과 완전히 같다(20장의 다른 규칙들이 그대로 적용된다).</li>
+</ul>
+<p><strong>끝을 모를 때는 <code>*</code>(열린 범위)를 쓴다.</strong></p>
+<pre><code class="language-markdown">{{contents/sub??.md;??=01-*}}</code></pre>
+<p><code>sub01.md</code>부터, 그 폴더에 실제로 있는 가장 큰 번호까지(예: <code>sub27.md</code> 까지 있으면 27까지) 자동으로 잡는다. 파일 개수가 자주 바뀌는 원고에서 매번 끝 번호를 손으로 고칠 필요가 없다.</p>
+<ul>
+<li><strong>중간에 빠진 번호는 조용히 건너뛴다.</strong> <code>sub11.md</code>가 없으면 <code>sub10.md</code> 다음에 <code>sub12.md</code>가 자연스럽게 이어진다 — 디렉터리를 실제로 뒤져서 존재하는 파일만 모으기 때문이다.</li>
+<li><strong>이건 고정 범위(<code>01-20</code>)와는 다른 철학이다.</strong> 고정 범위는 그 안의 파일이 하나라도 없으면 여전히 시끄러운 오류로 멈춘다(오타를 조용히 넘기지 않기 위해서다) — <code>*</code>를 쓴다는 것 자체가 “있는 것만 있는 대로 가져오라”는 명시적 의도이므로, 이 경우만 예외적으로 건너뛴다.</li>
+<li><code>*</code>는 <strong>끝자리에서만</strong> 쓸 수 있다. 시작을 <code>*</code>로 하거나(<code>*-20</code>), 양쪽 다 <code>*</code>로 하는 것(<code>*-*</code>)은 뜻이 모호해서 지원하지 않는다.</li>
+<li>찾는 범위는 <strong>문서 기준 디렉터리</strong>로 한정된다 — <code>setup:</code>이나 공유 리소스 폴더까지 뒤지는 일반 트랜스클루전의 확장 탐색은 여기 적용되지 않는다. <code>contents/sub??.md</code>처럼 하위 폴더를 적으면 그 폴더 안에서만 찾는다.</li>
+<li>자리 수(물음표 개수)는 여기서도 그대로 “몇 자리 숫자만 인정할지”를 정한다 — <code>??</code>면 <code>sub100.md</code>(3자리)는 대상에서 빠진다.</li>
+<li>조건에 맞는 파일을 하나도 못 찾으면(폴더 이름을 잘못 적었다거나) 오류로 멈춘다 — 열린 범위라고 해서 “아무것도 못 찾아도 조용히 넘어간다”는 뜻은 아니다.</li>
+<li>콤마 목록의 한 조각으로도 쓸 수 있다(<code>?=1-3,7-*</code>). <code>tex:</code> 접두사와도 함께 쓸 수 있다.</li>
+</ul>
+<hr />
+<h2 id="id-21-마스터-헤더-상속-setup">21. 마스터 헤더 상속 (<code>setup:</code>)<a class="anchor" href="#id-21-마스터-헤더-상속-setup" aria-label="링크">#</a></h2>
+<p>LaTeX 문서용 front matter는 금세 길어지고, 같은 판형으로 여러 문서를 만들면 그 20여 줄이 파일마다 복제된다. <code>setup:</code> 키는 그 공통부를 다른 파일에 빼두고 물려받게 해준다.</p>
+<pre><code class="language-markdown">---
+setup: mymaster.md
+title: 이 문서만의 제목
+---</code></pre>
+<p>이는 20장의 <code>{{filename}}</code> 포함과 <strong>정확히 대칭</strong>이다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th>문법</th><th>가져오는 것</th><th>버리는 것</th></tr>
+</thead>
+<tbody>
+<tr><td><code>{{file.md}}</code></td><td>그 파일의 <strong>본문</strong></td><td>front matter</td></tr>
+<tr><td><code>setup: file.md</code></td><td>그 파일의 <strong>front matter</strong></td><td>본문</td></tr>
+</tbody>
+</table></div>
+<p>따라서 setup 파일은 두 가지 형태 모두 가능하다.</p>
+<ul>
+<li><strong>완성된 마크다운 문서</strong>: <code>---</code>로 감싼 front matter가 있으면 그것만 읽고 본문은 통째로 버린다. 즉 <strong>이미 조판을 마친 기존 문서를 그대로 스타일 도너로 지정할 수 있다</strong> — “지난번 그 책과 같은 판형으로”가 한 줄로 끝난다.</li>
+<li><strong>헤더만 적힌 파일</strong>: <code>---</code> 구분선이 없으면 파일 전체를 YAML로 해석한다. 확장자는 무엇이든 상관없다(<code>.yaml</code>, <code>.txt</code> 등).</li>
+</ul>
+<h3 id="id-211-병합-규칙-로컬이-이긴다">21.1. 병합 규칙 — 로컬이 이긴다<a class="anchor" href="#id-211-병합-규칙-로컬이-이긴다" aria-label="링크">#</a></h3>
+<p>같은 키가 양쪽에 있으면 <strong>현재 파일의 값이 setup 파일의 값을 대체한다.</strong></p>
+<pre><code class="language-yaml"># base.yaml
+class: oblivoir
+classoptions: 11pt, a4paper
+author: Nova de Hi
+preamble: |
+  \usepackage{kotex}</code></pre>
+<pre><code class="language-markdown">---
+setup: base.yaml
+class: memoir          ← oblivoir 를 대체한다
+---</code></pre>
+<h3 id="id-212-이어붙이려면-키">21.2. 이어붙이려면 <code>키+:</code><a class="anchor" href="#id-212-이어붙이려면-키" aria-label="링크">#</a></h3>
+<p>대체가 아니라 <strong>덧붙이고</strong> 싶으면 키 이름 뒤에 <code>+</code>를 붙인다. 이것이 실제로 가장 많이 쓰게 될 문법이다 — 공용 프리앰블은 그대로 두고 이 문서에만 패키지 하나를 더 얹는 경우.</p>
+<pre><code class="language-markdown">---
+setup: base.yaml
+preamble+: |
+  \usepackage{tikz}
+classoptions+: twoside
+---</code></pre>
+<pre><code>\documentclass[11pt, a4paper, twoside]{oblivoir}
+\usepackage{kotex}
+\usepackage{tikz}</code></pre>
+<ul>
+<li>setup 파일의 값이 먼저 오고, 현재 파일의 값이 뒤에 붙는다. 이 순서 덕분에 개별 정의를 덮어쓰는 일은 LaTeX 자신의 <code>\renewcommand</code>가 해결해준다 — YAML 층에서 흉내낼 필요가 없다.</li>
+<li>구분자는 <code>classoption</code>/<code>classoptions</code>가 <code>,</code>+공백, 나머지는 개행이다.</li>
+<li>한 파일에 <code>preamble:</code>과 <code>preamble+:</code>이 <strong>동시에</strong> 있으면 대체를 먼저 적용하고 그 결과에 이어붙인다.</li>
+<li>setup이 아예 없는 문서에서 <code>키+:</code>를 쓰면 그냥 평범한 <code>키:</code>처럼 동작한다.</li>
+<li>프리앰블에서 같은 패키지가 중복 로딩되어도 LaTeX의 <code>\usepackage</code>가 알아서 한 번만 처리하므로 대개 문제되지 않는다.</li>
+</ul>
+<h3 id="id-213-여러-파일을-나열하기">21.3. 여러 파일을 나열하기<a class="anchor" href="#id-213-여러-파일을-나열하기" aria-label="링크">#</a></h3>
+<p><code>setup:</code>은 파일 하나뿐 아니라 <strong>리스트</strong>도 받는다. 판형은 공용 헤더에서 가져오고, 그 위에 문서 종류별 조각(용어집용 색인 설정, 발표자료용 여백 등)을 따로 얹고 싶을 때 쓴다.</p>
+<pre><code class="language-markdown">---
+setup: [base.yaml, glossary.yaml]
+title: 이 문서만의 제목
+---</code></pre>
+<ul>
+<li>왼쪽부터 순서대로 병합된다. <strong>뒤에 적은 파일이 앞의 것을 덮어쓴다</strong> — front matter 안의 일반적인 override 규칙(21.1)과 같다.</li>
+<li><code>키+:</code>는 리스트를 가로질러서도 계속 이어붙는다. <code>glossary.yaml</code>에 <code>preamble+:</code>가 있으면 <code>base.yaml</code>의 <code>preamble:</code> 뒤에 이어지고, 그 뒤에 다시 최상위 문서 자신의 <code>preamble+:</code>가 있으면 거기에도 이어진다.</li>
+<li>리스트 안의 각 파일이 <strong>자기 자신의 <code>setup:</code></strong>을 또 가질 수 있다(21.6의 체인 규칙이 그대로 적용된다). 그 경우 “지금까지 누적된 것” 위에 자신의 조상을 먼저 얹은 뒤, 자기 자신의 내용을 올린다 — 즉 리스트 안의 형제 관계도 상속 관계의 일부로 취급된다.</li>
+<li><strong>같은 파일을 리스트에 두 번 넣으면 순환 참조로 막는다.</strong> <code>setup: [a.md, a.md]</code>는 의미가 없고, 대개 오타다.</li>
+<li>CLI에서는 <code>--setup base.yaml,glossary.yaml</code>처럼 <strong>콤마</strong>로 나열한다(공백이 아니다 — 입력 파일 인자와 헷갈리지 않도록). front matter의 <code>setup:</code>을 통째로 갈아치우는 것은 단일 파일일 때와 같다.</li>
+</ul>
+<h3 id="id-214-title은-상속되지-않는다">21.4. <code>title</code>은 상속되지 않는다<a class="anchor" href="#id-214-title은-상속되지-않는다" aria-label="링크">#</a></h3>
+<p><code>title</code>은 문서의 <strong>정체성</strong>이지 스타일이 아니므로 setup 파일에서 물려받지 않는다. 완성된 기존 문서를 스타일 도너로 지정했을 때 그 문서의 제목이 조용히 딸려오면, 에러가 아니라 <em>엉뚱한 제목의 PDF</em>가 나오기 때문이다. <code>author</code>, <code>date</code>, <code>class</code> 등 나머지 키는 모두 정상적으로 상속된다.</p>
+<h3 id="id-215-mapping은-언제나-최상위-파일-기준">21.5. <code>mapping:</code>은 언제나 최상위 파일 기준<a class="anchor" href="#id-215-mapping은-언제나-최상위-파일-기준" aria-label="링크">#</a></h3>
+<p>유효한 매핑 설정은 <strong>어떤 경우에도 정확히 하나</strong>뿐이며, 여러 개가 병합되는 일은 없다. 우선순위는 다음과 같다.</p>
+<pre><code>--config (CLI)  &gt;  현재 파일의 mapping:  &gt;  setup 파일의 mapping:</code></pre>
+<p>setup 파일에서 상속된 경우라도 <strong>상대경로는 언제나 최상위 입력 파일의 디렉터리 기준으로 풀린다</strong> — setup 파일이 있는 디렉터리 기준이 아니다. 공용 폴더에 둔 setup 파일에서 그 옆의 매핑 파일을 가리키려면 절대경로를 쓸 것. 같은 이유로 <code>mapping+:</code>는 지원하지 않으며, 쓰면 경고를 찍고 무시한다.</p>
+<h3 id="id-216-체인은-2단계까지">21.6. 체인은 2단계까지<a class="anchor" href="#id-216-체인은-2단계까지" aria-label="링크">#</a></h3>
+<p>setup 파일이 또 자신의 <code>setup:</code>을 가질 수 있다. 이때 그 경로는 <strong>그 키를 적은 파일</strong>의 디렉터리 기준이다(<code>mapping:</code>과 다르다).</p>
+<pre><code>doc.md      →  series.md     →  base.yaml
+(작업 파일)     (시리즈 공통)     (공용 기본)</code></pre>
+<p><strong>이 3단 구성이 허용되는 최대 형태</strong>이고, 그보다 깊어지면 오류로 중단한다. 헤더를 어디서 물려받았는지 추적할 수 없게 되는 것을 막기 위한 의도적인 제한이다. 순환 참조(<code>a.md</code> → <code>b.md</code> → <code>a.md</code>)도 오류로 잡는다.</p>
+<p>setup 파일의 <code>setup:</code>을 조용히 무시하지 않고 굳이 2단계까지 허용한 이유는, 완성된 문서를 스타일 도너로 지정했을 때 그 문서가 스스로 공용 헤더 위에 지어져 있는 경우가 흔하기 때문이다. 무시해버리면 <strong>스타일의 절반만 딸려온 채 에러 없이 잘못된 출력</strong>이 나온다.</p>
+<h3 id="id-217-출처-확인하기">21.7. 출처 확인하기<a class="anchor" href="#id-217-출처-확인하기" aria-label="링크">#</a></h3>
+<p>값의 출처가 여러 곳으로 나뉘므로 <code>--dump-meta</code>로 병합 결과를 확인할 수 있다.</p>
+<pre><code class="language-bash">$ python3 ndhmd4tex.py doc.md --dump-meta
+# setup 체인: doc.md -&gt; shared/series.md -&gt; shared/base.yaml
+author: Nova de Hi
+class: oblivoir
+classoptions: 11pt, a4paper, twoside
+preamble: '\usepackage{kotex}
+
+  \usepackage{tabularray}'
+title: 내 문서</code></pre>
+<p>setup 파일을 찾지 못하거나, 체인이 너무 깊거나, 순환 참조가 있으면 stderr에 오류를 출력하고 종료 코드 1로 끝난다(20장의 포함 파일 오류와 같은 방식).</p>
+<p>또한 <code>{{}}</code>로 포함되는 파일의 front matter는 통째로 무시되므로, 포함되는 파일에 <code>setup:</code>을 적어놔도 아무 영향이 없다.</p>
+<hr />
+<h2 id="id-22-알려진-제약-주의사항">22. 알려진 제약 / 주의사항<a class="anchor" href="#id-22-알려진-제약-주의사항" aria-label="링크">#</a></h2>
+<ul>
+<li>예전 표기의 설명 리스트(<code>용어 :: 설명</code>)는 <code>그는 말했다 :: 아니다</code>처럼 산문에 같은 형태가 나오면 구분할 방법이 없다. 중괄호형(<code>{용어} ::  설명</code>)을 쓰거나 <code>description_syntax: braces</code>로 막으면 된다(11장 참고).</li>
+<li><code>:::{이름}</code> 커스텀 환경은 <code>:::</code>와 <code>{</code> 사이에 <strong>공백이 있으면 인식되지 않는다</strong>.</li>
+<li>인용구(<code>&gt;</code>) 안에 리스트·헤딩 등 별개 블록을 넣으려면 <code>&gt;</code> 단독 줄로 빈 줄을 표시해야 한다. 그냥 죽 이어 쓰면 전부 한 문단으로 합쳐진다.</li>
+<li><code>`\begin{...}...\end{...}`</code> 처럼 raw LaTeX 문법을 예시로 보여주려고 인라인 코드 백틱으로 감쌀 때, <strong>백틱이 <code>\begin</code>/<code>\end</code> 바로 옆에 붙어 있어야</strong> 안전하게 처리된다. 백틱과 내용 사이에 패딩 스페이스를 넣으면 (<code>` \begin{...}...\end{...} `</code>처럼) 여전히 진짜 raw 환경으로 오인식될 수 있다.</li>
+<li>같은 이유로, 인라인 코드로 <code>&lt;!-- --&gt;</code> 문법 자체를 예시로 보여줄 때도 백틱이 바로 옆에 붙어 있어야 안전하다(패딩 스페이스가 있으면 진짜 주석으로 오인식되어 지워질 수 있다).</li>
+<li>표는 헤더 행의 열 개수를 기준으로 고정 폭 처리한다.</li>
+<li>raw로 보호되는 블록(코드펜스/디스플레이수식/raw 환경)은 그 <strong>안에서</strong> 이 방언 문법(굵게, 따옴표 변환 등)이 전혀 적용되지 않는다 — 이미 완성된 LaTeX이라고 가정하기 때문이다.</li>
+<li>리스트 항목 안에 <strong>문단·코드 블록 등 블록 요소를 넣을 수 없다</strong>. 빈 줄로 구분된 둘째 문단은 리스트를 닫고 밖으로 빠져나온다(11장 참고). 중첩 리스트만이 항목 안에 들어갈 수 있는 유일한 블록이다.</li>
+<li><code>{{filename}}</code> 파일 포함은 코드 펜스와 인라인 코드 스팬 <strong>안에서는 해석되지 않는다</strong>(리터럴로 남는다). 그래서 <code>`{{ user.name }}`</code>처럼 다른 템플릿 문법을 예시로 보여주거나, 7.1의 raw 스팬에 <code>{{</code>가 들어가도 안전하다.</li>
+<li><code>{{filename}}</code> 파일 포함은 <strong>1단계만</strong> 지원한다. 포함된 파일 안에 또 <code>{{...}}</code>가 있어도 재귀적으로 해석되지 않고 리터럴 텍스트로 남는다(20장 참고).</li>
+<li><code>setup:</code> 체인은 <strong>2단계까지만</strong> 허용된다(즉 <code>작업 파일 → setup → setup</code>이 최대). 더 깊어지면 오류다(21.6 참고).</li>
+<li><code>setup:</code>으로 상속되는 <code>mapping:</code>의 상대경로는 setup 파일이 아니라 <strong>언제나 최상위 입력 파일</strong>의 디렉터리 기준으로 풀린다. 공용 폴더에 둔 setup 파일에서 매핑 파일을 가리킬 때는 절대경로를 쓰는 것이 안전하다(21.5 참고).</li>
+<li><code>title</code>은 <code>setup:</code>으로 상속되지 않는다(21.4 참고). 반대로 <code>author</code>, <code>date</code>는 상속되므로, 완성된 문서를 스타일 도너로 쓸 때 저자가 다르면 현재 파일에서 명시적으로 덮어써야 한다.</li>
+<li><code>showexam</code> 상자는 <strong>페이지를 넘어 쪼개지지 않는다</strong>. 예제가 길면 통째로 다음 페이지로 밀린다. <code>tcolorbox</code>로 바꿔도 <code>breakable</code>과 <code>sidebyside</code>는 양립하지 않으므로 해결되지 않는다(10.2 참고).</li>
+<li>리스트 항목이나 인용구 안에 들여쓴 <code>showexam</code> 블록은 지원하지 않는다 — 최상위에서만 쓴다.</li>
+<li><code>showexam</code>의 <code>style: verbatim</code>은 긴 줄을 접지 못해 상자 밖으로 넘친다. 줄바꿈이 필요하면 <code>minted</code>나 <code>lstlisting</code>을 쓴다. 한글 등 유니코드가 섞이면 <code>lstlisting</code>은 감당하지 못하므로 <code>minted</code>가 사실상 유일한 선택이다(10장의 <code>-shell-escape</code> 관련 설명 참고).</li>
+</ul>
+<hr />
+<h2 id="id-23-beamer-프레임-4속성">23. Beamer 프레임 (<code>={4,}{속성}</code>)<a class="anchor" href="#id-23-beamer-프레임-4속성" aria-label="링크">#</a></h2>
+<p><code>class: beamer</code>로 발표 자료를 만들 때, 프레임 하나하나를 <code>\begin{frame}</code>/ <code>\end{frame}</code>로 손수 감싸지 않아도 되게 하는 문법이다. <code>:::{환경}</code>(10장)과 정확히 같은 관례 — 여는 쪽만 중괄호가 있고 닫는 쪽은 맨몸 — 를 등호에 적용했을 뿐이다.</p>
+<pre><code class="language-markdown">======{title="프레임에 제목을 달자",subtitle="작은 제목",opt=fragile}
+본문.
+======</code></pre>
+<pre><code>\begin{frame}[fragile]
+\frametitle{프레임에 제목을 달자}
+\framesubtitle{작은 제목}
+
+본문.
+\end{frame}</code></pre>
+<ul>
+<li><strong>여는 줄은 등호 4개 이상 + 중괄호 속성</strong>(<code>={4,}\{...\}</code>), <strong>닫는 줄은 등호 4개 이상뿐</strong>(중괄호 없이). 4개를 최소로 둔 것은 <code>---</code>/<code>***</code>가 이미 수평선으로 예약된 것과 같은 논리다.</li>
+<li>속성 문법은 <code>:::{환경}</code>과 완전히 같은 <code>key="값"</code>/<code>key=값</code>(쉼표로 나열) 이다 — 새 파싱 규칙을 또 만들지 않았다.</li>
+<li><strong><code>name=</code>을 주면 <code>frame</code> 대신 그 이름의 환경을 쓴다.</strong> 값이 인라인 처리 없이(라텍 명령 이름 자리이지 화면 텍스트가 아니므로) 가공 없이 그대로 <code>\begin{...}</code>/<code>\end{...}</code> 양쪽에 쓰인다. <code>ltx-talk</code> 같은 Beamer 확장 패키지가 제공하는 <code>frame*</code>, <code>itemizedframe</code>처럼 “frame과 비슷하게 동작하되 이름이 다른” 환경을 쓸 때 필요하다 — title/subtitle/opt/raw 처리는 환경 이름과 완전히 무관하게 그대로다.</li>
+</ul>
+<pre><code class="language-markdown">===={name="frame*",title="TITLE"}
+본문.
+====</code></pre>
+<pre><code>\begin{frame*}
+\frametitle{TITLE}
+
+본문.
+\end{frame*}</code></pre>
+<ul>
+<li><code>title=</code>/<code>subtitle=</code>은 각각 <code>\frametitle{}</code>/<code>\framesubtitle{}</code>이 되고 (값은 인라인 처리를 거친다), <code>opt=</code>은 <code>\begin{환경}[...]</code>의 대괄호 안에 가공 없이 그대로 들어간다. <code>raw=</code>는 <code>\begin{환경}[opt]</code> 바로 뒤에(같은 줄에) 가공 없이 그대로 이어붙는다(<code>opt</code>가 없으면 대괄호 없이 <code>\begin{환경}</code> 뒤에 바로 붙는다) — <code>:::{환경}</code>의 <code>raw</code> 속성과 같은 예약어 취급이다. 넷 다 안 쓰면 대응하는 줄/조각 자체가 아예 안 나온다.</li>
+<li><strong>대괄호나 중괄호가 두 개 이상 필요하면 <code>raw=</code>에 마저 이어붙인다.</strong> <code>opt=</code>은 오직 <strong>첫 번째</strong> <code>[...]</code>만 맡는다. Beamer는 <code>\begin{frame}[&lt;+-&gt;][fragile]</code>처럼 대괄호를 두 개(오버레이 기본값 + 옵션) 쓰기도 하는데, 새 속성을 또 만들 필요 없이 두 번째 대괄호를 <code>raw=</code>에 문자열째로 넣으면 그대로 이어붙는다. 예시는 아래를 볼 것.</li>
+</ul>
+<pre><code class="language-markdown">======{opt=&lt;+-&gt;,raw="[fragile]",title="Itemize"}</code></pre>
+<pre><code>\begin{frame}[&lt;+-&gt;][fragile]
+\frametitle{Itemize}</code></pre>
+<p>실측(xelatex + beamer)으로 <code>[&lt;+-&gt;]</code>가 프레임 전체의 기본 오버레이로 적용돼, 리스트 항목이 <code>\pause</code> 없이도 한 단계씩 순차 표시되는 것을 확인했다. 대괄호든 중괄호든, 몇 개가 더 필요하든 전부 <code>raw=</code> 문자열 하나에 순서대로 이어 적으면 된다 — <code>raw="[fragile]{추가 제목}"</code>처럼.</p>
+<ul>
+<li><strong>프레임 안은 완전히 평범한 본문이다.</strong> 리스트, 설명 리스트, 표, 인용, 중첩된 <code>:::{환경}</code> 등 이 방언이 지원하는 모든 블록 문법이 바깥과 똑같이 그대로 동작한다 — “프레임 전용 파서”가 따로 있는 게 아니라, <code>:::{환경}</code>과 마찬가지로 안쪽 내용을 그대로 재귀 처리하기 때문이다. 그래서 프레임 여는 줄 바로 다음에 빈 줄이 없어도(원고에서 시각적으로 등호와 본문을 붙여 써도) 문제없다 — 재귀 호출이 그 첫 줄부터 새 블록으로 인식한다.</li>
+<li><strong>설명 리스트와 조합하면 Beamer의 오버레이 지정 문법을 쓸 수 있다.</strong> 설명 리스트도 첫 항목의 설명에 <code>{!옵션}</code> 블록을 쓸 수 있으므로(11장), <code>\begin{description}[&lt;+-| alert@+&gt;]</code>처럼 항목이 단계별로 순차 강조되게 만들 수 있다. 예시는 아래를 볼 것.</li>
+</ul>
+<pre><code class="language-markdown">{uncover} ::  {!"&lt;+-| alert@+&gt;"} 주어진 슬라이드에서 visible.
+{only} ::  주어진 슬라이드에서 show.</code></pre>
+<pre><code>\begin{description}[&lt;+-| alert@+&gt;]
+\item[uncover] 주어진 슬라이드에서 visible.
+\item[only] 주어진 슬라이드에서 show.
+\end{description}</code></pre>
+<p>실측(xelatex + beamer 컴파일)으로 각 오버레이 단계에서 정확히 그 항목만 <code>\alert</code>로 강조되는 것을 확인했다.</p>
+<ul>
+<li><code>--lint</code>는 짝이 안 맞는 프레임(닫히지 않음, 열린 적 없이 닫음)과 <code>====</code>와 <code>{</code> 사이의 공백(공백이 있으면 프레임으로 인식되지 않는다)을 잡아낸다.</li>
+<li><code>--syncinfo</code>는 프레임 전체를 하나의 블록으로 추적한다 — 역방향 검색을 하면 그 프레임이 시작하는 원본 위치로는 정확히 가지만, 프레임 안의 특정 줄까지 정밀하게 짚어주지는 않는다(<code>:::{환경}</code>과 같은 한계).</li>
+<li><strong><code>class: beamer</code>를 위한 별도의 기본 설정은 없다.</strong> 이 방언의 기본 <code>classoptions</code>(예: <code>chapter</code>)는 book/article류를 염두에 둔 것이라 beamer에는 안 맞는 옵션이 섞여 있을 수 있다 — beamer로 조판할 때는 <code>classoptions: ""</code>처럼 front matter에서 직접 정리해 주는 것이 안전하다.</li>
+</ul>
+
+<nav class="pager"><a href="ndhmdwriter-manual.html">← ndhmdWriter 설명서 (참조편)</a></nav>
+  </main>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

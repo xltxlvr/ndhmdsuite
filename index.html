@@ -113,6 +113,9 @@
   .box ul{margin:0; padding-left:1.2em; color:var(--muted); font-size:.95rem}
   .box li{margin:4px 0}
 
+  a.doclink{text-decoration:none; color:inherit}
+  a.doclink:hover{border-color:var(--accent)}
+  a.doclink h3{font-family:inherit}
   .soon{
     border:1.5px dashed var(--line); border-radius:14px; padding:36px 24px;
     text-align:center; color:var(--muted);
@@ -212,8 +215,8 @@
     <div class="wrap">
       <h2><span data-l="ko">버전과 최근 변경</span><span data-l="en">Versions &amp; recent changes</span></h2>
       <p class="sub">
-        <span data-l="ko">현재 버전과 최근 수정 내용을 요약했습니다. 전체 이력은 각 저장소의 CHANGELOG를 참고하세요.</span>
-        <span data-l="en">Current versions and a short summary of recent changes. See each repository's CHANGELOG for the full history.</span>
+        <span data-l="ko">현재 버전과 최근 수정 내용을 요약했습니다. 전체 이력: <a href="docs/ndhmdwriter-changelog.html">ndhmdwriter</a> · <a href="docs/ndhmd4tex-changelog.html">ndhmd4tex·ndhmd2html</a></span>
+        <span data-l="en">Current versions and a short summary of recent changes. Full history (Korean): <a href="docs/ndhmdwriter-changelog.html">ndhmdwriter</a> · <a href="docs/ndhmd4tex-changelog.html">ndhmd4tex·ndhmd2html</a></span>
       </p>
       <div class="vers">
         <div class="ver"><b>ndhmdwriter</b><span class="n">0.9.5</span></div>
@@ -298,13 +301,26 @@
     <div class="wrap">
       <h2><span data-l="ko">사용법</span><span data-l="en">Usage</span></h2>
       <p class="sub">
-        <span data-l="ko">ndhmdwriter, ndhmd4tex, ksruncltex의 사용 안내를 이곳에 추가할 예정입니다.</span>
-        <span data-l="en">Guides for ndhmdwriter, ndhmd4tex and ksruncltex will be added here.</span>
+        <span data-l="ko">설명서는 한국어로 제공되며, 검색창으로 전체 문서를 한 번에 찾을 수 있습니다.</span>
+        <span data-l="en">The manuals are written in Korean. A search box covers all documents at once.</span>
       </p>
-      <div class="soon">
-        <span data-l="ko">준비 중입니다. 그동안은 각 GitHub 저장소의 문서를 참고해 주세요.</span>
-        <span data-l="en">Coming soon. In the meantime, see the documentation in each GitHub repository.</span>
+      <div class="grid">
+        <a class="card doclink" href="docs/quickstart.html">
+          <h3><span data-l="ko">빠른 시작</span><span data-l="en">Quick start</span></h3>
+          <p><span data-l="ko">설치부터 첫 PDF를 뽑기까지만 다룬 짧은 안내.</span><span data-l="en">A short guide from installation to your first PDF.</span></p>
+        </a>
+        <a class="card doclink" href="docs/ndhmdwriter-manual.html">
+          <h3><span data-l="ko">ndhmdWriter 설명서</span><span data-l="en">ndhmdWriter manual</span></h3>
+          <p><span data-l="ko">화면 구성부터 단축키까지 메뉴 순서로 적은 참조 설명서.</span><span data-l="en">Reference manual, from the screen layout to every shortcut.</span></p>
+        </a>
+        <a class="card doclink" href="docs/ndhmd4tex-dialect-guide.html">
+          <h3><span data-l="ko">ndhmd4tex 방언 사양서</span><span data-l="en">ndhmd4tex dialect guide</span></h3>
+          <p><span data-l="ko">ndhmarkdown 문법 전체를 정리한 사양서.</span><span data-l="en">The complete ndhmarkdown syntax specification.</span></p>
+        </a>
       </div>
+      <p class="sub" style="margin-top:18px">
+        <a href="docs/index.html"><span data-l="ko">문서 전체 보기 →</span><span data-l="en">All documents →</span></a>
+      </p>
     </div>
   </section>
 </main>

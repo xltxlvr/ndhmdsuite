@@ -1,41 +1,19 @@
-# ndhmdSuite
+# ndhmdSuite 홈페이지
 
-Version: 4.35
+GitHub Pages 용 정적 사이트입니다.
 
-Publisher: ndhmd
+- `index.html` — 홈(다운로드, 구성 요소, 최근 변경, 설치, 문서 링크)
+- `docs/` — **생성된** 문서 쪽(손대지 마세요; `docs.css`, `docs.js` 만 직접 고치는 파일)
+- `docs-src/` — 문서 원고(markdown). 여기를 고치고 아래 명령으로 다시 만듭니다.
+- `tools/build_docs.py` — 원고 → `docs/*.html` 변환 스크립트
 
-ndhmdSuite is a comprehensive toolset designed for efficient document authoring and compilation. The suite features the main dedicated editor (ndhmdwriter) alongside integrated auxiliary tools and compilation wrappers like ksruncltex.
+## 문서 다시 만들기
 
-* Homepage: https://xltxlvr.github.io/ndhmdsuite
+필요: Python 3, [pandoc](https://pandoc.org)(변경 이력용), `ndhmd2html.py`(+ PyYAML, Pillow)
 
-## Included Components
-ndhmdwriter: The primary graphical editor and interface for the suite.
+```
+python3 tools/build_docs.py --n2h /경로/ndhmd2html.py
+```
 
-ksruncltex: Bundled compilation wrapper, automatically configured during the installation process.
-
-Resources: Core configuration and resource files, maintained in the user profile directory.
-
-## Installation
-Download the ndhmdSuite_Setup.exe installer.
-
-Run the executable. The setup supports both All Users (requires Administrator privileges) and Current User installation modes.
-
-If a previous version of ndhmdSuite is detected on your system, the installer will prompt you to automatically and cleanly remove it before proceeding.
-
-Select your preferred language (English or Korean) and follow the setup wizard.
-
-## Automated Setup Actions
-During installation, the setup executable automatically performs the following system configurations:
-
-Environment Variables: Appends the installation directory to your system or user PATH, allowing seamless command-line access to the suite's tools from any directory.
-
-Resource Deployment: Copies necessary user resources directly to %USERPROFILE%\ndhmd4tex\.
-
-Script Initialization: Silently executes the ksruncltex installation batch script to register necessary compilation elements.
-
-Shortcuts: Generates Desktop and Start Menu shortcuts for ndhmdwriter.exe.
-
-## Uninstallation
-ndhmdSuite can be entirely removed via the Windows "Apps & features" or "Add or Remove Programs" settings.
-
-The uninstaller is designed for a clean rollback. It will safely remove the application directory from your PATH environment variable and delete the installed binaries. (Note: User-generated files or specific configurations in the %USERPROFILE%\ndhmd4tex\ directory may need to be removed manually if no longer needed.)
+설명서의 raw LaTeX 표(`tblr`)는 변환 전에 자동으로 파이프 표로 바꿉니다(원고는 그대로).
+새 문서를 더하려면 `tools/build_docs.py` 위쪽의 `DOCS`, `CARDS` 목록에 한 줄 추가하세요.
