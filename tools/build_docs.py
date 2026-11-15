@@ -33,7 +33,7 @@ DOCS = [
          title="빠른 시작", sub="ndhmdSuite 설치부터 첫 PDF까지",
          group="start", number=False),
     dict(slug="ndhmdwriter-manual", src="ndhmdwriter-manual.md", kind="ndhmd",
-         title="ndhmdWriter 설명서 (참조편)", sub="ndhmdWriter 0.9.5 기준 · 메뉴와 화면 순서로 적은 기능 사전",
+         title="ndhmdWriter 설명서 (참조편)", sub="ndhmdWriter 0.9 기준 · 메뉴와 화면 순서로 적은 기능 사전",
          group="ref", number=True, tblr=True),
     dict(slug="ndhmd4tex-dialect-guide", src="ndhmd4tex-dialect-guide.md", kind="ndhmd",
          title="ndhmd4tex 방언 사양서", sub="ndhmd4tex 0.22 기준 · ndhmarkdown 문법 전체",
