@@ -711,7 +711,7 @@ RTLtypeset:                              # 풀어 쓴 꼴
 <tr><td>작은따옴표 <code>'</code></td><td><code>`</code> (백틱 1개)</td><td><code>'</code> (그대로)</td><td>아래 참고</td></tr>
 </tbody>
 </table></div>
-<p><strong>판정 방식</strong>: 문자열 맨 앞이거나, 공백 / <code>(</code> <code>[</code> <code>{</code> <code>*</code> <code>~</code> 바로 뒤에 오는 따옴표만 “여는” 것으로 인식해 먼저 치환한다. 그 외에 남은 따옴표는 전부 “닫는” 것으로 간주해 일괄 치환한다. <strong>닫는 따옴표 뒤에 무엇이 오는지는 검사하지 않는다</strong> — 한국어는 <code>"인용"을</code>처럼 조사가 공백 없이 바로 붙는 경우가 많아서, pandoc처럼 “뒤에 공백/구두점이 오는가”로 닫는 위치를 판정하는 방식은 쓸 수 없기 때문이다.</p>
+<p><strong>판정 방식</strong>: 문자열 맨 앞이거나, 공백 / <code>(</code> <code>[</code> <code>{</code> <code>*</code> <code>~</code> / CJK 전각 여는 괄호 (<code>（</code> <code>［</code> <code>｛</code> <code>〈</code> <code>《</code> <code>「</code> <code>『</code> <code>【</code> <code>〔</code> <code>〖</code> <code>〘</code> <code>〚</code> <code>｢</code>, 0.22.3) 바로 뒤에 오는 따옴표만 “여는” 것으로 인식해 먼저 치환한다. 그 외에 남은 따옴표는 전부 “닫는” 것으로 간주해 일괄 치환한다. <strong>닫는 따옴표 뒤에 무엇이 오는지는 검사하지 않는다</strong> — 한국어는 <code>"인용"을</code>처럼 조사가 공백 없이 바로 붙는 경우가 많아서, pandoc처럼 “뒤에 공백/구두점이 오는가”로 닫는 위치를 판정하는 방식은 쓸 수 없기 때문이다.</p>
 <pre><code class="language-markdown">그는 "안녕하세요"라고 말했다.
 → 그는 ``안녕하세요''라고 말했다.
 

@@ -27,6 +27,7 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#ndhmd4texpy-0223-ndhmd2htmlpy-041-그대로">ndhmd4tex.py 0.22.3, ndhmd2html.py 0.4.1 그대로</a></li>
 <li><a href="#ndhmd4texpy-0222-ndhmd2htmlpy-041">ndhmd4tex.py 0.22.2, ndhmd2html.py 0.4.1</a></li>
 <li><a href="#ndhmd4texpy-0221-ndhmd2htmlpy-040-그대로">ndhmd4tex.py 0.22.1, ndhmd2html.py 0.4.0 그대로</a></li>
 <li><a href="#ndhmd4texpy-0220-ndhmd2htmlpy-040">ndhmd4tex.py 0.22.0, ndhmd2html.py 0.4.0</a></li>
@@ -169,6 +170,10 @@
       <p class="doc-sub">최신 항목이 위에 있습니다</p>
     </div>
 <h1 id="ndhmd4tex-변경-이력">ndhmd4tex 변경 이력<a class="anchor" href="#ndhmd4tex-변경-이력" aria-label="링크">#</a></h1>
+<h2 id="ndhmd4texpy-0223-ndhmd2htmlpy-041-그대로">ndhmd4tex.py 0.22.3, ndhmd2html.py 0.4.1 그대로<a class="anchor" href="#ndhmd4texpy-0223-ndhmd2htmlpy-041-그대로" aria-label="링크">#</a></h2>
+<ul>
+<li><strong>스마트 따옴표: CJK 전각 여는 괄호 뒤의 따옴표도 여는 따옴표로 판정한다.</strong> <code>（"인용"）</code>, <code>「"인용"」</code>, <code>《"제목"》</code> 에서 앞 따옴표가 닫는 따옴표로 나가던 것을 고쳤다. 대상은 <code>（［｛〈《「『【〔〖〘〚｢</code>. <code>quotes</code> 의 모든 모드와 ndhmd2html 에 똑같이 적용된다.</li>
+</ul>
 <h2 id="ndhmd4texpy-0222-ndhmd2htmlpy-041">ndhmd4tex.py 0.22.2, ndhmd2html.py 0.4.1<a class="anchor" href="#ndhmd4texpy-0222-ndhmd2htmlpy-041" aria-label="링크">#</a></h2>
 <ul>
 <li><strong><code>external</code> 결과를 <code>||</code> 로 문장에 이을 때의 버그 수정.</strong> 변환기가 결과 앞뒤에 두르던 빈 줄이 <code>||</code> 바로 옆에도 들어가서, "빈 줄 뒤의 <code>||</code> = 줄을 바꿔 잇기" 규칙이 원고에 없는데도 걸렸다 (<code>markdown</code> 결과 뒤에 <code>\\</code> 가 생기고, HTML 에서는 <code>math</code> 결과 뒤에 <code>&lt;br /&gt;</code> 가 생겼다). 이제 <code>||</code> 옆에는 빈 줄을 두지 않는다.</li>

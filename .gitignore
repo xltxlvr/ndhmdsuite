@@ -57,3 +57,6 @@ compile_commands.json
 
 # mac
 *.DS_Store
+
+# python
+__pycache__/

@@ -236,6 +236,29 @@ def uncomment_missing_figure(md, srcdir):
     return pat.sub(rep, md)
 
 
+# ───────────────────────── 파일 쓰기 ─────────────────────────
+
+def write_text(path, text):
+    """기존 파일이 읽기 전용이어도 덮어쓸 수 있게 먼저 지우고 쓴다."""
+    path = Path(path)
+    if path.exists():
+        path.unlink()
+    path.write_text(text, encoding="utf-8")
+
+
+def copy_files(src_dir, dst_dir):
+    """권한·시간 정보는 복사하지 않고(copyfile) 내용만 복사한다.
+    copytree/copy2 는 원본의 읽기 전용 권한까지 복사해서, 다음 빌드 때 덮어쓰기가 막힌다."""
+    dst_dir = Path(dst_dir)
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    for f in Path(src_dir).iterdir():
+        if f.is_file():
+            dst = dst_dir / f.name
+            if dst.exists():
+                dst.unlink()
+            shutil.copyfile(f, dst)
+
+
 # ───────────────────────── 변환 ─────────────────────────
 
 def n2h_cmd(arg):
@@ -437,8 +460,8 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td)
         if (SRC / "img").is_dir():           # 그림은 변환할 때도, 결과 폴더에도 둔다
-            shutil.copytree(SRC / "img", tmp / "img")
-            shutil.copytree(SRC / "img", OUT / "img", dirs_exist_ok=True)
+            copy_files(SRC / "img", tmp / "img")
+            copy_files(SRC / "img", OUT / "img")
         for spec in built_specs:
             print(f"* {spec['src']}")
             md = (SRC / spec["src"]).read_text(encoding="utf-8")
@@ -465,7 +488,7 @@ def main():
             if k + 1 < len(same):
                 pn.append(f'<a class="next" href="{same[k+1]["slug"]}.html">{html.escape(same[k+1]["title"])} →</a>')
             pager = '<nav class="pager">' + "".join(pn) + "</nav>" if pn else ""
-            (OUT / f"{spec['slug']}.html").write_text(page(spec, body, toc, math, pager), encoding="utf-8")
+            write_text(OUT / f"{spec['slug']}.html", page(spec, body, toc, math, pager))
             index.extend(search_sections(body, spec, heads))
             print(f"  → docs/{spec['slug']}.html ({len(heads)}개 헤딩)")
 
@@ -473,9 +496,8 @@ def main():
         print("\n주의:", *sorted(set(warnings)), sep="\n  ")
 
     if not a.only:
-        (OUT / "index.html").write_text(index_page(None), encoding="utf-8")
-        (OUT / "search-index.json").write_text(json.dumps(index, ensure_ascii=False, separators=(",", ":")),
-                                               encoding="utf-8")
+        write_text(OUT / "index.html", index_page(None))
+        write_text(OUT / "search-index.json", json.dumps(index, ensure_ascii=False, separators=(",", ":")))
         print(f"* docs/index.html, docs/search-index.json ({len(index)}개 절)")
 
 
