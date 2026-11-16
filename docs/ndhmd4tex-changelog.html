@@ -27,6 +27,8 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#kskoreanbibsty-04-ndhmd4texpy-0242-그대로">kskoreanbib.sty 0.4 (ndhmd4tex.py 0.24.2 그대로)</a></li>
+<li><a href="#ndhmd4texpy-0242">ndhmd4tex.py 0.24.2</a></li>
 <li><a href="#ndhmd4texpy-0241-그대로-ndhmd2htmlpy-050">ndhmd4tex.py 0.24.1 그대로, ndhmd2html.py 0.5.0</a></li>
 <li><a href="#ndhmd4texpy-0241-ndhmd2htmlpy-042-그대로">ndhmd4tex.py 0.24.1, ndhmd2html.py 0.4.2 그대로</a></li>
 <li><a href="#ndhmd4texpy-0240-ndhmd2htmlpy-042-그대로">ndhmd4tex.py 0.24.0, ndhmd2html.py 0.4.2 그대로</a></li>
@@ -176,6 +178,14 @@
       <p class="doc-sub">최신 항목이 위에 있습니다</p>
     </div>
 <h1 id="ndhmd4tex-변경-이력">ndhmd4tex 변경 이력<a class="anchor" href="#ndhmd4tex-변경-이력" aria-label="링크">#</a></h1>
+<h2 id="kskoreanbibsty-04-ndhmd4texpy-0242-그대로">kskoreanbib.sty 0.4 (ndhmd4tex.py 0.24.2 그대로)<a class="anchor" href="#kskoreanbibsty-04-ndhmd4texpy-0242-그대로" aria-label="링크">#</a></h2>
+<ul>
+<li><strong>numeric: 논문이 아닌 <code>kobib</code> 항목(book, booklet …)의 제목도 <code>『제목』</code> 으로 찍는다.</strong> 이전에는 <code>article</code> 만 서식을 받아 <code>@booklet</code> 등의 한국어 제목이 서식 없이 나왔다. 논문은 그대로 <code>「제목」,</code>. 영문 항목에는 영향이 없다.</li>
+</ul>
+<h2 id="ndhmd4texpy-0242">ndhmd4tex.py 0.24.2<a class="anchor" href="#ndhmd4texpy-0242" aria-label="링크">#</a></h2>
+<ul>
+<li><strong>bibtex 방식의 <code>\bibliography</code> 에 <code>.bib</code> 확장자를 붙인다</strong>(<code>\bibliography{a.bib,ref.bib}</code>). 이전에는 확장자 없이 <code>\bibliography{a,ref}</code> 를 냈다. TeX Live 2023 의 bibtex 에서 확장자를 붙여도 그대로 읽히는 것을 확인했다. biblatex 의 <code>\addbibresource</code> 는 원래 확장자를 붙인다.</li>
+</ul>
 <h2 id="ndhmd4texpy-0241-그대로-ndhmd2htmlpy-050">ndhmd4tex.py 0.24.1 그대로, ndhmd2html.py 0.5.0<a class="anchor" href="#ndhmd4texpy-0241-그대로-ndhmd2htmlpy-050" aria-label="링크">#</a></h2>
 <ul>
 <li><strong>ndhmd2html: <code>bibliography:</code> 로 문헌 목록을 만든다(<code>.bbl</code> 에서).</strong>

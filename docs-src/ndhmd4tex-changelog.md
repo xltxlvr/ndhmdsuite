@@ -1,5 +1,17 @@
 # ndhmd4tex 변경 이력
 
+## kskoreanbib.sty 0.4 (ndhmd4tex.py 0.24.2 그대로)
+
+- **numeric: 논문이 아닌 `kobib` 항목(book, booklet …)의 제목도 `『제목』` 으로 찍는다.** 이전에는
+  `article` 만 서식을 받아 `@booklet` 등의 한국어 제목이 서식 없이 나왔다. 논문은 그대로 `「제목」,`.
+  영문 항목에는 영향이 없다.
+
+## ndhmd4tex.py 0.24.2
+
+- **bibtex 방식의 `\bibliography` 에 `.bib` 확장자를 붙인다**(`\bibliography{a.bib,ref.bib}`). 이전에는
+  확장자 없이 `\bibliography{a,ref}` 를 냈다. TeX Live 2023 의 bibtex 에서 확장자를 붙여도 그대로
+  읽히는 것을 확인했다. biblatex 의 `\addbibresource` 는 원래 확장자를 붙인다.
+
 ## ndhmd4tex.py 0.24.1 그대로, ndhmd2html.py 0.5.0
 
 - **ndhmd2html: `bibliography:` 로 문헌 목록을 만든다(`.bbl` 에서).**
