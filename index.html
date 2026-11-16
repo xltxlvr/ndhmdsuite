@@ -152,7 +152,7 @@
 
 <main id="top">
   <div class="wrap hero">
-    <span class="eyebrow">Version 4.54 · Windows</span>
+    <span class="eyebrow">Version 4.55 · Windows</span>
     <h1>ndhmdSuite</h1>
     <p class="lead">
       <span data-l="ko">문서 저술과 조판을 위한 통합 도구 모음. 전용 편집기 ndhmdwriter와 변환기 ndhmd4tex, 컴파일 래퍼 ksruncltex를 한 번에 설치합니다.</span>
@@ -197,6 +197,7 @@
             <span data-l="en">Converts ndhmd-flavoured markdown into TeX and can assemble multiple manuscripts into a single book.</span>
           </p>
           <a class="repo" href="https://github.com/xltxlvr/ndhmd4tex" target="_blank" rel="noopener">github.com/xltxlvr/ndhmd4tex →</a>
+          <a class="repo" href="https://github.com/xltxlvr/ndhmd4tex/tree/main/samples" target="_blank" rel="noopener" style="margin-top:6px"><span data-l="ko">예제 보기 →</span><span data-l="en">Browse samples →</span></a>
         </article>
         <article class="card">
           <h3>ksruncltex</h3>
@@ -219,30 +220,31 @@
         <span data-l="en">Current versions and a short summary of recent changes. Full history (Korean): <a href="docs/ndhmdwriter-changelog.html">ndhmdwriter</a> · <a href="docs/ndhmd4tex-changelog.html">ndhmd4tex·ndhmd2html</a></span>
       </p>
       <div class="vers">
-        <div class="ver"><b>ndhmdwriter</b><span class="n">0.9.10</span></div>
-        <div class="ver"><b>ndhmd4tex</b><span class="n">0.22.3</span></div>
-        <div class="ver"><b>ndhmd2html</b><span class="n">0.4.1</span></div>
+        <div class="ver"><b>ndhmdwriter</b><span class="n">0.10.1</span></div>
+        <div class="ver"><b>ndhmd4tex</b><span class="n">0.24.1</span></div>
+        <div class="ver"><b>ndhmd2html</b><span class="n">0.5.0</span></div>
         <div class="ver"><b>ndhmdsync</b><span class="n">0.5.6</span></div>
+        <div class="ver"><b>ksruncltex</b><span class="n">rev8</span></div>
       </div>
       <div class="two">
         <div class="box log">
           <h3>ndhmdwriter</h3>
           <ul>
+            <li><i>0.10.1</i><span><span data-l="ko">문헌 인용 삽입: <code>citekey 삽입</code> 버튼 추가, 삽입 형식을 <code>[@citekey]</code>로, 다크 모드 안내 글씨 수정</span><span data-l="en">Citation insertion: new <code>Insert citekey</code> button, inserts <code>[@citekey]</code>, fixed unreadable hint text in dark mode</span></span></li>
+            <li><i>0.10.0</i><span><span data-l="ko">ndhmd2html 0.5.0의 <code>--bibharvest</code> 지원 (biber 문헌 목록 준비)</span><span data-l="en">Support for ndhmd2html 0.5.0 <code>--bibharvest</code> (preparing biber bibliographies)</span></span></li>
             <li><i>0.9.10</i><span><span data-l="ko">AI 도우미 설정창 개선</span><span data-l="en">Improve user interface of AI Assistant</span></span></li>
             <li><i>0.9.8</i><span><span data-l="ko">웹 도움말</span><span data-l="en">Reference Manual on the web</span></span></li>
             <li><i>0.9.6</i><span><span data-l="ko">외부 도구에 스크립트 등록</span><span data-l="en">Allow python and lua scripts in external tools</span></span></li>
-            <li><i>0.9.3</i><span><span data-l="ko">조각 그림에 “실행 후 자르기” 옵션 추가</span><span data-l="en">Jigsaw figures: new “crop after run” option</span></span></li>
-            <li><i>0.9.0</i><span><span data-l="ko">ndhmd4tex 0.22의 <code>external</code> 블록 지원</span><span data-l="en">Support for ndhmd4tex 0.22 <code>external</code> blocks</span></span></li>
           </ul>
         </div>
         <div class="box log">
           <h3>ndhmd4tex · ndhmd2html</h3>
           <ul>
+            <li><i>0.24.1</i><span><span data-l="ko">한국어 문헌: <code>korean.lbx</code> 정리, 한국어 항목의 “et al.”을 “외”로 (kskoreanbib 0.3). ndhmd2html 0.5.0: <code>.bbl</code>에서 문헌 목록 생성</span><span data-l="en">Korean bibliographies: cleaned up <code>korean.lbx</code>, Korean entries use “외” for “et al.” (kskoreanbib 0.3). ndhmd2html 0.5.0: builds the bibliography from <code>.bbl</code></span></span></li>
+            <li><i>0.24.0</i><span><span data-l="ko"><code>bibliography:</code>의 <code>lang:</code>로 한국어 문헌 지원</span><span data-l="en">Korean bibliography support via <code>lang:</code> in <code>bibliography:</code></span></span></li>
+            <li><i>0.23.0</i><span><span data-l="ko">front matter <code>bibliography:</code>로 <code>.bib</code> 선언과 문헌 목록 출력</span><span data-l="en">front matter <code>bibliography:</code> declares <code>.bib</code> files and prints the reference list</span></span></li>
             <li><i>0.22.3</i><span><span data-l="ko">스마트 따옴표 동작 개선 (ndhmd2html 0.4.1)</span><span data-l="en">Fix smart quotes actions after CJK parenthesis (ndhmd2html 0.4.1)</span></span></li>
-            <li><i>0.22.2</i><span><span data-l="ko"><code>external</code> 결과를 <code>||</code>로 이을 때의 줄바꿈 오류 수정 (ndhmd2html 0.4.1)</span><span data-l="en">Fixed a stray line break when joining <code>external</code> output with <code>||</code> (ndhmd2html 0.4.1)</span></span></li>
-            <li><i>0.22.1</i><span><span data-l="ko"><code>external</code> 결과 종류 <code>math</code> 추가</span><span data-l="en">New <code>math</code> result type for <code>external</code></span></span></li>
-            <li><i>0.22.0</i><span><span data-l="ko">외부 도구 결과를 그림·글로 받는 <code>external</code> 블록 도입 (ndhmd2html 0.4.0)</span><span data-l="en">New <code>external</code> block: pull figures or text from external tools (ndhmd2html 0.4.0)</span></span></li>
-            <li><i>0.21.2</i><span><span data-l="ko">RTL 블록과 인라인 구간 구분</span><span data-l="en">RTL blocks distinguished from inline spans</span></span></li>
+            <li><i>0.22.2</i><span><span data-l="ko"><code>external</code> 결과를 <code>||</code>로 이을 때의 줄바꿈 오류 수정</span><span data-l="en">Fixed a stray line break when joining <code>external</code> output with <code>||</code></span></span></li>
           </ul>
         </div>
       </div>
@@ -317,6 +319,10 @@
           <h3><span data-l="ko">ndhmd4tex 방언 사양서</span><span data-l="en">ndhmd4tex dialect guide</span></h3>
           <p><span data-l="ko">ndhmarkdown 문법 전체를 정리한 사양서.</span><span data-l="en">The complete ndhmarkdown syntax specification.</span></p>
         </a>
+        <a class="card doclink" href="https://github.com/xltxlvr/ndhmd4tex/tree/main/samples" target="_blank" rel="noopener">
+          <h3><span data-l="ko">ndhmd4tex 예제 ↗</span><span data-l="en">ndhmd4tex samples ↗</span></h3>
+          <p><span data-l="ko">논문·에세이·Beamer·참고문헌 등 바로 변환해 볼 수 있는 예제 원고 (GitHub).</span><span data-l="en">Sample manuscripts you can convert right away: article, essay, Beamer, bibliography and more (GitHub).</span></p>
+        </a>
       </div>
       <p class="sub" style="margin-top:18px">
         <a href="docs/index.html"><span data-l="ko">문서 전체 보기 →</span><span data-l="en">All documents →</span></a>
@@ -327,7 +333,7 @@
 
 <footer>
   <div class="wrap">
-    <span>ndhmdSuite 4.35 · Publisher: ndhmd</span>
+    <span>ndhmdSuite 4.55 · Publisher: ndhmd</span>
     <span>
       <a href="https://github.com/xltxlvr/ndhmdwriter" target="_blank" rel="noopener">ndhmdwriter</a> ·
       <a href="https://github.com/xltxlvr/ndhmd4tex" target="_blank" rel="noopener">ndhmd4tex</a> ·

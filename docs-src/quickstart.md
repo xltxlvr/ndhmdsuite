@@ -127,4 +127,5 @@ markdown → tex → PDF까지 한 번에 끝난다. 엔진은 `--pdfxe`(xelatex
 
 - 메뉴와 화면을 하나씩 알고 싶다면 [ndhmdWriter 설명서](ndhmdwriter-manual.html)
 - 문법을 찾아보려면 [ndhmd4tex 방언 사양서](ndhmd4tex-dialect-guide.html). 앱에서는 **도움말 ▶ ndhmarkdown ▶ 사양서 / 치트시트**로 PDF판을 열 수 있다.
+- 바로 변환해 볼 수 있는 [ndhmd4tex 예제](https://github.com/xltxlvr/ndhmd4tex/tree/main/samples)(GitHub): 논문, 에세이, Beamer, 참고문헌 등
 - 단축키 전체는 설명서 [부록 A](ndhmdwriter-manual.html#app-shortcuts)

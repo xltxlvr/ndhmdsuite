@@ -43,6 +43,8 @@
 <li><a href="#id-22-모르는-키는-매크로로-넘어간다">2.2. 모르는 키는 매크로로 넘어간다</a></li>
 <li><a href="#id-23-maketitle-tocloft-제목목차-자동-삽입">2.3. maketitle / tocloft — 제목·목차 자동 삽입</a></li>
 <li><a href="#id-24-rtltypeset-오른쪽에서-왼쪽으로-쓰는-문자">2.4. RTLtypeset — 오른쪽에서 왼쪽으로 쓰는 문자</a></li>
+<li><a href="#id-25-bibliography-bib-파일-선언과-문헌-목록-출력">2.5. bibliography — .bib 파일 선언과 문헌 목록 출력</a></li>
+<li><a href="#id-251-lang-한국어-문헌">2.5.1. lang — 한국어 문헌</a></li>
 </ul></details></li>
 <li><a href="#id-3-헤딩">3. 헤딩</a></li>
 <li><details><summary><a href="#id-4-문단과-줄바꿈">4. 문단과 줄바꿈</a></summary><ul>
@@ -603,6 +605,68 @@ RTLtypeset:                              # 풀어 쓴 꼴
 <li>코드 스팬 안의 RTL 글자는 감싸지 않는다(고정폭 글꼴에 글리프가 있어야 보인다). <code>title:</code>·<code>author:</code>의 RTL 글자도 감싸지 않으니 필요하면 직접 <code>\texthebrew{…}</code>로 쓴다.</li>
 <li><strong>확인한 범위</strong>: <code>polyglossia</code>(기본값)는 oblivoir 클래스에서 XeTeX와 LuaTeX 양쪽으로 인라인 RTL 구간이 바르게 조판되는 것을 확인했다. <code>primitive</code>와 <code>babel</code>은 XeTeX + fontspec(article)에서 확인했고, 이 둘의 LuaTeX 쪽과 oblivoir 조합은 확인하지 않았다.</li>
 <li><code>\DocumentMetadata</code>가 없는 문서에서 polyglossia 방식이 <code>\UseMathForPositioningText</code>가 정의되지 않았다는 오류를 내면(bidi 쪽으로 추정) <code>preamble:</code>에 <code>\providecommand\UseMathForPositioningText{}</code>를 넣는다. <code>\DocumentMetadata</code>를 선언한 문서에서는 나지 않는다.</li>
+</ul>
+<h3 id="id-25-bibliography-bib-파일-선언과-문헌-목록-출력">2.5. <code>bibliography</code> — <code>.bib</code> 파일 선언과 문헌 목록 출력<a class="anchor" href="#id-25-bibliography-bib-파일-선언과-문헌-목록-출력" aria-label="링크">#</a></h3>
+<p><code>.bib</code> 파일을 쓰는 문서는 front matter에 선언해 두면 프리앰블과 문서 끝에 필요한 명령이 알아서 들어간다.</p>
+<pre><code class="language-yaml">bibliography:
+  backend: biber            # biber | bibtex (생략하면 자동 판정)
+  resource: [a.bib, ref.bib]
+  style: authoryear
+  title: 문헌 목록
+  lang: en              # en | ko | en+ko — 한국어 문헌은 2.5.1</code></pre>
+<p>파일 이름만 적는 줄임 표기도 된다(<code>bibliography: a.bib</code>, <code>bibliography: [a.bib, b.bib]</code>, <code>bibliography: "a.bib, b.bib"</code>). <code>.bib</code> 확장자는 적어도 되고 빼도 된다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th></th><th>biblatex (<code>backend: biber</code>)</th><th>bibtex (<code>backend: bibtex</code>)</th></tr>
+</thead>
+<tbody>
+<tr><td>프리앰블 끝</td><td><code>\usepackage[backend=biber,style=…]{biblatex}</code> + <code>\addbibresource{a.bib}</code></td><td>—</td></tr>
+<tr><td>문서 끝</td><td><code>\printbibliography[title={…}]</code></td><td><code>\bibliographystyle{…}</code> + <code>\bibliography{a,ref}</code></td></tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>backend 판정</strong>: <code>biber</code>는 biblatex를 쓴다는 뜻이다(<code>biblatex</code>도 같은 뜻으로 받는다). <code>bibtex</code>는 전통 방식이다. 생략하면 프리앰블이 biblatex를 이미 불러 두었는지로 정한다.</li>
+<li><strong><code>natbib=true</code></strong>: 이 도구가 biblatex를 불러 줄 때 <code>style</code>이 <code>authoryear</code> 계열(<code>authoryear</code>, <code>authoryear-comp</code> 등)이면 <code>natbib=true</code>를 함께 넣는다. <code>[@p:키]</code>, <code>[@t:키]</code>(<code>\citep</code>, <code>\citet</code>)가 biblatex에서도 그대로 동작한다. 번호 방식 등 다른 스타일에는 넣지 않는다. 다른 옵션을 쓰고 싶으면 <code>preamble:</code>에서 <code>\usepackage[…]{biblatex}</code>를 직접 부르면 된다(아래).</li>
+<li><strong>이미 biblatex를 불렀으면</strong> 패키지를 다시 넣지 않고 <code>\addbibresource</code>만 더한다. 이때 <code>style</code>은 무시하고(스타일은 <code>\usepackage[style=…]{biblatex}</code>에서 정한다) 경고한다. <code>backend: bibtex</code>인데 biblatex가 로드되어 있으면 모순이라 biblatex 방식으로 처리하며 경고한다.</li>
+<li><strong><code>style</code></strong>: biblatex에서는 패키지 옵션 <code>style=</code>, bibtex에서는 <code>\bibliographystyle</code>의 인자다. bibtex에서 생략하면 natbib을 불렀을 때 <code>plainnat</code>, 아니면 <code>plain</code>이다.</li>
+<li><strong><code>title</code></strong>: biblatex는 <code>\printbibliography[title={…}]</code>로 넘기고, bibtex는 <code>\bibname</code>과 <code>\refname</code>을 바꾼다. 생략하면 클래스·언어 패키지의 기본 제목이 나온다.</li>
+<li><strong>출력 위치</strong>: 기본은 <code>\end{document}</code> 바로 앞이다. 다른 곳에 두려면 원고에 <code>\printbibliography</code>나 <code>\bibliography{…}</code>를 직접 쓴다. 이미 썼으면 출력 명령은 넣지 않고 파일 선언만 한다. <code>thebibliography</code> 환경(17.2)이 있을 때도 마찬가지다. verbatim 안이나 주석 안에 있는 것은 쓴 것으로 치지 않는다.</li>
+<li><code>\nocite{*}</code>가 필요하면 본문에 직접 쓴다. 선언한 <code>.bib</code>가 원고 폴더에 없으면 경고하지만 (TeX가 다른 경로에서 찾을 수도 있다) 변환은 계속한다.</li>
+<li>컴파일할 때 biber나 bibtex를 돌리는 것은 컴파일 도구의 몫이다. <code>--latexmk</code>는 알아서 고른다. ksruncltex로 컴파일한다면 front matter의 <code>compileoption:</code>에 <code>--biber</code>를 준다(biber 사용). HTML 변환(아래 ndhmd2html)에 <code>.bbl</code>이 필요하면 <code>--copybbl</code>도 함께 준다. <code>--copybbl</code>은 output-dir에 생성된 <code>.bbl</code>만 원고 폴더로 복사해 오는 옵션이다.</li>
+</ul>
+<pre><code class="language-yaml">compileoption: --biber --copybbl</code></pre>
+<p>- <code>--pandoc</code>/<code>--mmd</code> 모드에서는 이 키를 처리하지 않고 경고한다. - <strong>ndhmd2html</strong>: HTML에서는 LaTeX와 biber/bibtex을 먼저 돌려 만든 <code>&lt;이름&gt;.bbl</code>에서 목록을 만든다. ksruncltex로 컴파일했다면 <code>compileoption: --biber --copybbl</code>로 <code>.bbl</code>을 원고 폴더에 가져와야 한다. <code>.bbl</code>이 없으면 목록 자리에 “LaTeX과 biber/bibtex을 먼저 실행하여야 문헌 목록이 생성됩니다.” 안내를 넣는다. bibtex 형식 <code>.bbl</code>은 바로 읽고, biber 형식은 <code>bbl2bibitem.lua</code>가 만든 <code>&lt;이름&gt;-thebib.tex</code>를 읽는다(<code>--bibharvest</code>가 만든다). 본문의 <code>[@키]</code>는 목록 항목으로 링크되며 번호 방식은 <code>[1]</code>, 저자-연도는 <code>Knuth (1984)</code>, <code>(Knuth, 1984)</code>로 나간다. - 한국어 문헌(<code>lang: ko</code>, <code>en+ko</code>)은 2.5.1. - 이 키는 문서 단위 설정이라 매핑이 아니라 front matter(또는 <code>setup:</code>으로 물려주는 헤더)에 쓴다.</p>
+<h3 id="id-251-lang-한국어-문헌">2.5.1. <code>lang</code> — 한국어 문헌<a class="anchor" href="#id-251-lang-한국어-문헌" aria-label="링크">#</a></h3>
+<p>한국어 문헌이 들어가는 문서는 <code>lang</code>을 준다. 한국어 문헌 서식은 <code>kskoreanbib.sty</code>(와 <code>korean.lbx</code>)가 맡으며 biblatex+biber가 필요하다.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr><th><code>lang</code></th><th>하는 일</th></tr>
+</thead>
+<tbody>
+<tr><td><code>en</code> (기본)</td><td>지금까지와 같다.</td></tr>
+<tr><td><code>ko</code></td><td><code>kskoreanbib</code>을 불러 한국어 서식을 켠다. 문헌 목록은 <strong>한 벌</strong>로 찍는다.</td></tr>
+<tr><td><code>en+ko</code></td><td><code>ko</code>와 같되, 목록을 <strong>두 번</strong> 나눠 찍는다. 한국어 문헌(<code>keywords</code>에 <code>kobib</code>)이 먼저, 그 밖의 문헌이 뒤에 온다.</td></tr>
+</tbody>
+</table></div>
+<pre><code class="language-yaml">bibliography:
+  resource: sample.bib
+  style: authoryear         # numeric | authoryear
+  lang: en+ko
+  title: 참고문헌</code></pre>
+<pre><code>\usepackage[authoryear]{kskoreanbib}
+\addbibresource{sample.bib}
+...
+\printbibheading[title={참고문헌}]
+\printbibliography[keyword=kobib,heading=none]
+\printbibliography[notkeyword=kobib,heading=none]</code></pre>
+<ul>
+<li><strong><code>.bib</code> 쪽 약속</strong>: 한국어 항목에는 <code>keywords = {kobib}</code>를 단다. 한글과 영문이 섞인 항목은 <code>kobibmixed</code>(authoryear에서만 쓴다). biblatex의 <code>langid</code>로 언어를 가르는 방법은 babel이나 polyglossia 없이는 문구가 바뀌지 않으므로(kotex만 쓰는 문서) 키워드로 가른다.</li>
+<li><strong><code>style</code></strong>: <code>numeric</code>(생략하면 이쪽)과 <code>authoryear</code>(<code>authoryear-comp</code> 등 계열 포함)만 지원한다. 다른 값은 경고하고 <code>numeric</code>으로 둔다. authoryear에서는 <code>natbib=true</code>가 들어가 <code>[@t:키]</code>, <code>[@p:키]</code>가 동작하고, numeric에서는 natbib 명령이 없다.</li>
+<li><strong><code>ko</code>와 <code>en+ko</code>는 biber를 쓴다.</strong> <code>backend: bibtex</code>라고 적었으면 경고하고 biblatex 방식으로 처리한다. 컴파일할 때 biber를 돌리는 것은 <code>--latexmk</code>나 <code>compileoption: --biber</code> 쪽의 몫이다.</li>
+<li><strong>kotex는 직접 불러 둔다.</strong> <code>preamble:</code>에 <code>\usepackage{kotex}</code>(또는 oblivoir 클래스)가 있어야 한다. <code>kskoreanbib</code>은 그 뒤, 프리앰블 끝에 들어간다.</li>
+<li><strong>파일 배치</strong>: <code>kskoreanbib.sty</code>와 <code>korean.lbx</code>는 <strong>TEXMFHOME에 설치하기를 권장한다</strong> (<code>kpsewhich -var-value TEXMFHOME</code>이 알려 주는 폴더 아래 <code>tex/latex/kskoreanbib/</code>). TeX가 찾을 수 있으면 변환기는 아무것도 하지 않는다. 설치하지 않았다면 이 도구와 같은 폴더나 공유 리소스 폴더(<code>ndhmd4tex/resources/</code> 아래, <code>ksbib/</code> 같은 하위 폴더도 훑는다)에 사본을 두면 되고, 컴파일 폴더에 없을 때 그 폴더로 <strong>복사</strong>한다. 이미 있는 파일은 덮어쓰지 않으므로 고쳐 쓴 사본이 안전하다.</li>
+<li><strong>이미 biblatex를 불렀으면</strong> <code>kskoreanbib</code>을 불러오지 않고 경고한다(둘이 충돌한다). 이때 <code>en+ko</code>의 나눠 찍기는 그대로 적용된다. 한국어 서식이 필요하면 <code>preamble:</code>에서 <code>\usepackage{kskoreanbib}</code>를 직접 쓴다.</li>
+<li><code>--pandoc</code>/<code>--mmd</code>에서는 <code>bibliography:</code> 전체를 처리하지 않는다(2.5).</li>
 </ul>
 <h2 id="id-3-헤딩">3. 헤딩<a class="anchor" href="#id-3-헤딩" aria-label="링크">#</a></h2>
 <pre><code class="language-markdown"># 1단계 제목
@@ -1702,7 +1766,7 @@ environments:
 <p>기본값을 끄고 싶으면 빈 값을 명시한다. <code>:::{table align=""}</code>이면 <code>\centering</code> 줄이 사라진다.</p>
 <p>내용 부분은 재귀적으로 처리되므로 14장의 마크다운 표를 넣어도 되고, 위 예시처럼 직접 짠 raw <code>tblr</code>을 넣어도 된다(8장 raw 환경 규칙으로 보호된다).</p>
 <h3 id="id-172-thebibliography-원고에-직접-쓰는-문헌-목록">17.2. <code>thebibliography</code> — 원고에 직접 쓰는 문헌 목록<a class="anchor" href="#id-172-thebibliography-원고에-직접-쓰는-문헌-목록" aria-label="링크">#</a></h3>
-<p><code>.bib</code> 파일과 biber/bibtex를 쓴다면 이 절은 필요 없다(그쪽은 이 스크립트의 소관이 아니다). 문헌 목록을 원고에 직접 적어야 할 때 쓴다.</p>
+<p><code>.bib</code> 파일과 biber/bibtex를 쓴다면 이 절 대신 front matter의 <code>bibliography:</code>(2.5)를 쓴다. 문헌 목록을 원고에 직접 적어야 할 때 이 절을 쓴다.</p>
 <pre><code class="language-markdown">:::{thebibliography widest="99"}
 
 \bibitem{ndh2024} Nova de Hi, 2024, *What is markdown?*

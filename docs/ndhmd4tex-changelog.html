@@ -27,6 +27,12 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#ndhmd4texpy-0241-그대로-ndhmd2htmlpy-050">ndhmd4tex.py 0.24.1 그대로, ndhmd2html.py 0.5.0</a></li>
+<li><a href="#ndhmd4texpy-0241-ndhmd2htmlpy-042-그대로">ndhmd4tex.py 0.24.1, ndhmd2html.py 0.4.2 그대로</a></li>
+<li><a href="#ndhmd4texpy-0240-ndhmd2htmlpy-042-그대로">ndhmd4tex.py 0.24.0, ndhmd2html.py 0.4.2 그대로</a></li>
+<li><a href="#ndhmd4texpy-0232-ndhmd2htmlpy-042-그대로">ndhmd4tex.py 0.23.2, ndhmd2html.py 0.4.2 그대로</a></li>
+<li><a href="#ndhmd4texpy-0231-ndhmd2htmlpy-042-그대로">ndhmd4tex.py 0.23.1, ndhmd2html.py 0.4.2 그대로</a></li>
+<li><a href="#ndhmd4texpy-0230-ndhmd2htmlpy-042">ndhmd4tex.py 0.23.0, ndhmd2html.py 0.4.2</a></li>
 <li><a href="#ndhmd4texpy-0223-ndhmd2htmlpy-041-그대로">ndhmd4tex.py 0.22.3, ndhmd2html.py 0.4.1 그대로</a></li>
 <li><a href="#ndhmd4texpy-0222-ndhmd2htmlpy-041">ndhmd4tex.py 0.22.2, ndhmd2html.py 0.4.1</a></li>
 <li><a href="#ndhmd4texpy-0221-ndhmd2htmlpy-040-그대로">ndhmd4tex.py 0.22.1, ndhmd2html.py 0.4.0 그대로</a></li>
@@ -170,6 +176,60 @@
       <p class="doc-sub">최신 항목이 위에 있습니다</p>
     </div>
 <h1 id="ndhmd4tex-변경-이력">ndhmd4tex 변경 이력<a class="anchor" href="#ndhmd4tex-변경-이력" aria-label="링크">#</a></h1>
+<h2 id="ndhmd4texpy-0241-그대로-ndhmd2htmlpy-050">ndhmd4tex.py 0.24.1 그대로, ndhmd2html.py 0.5.0<a class="anchor" href="#ndhmd4texpy-0241-그대로-ndhmd2htmlpy-050" aria-label="링크">#</a></h2>
+<ul>
+<li><strong>ndhmd2html: <code>bibliography:</code> 로 문헌 목록을 만든다(<code>.bbl</code> 에서).</strong>
+<ul>
+<li>LaTeX 과 biber/bibtex 을 먼저 돌려 <code>&lt;입력이름&gt;.bbl</code> 이 있어야 한다(<code>--bbl FILE</code> 로 지정). 없으면 "[LaTeX과 biber/bibtex을 먼저 실행하여야 문헌 목록이 생성됩니다.]" 를 목록 자리에 넣고 경고한다.</li>
+<li>bibtex 형식 <code>.bbl</code> 은 thebibliography 환경 그 자체라 바로 읽는다(<code>\newblock</code>, <code>{\em …}</code>, 악센트, 대문자 보호 중괄호를 처리한다).</li>
+<li>biber 형식 <code>.bbl</code> 은 <code>bbl2bibitem.lua</code> 가 만든 <code>&lt;이름&gt;-thebib.tex</code> 를 읽는다. 없으면 <code>--bibharvest</code> 가 lualatex 로 만든다(스크립트는 도구 옆·작업 폴더·공유 리소스 폴더에서 찾는다).</li>
+<li>목록은 문서 끝, 또는 <code>\printbibliography</code>·<code>\bibliography{…}</code> 를 쓴 자리에 놓인다. 본문에 thebibliography 환경이 있으면 그것이 우선한다. <code>.bib</code> 가 <code>.bbl</code> 보다 새로우면 경고한다.</li>
+<li>인용 <code>[@키]</code> 가 목록 항목으로 링크된다. 번호 방식은 <code>[1]</code>, natbib 꼴 라벨 <code>Short(Year)</code> 는 저자-연도(<code>\citet</code> -&gt; <code>Short (Year)</code>, <code>\citep</code>/<code>\cite</code> -&gt; <code>(Short, Year)</code>, <code>\citeauthor</code>, <code>\citeyear</code>). thebibliography 환경의 <code>\bibitem[Short(Year)]{키}</code> 도 같은 방식으로 읽는다(이전에는 라벨을 그대로 보였다).</li>
+<li>새 옵션: <code>--bbl FILE</code>, <code>--bibharvest</code>.</li>
+</ul></li>
+</ul>
+<h2 id="ndhmd4texpy-0241-ndhmd2htmlpy-042-그대로">ndhmd4tex.py 0.24.1, ndhmd2html.py 0.4.2 그대로<a class="anchor" href="#ndhmd4texpy-0241-ndhmd2htmlpy-042-그대로" aria-label="링크">#</a></h2>
+<ul>
+<li><strong><code>kskoreanbib.sty</code>·<code>korean.lbx</code> 의 위치.</strong> TEXMFHOME 설치를 권장한다(TeX 가 찾으면 복사하지 않는다). 설치하지 않았을 때를 위해 공유 리소스 폴더 아래 하위 폴더(<code>ndhmd4tex/resources/ksbib/</code> 등)까지 훑어 컴파일 폴더로 복사한다.</li>
+<li><strong><code>korean.lbx</code> 정리.</strong> <code>\ProvidesFile{korean.lbx}</code>; 중복 정의(inseries, ofseries, number, chapter, mathesis, phdthesis, candthesis, resreport) 제거(실제로 적용되던 <code>inseries = in</code> 은 유지); <code>andothers</code> 의 짧은 칸을 <code>et al.</code> 로(<code>et.~al.</code> 은 <code>et. al.</code> 로 찍혔다); 긴 칸을 한국어로: 권(volume), 부(part), 호(issue, number), 장(chapter), 판(edition), 함께 참조(seealso), 지음(byauthor), <code>번역:</code>(bytranslator, 영어가 섞이던 <code>\lbx@lfromlang</code> 제거). 짧은 칸은 영어 항목 때문에 그대로 둔다.</li>
+<li><strong><code>kskoreanbib.sty</code> 0.3.</strong> 한국어 항목의 "et al." 이 <code>외</code> 로 찍힌다(인용: <code>김의중 외</code>, 영문 항목은 <code>et al.</code>). 주 언어가 korean 이라 영어 블록의 <code>andothers</code> 재정의가 먹지 않던 것을 korean 블록으로 보강했다.</li>
+</ul>
+<h2 id="ndhmd4texpy-0240-ndhmd2htmlpy-042-그대로">ndhmd4tex.py 0.24.0, ndhmd2html.py 0.4.2 그대로<a class="anchor" href="#ndhmd4texpy-0240-ndhmd2htmlpy-042-그대로" aria-label="링크">#</a></h2>
+<ul>
+<li><strong><code>bibliography:</code> 의 <code>lang:</code> — 한국어 문헌 지원 (<code>en</code> | <code>ko</code> | <code>en+ko</code>).</strong>
+<ul>
+<li><code>ko</code>, <code>en+ko</code>: 프리앰블 끝에 <code>\usepackage[numeric|authoryear]{kskoreanbib}</code>(biblatex+biber)를 넣는다. <code>style</code> 은 numeric(기본)·authoryear 계열만 받고, 그 밖의 값은 경고 후 numeric.</li>
+<li><code>en+ko</code>: 문헌 목록을 <code>\printbibheading</code> + <code>\printbibliography[keyword=kobib,heading=none]</code> + <code>\printbibliography[notkeyword=kobib,heading=none]</code> 로 두 번 나눠 찍는다. <code>ko</code> 는 한 벌.</li>
+<li><code>backend: bibtex</code> 와 같이 쓰면 경고하고 biblatex 방식으로 처리한다. 이미 biblatex 를 불렀으면 <code>kskoreanbib</code> 을 불러오지 않고 경고한다(나눠 찍기는 그대로).</li>
+<li><code>kskoreanbib.sty</code>·<code>korean.lbx</code> 가 컴파일 폴더에 없고 TeX 도 찾지 못하면 도구 옆(또는 공유 리소스 폴더)의 사본을 컴파일 폴더로 복사한다(이미 있는 파일은 덮어쓰지 않는다).</li>
+</ul></li>
+<li><strong><code>kskoreanbib.sty</code> 0.2: numeric 과 authoryear 를 한 파일로 합쳤다.</strong> 패키지 옵션 <code>numeric</code> / <code>authoryear</code>(옵션을 안 주면 authoryear)로 갈린다. authoryear 의 출력은 이전 판과 같고, numeric 은 <code>kskoreanbib</code> 이 <code>language=korean</code>(korean.lbx)로 biblatex 를 불러 주므로 문구 언어가 이전 샘플(english)과 조금 다르다(영문 항목의 <code>In:</code> 이 사라진다). <code>\cntrdot</code>, <code>\snm</code>, <code>\bnm</code> 은 oblivoir/kopunct 가 없어도 <code>\providecommand</code> 대용 정의로 동작한다.</li>
+</ul>
+<h2 id="ndhmd4texpy-0232-ndhmd2htmlpy-042-그대로">ndhmd4tex.py 0.23.2, ndhmd2html.py 0.4.2 그대로<a class="anchor" href="#ndhmd4texpy-0232-ndhmd2htmlpy-042-그대로" aria-label="링크">#</a></h2>
+<ul>
+<li><strong><code>natbib=true</code> 는 <code>style</code> 이 <code>authoryear</code> 계열일 때만 넣는다</strong>(0.23.1 은 항상 넣었다). 번호 방식이나 <code>style</code> 이 없을 때는 <code>\usepackage[backend=biber,…]{biblatex}</code> 만 나간다.</li>
+</ul>
+<h2 id="ndhmd4texpy-0231-ndhmd2htmlpy-042-그대로">ndhmd4tex.py 0.23.1, ndhmd2html.py 0.4.2 그대로<a class="anchor" href="#ndhmd4texpy-0231-ndhmd2htmlpy-042-그대로" aria-label="링크">#</a></h2>
+<ul>
+<li><strong><code>bibliography:</code> 가 biblatex 를 불러 줄 때 <code>natbib=true</code> 를 기본으로 넣는다.</strong> <code>\usepackage[backend=biber,natbib=true,style=…]{biblatex}</code> — <code>[@p:키]</code>, <code>[@t:키]</code> (<code>\citep</code>, <code>\citet</code>)가 biblatex 에서도 동작한다. 다른 옵션을 원하면 <code>preamble:</code> 에서 직접 부른다.</li>
+</ul>
+<h2 id="ndhmd4texpy-0230-ndhmd2htmlpy-042">ndhmd4tex.py 0.23.0, ndhmd2html.py 0.4.2<a class="anchor" href="#ndhmd4texpy-0230-ndhmd2htmlpy-042" aria-label="링크">#</a></h2>
+<ul>
+<li><strong>front matter <code>bibliography:</code> — <code>.bib</code> 파일 선언과 문헌 목록 출력.</strong>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">backend</span><span class="kw">:</span><span class="at"> biber            # biber | bibtex (생략하면 프리앰블에서 biblatex 로드 여부로 판정)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resource</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">a.bib</span><span class="kw">,</span><span class="at"> ref.bib</span><span class="kw">]</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">style</span><span class="kw">:</span><span class="at"> authoryear</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> 문헌 목록</span></span></code></pre></div>
+<code>bibliography: a.bib</code> / <code>[a.bib, b.bib]</code> 줄임 표기도 받는다(pandoc 의 같은 이름 키와 호환).
+<ul>
+<li>biblatex 방식: 프리앰블 끝에 <code>\addbibresource{…}</code>(biblatex 를 아직 안 불렀고 <code>backend: biber</code> 이면 <code>\usepackage[backend=biber,style=…]{biblatex}</code> 도), 문서 끝에 <code>\printbibliography</code>.</li>
+<li>bibtex 방식: 문서 끝에 <code>\bibliographystyle{…}</code>(생략 시 natbib 이면 <code>plainnat</code>, 아니면 <code>plain</code>)와 <code>\bibliography{…}</code>(확장자 없이).</li>
+<li>사용자가 본문에 <code>\printbibliography</code>, <code>\bibliography{</code>, <code>thebibliography</code> 를 직접 썼으면(verbatim·주석 안은 제외) 출력 명령은 넣지 않는다. 이미 biblatex 를 불렀으면 패키지를 다시 넣지 않고 <code>style</code> 은 경고와 함께 무시한다. <code>.bib</code> 가 원고 폴더에 없으면 경고한다.</li>
+<li><code>--pandoc</code>/<code>--mmd</code> 에서는 경고하고 처리하지 않는다. <code>\nocite{*}</code> 는 사용자가 직접 쓴다.</li>
+</ul></li>
+<li><strong>ndhmd2html</strong>: <code>bibliography:</code> 가 있으면 문헌 목록을 아직 만들지 않는다는 경고를 낸다.</li>
+</ul>
 <h2 id="ndhmd4texpy-0223-ndhmd2htmlpy-041-그대로">ndhmd4tex.py 0.22.3, ndhmd2html.py 0.4.1 그대로<a class="anchor" href="#ndhmd4texpy-0223-ndhmd2htmlpy-041-그대로" aria-label="링크">#</a></h2>
 <ul>
 <li><strong>스마트 따옴표: CJK 전각 여는 괄호 뒤의 따옴표도 여는 따옴표로 판정한다.</strong> <code>（"인용"）</code>, <code>「"인용"」</code>, <code>《"제목"》</code> 에서 앞 따옴표가 닫는 따옴표로 나가던 것을 고쳤다. 대상은 <code>（［｛〈《「『【〔〖〘〚｢</code>. <code>quotes</code> 의 모든 모드와 ndhmd2html 에 똑같이 적용된다.</li>
