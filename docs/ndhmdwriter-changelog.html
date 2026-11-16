@@ -27,6 +27,8 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#0910">0.9.10</a></li>
+<li><a href="#099">0.9.9</a></li>
 <li><a href="#098">0.9.8</a></li>
 <li><a href="#097">0.9.7</a></li>
 <li><a href="#096">0.9.6</a></li>
@@ -255,6 +257,16 @@
     </div>
 <h1 id="changelog">CHANGELOG<a class="anchor" href="#changelog" aria-label="링크">#</a></h1>
 <p>버전은 <code>__version__</code> 하나로 관리한다(파일 맨 위). 수정이 있을 때마다 마지막 자리(patch)를 하나씩 올린다. 최신 항목이 위에 온다.</p>
+<h2 id="0910">0.9.10<a class="anchor" href="#0910" aria-label="링크">#</a></h2>
+<ul>
+<li>AI 도우미 설정창 정리: <code>도구</code>·<code>지시문</code> 두 탭. 도구를 고르면 그 도구의 경로(찾음 ✓/✗)만 보이고 인자·웹 허용 인자는 <code>고급</code>을 펼쳐야 보인다. 안내문은 짧게 줄이고 설명은 툴팁·설명서로.</li>
+<li>시험: offscreen에서 도구 전환·고급 펼침·지시문 선택 동작과 화면 캡처 확인. macOS·다크 모드는 미확인.</li>
+</ul>
+<h2 id="099">0.9.9<a class="anchor" href="#099" aria-label="링크">#</a></h2>
+<ul>
+<li>설명서: AI 도우미에서 권한을 더 열고 싶을 때(<code>--dangerously-skip-permissions</code>, <code>--sandbox</code> 등)의 사용자 책임과 위험을 명시. agy 옵션 이름은 미확인. 기본값은 바꾸지 않음.</li>
+<li>설정창 안내문에 같은 취지 한 줄 추가.</li>
+</ul>
 <h2 id="098">0.9.8<a class="anchor" href="#098" aria-label="링크">#</a></h2>
 <ul>
 <li>도움말 메뉴: <code>Reference Manual</code> → <code>Reference Manual (pdf)</code>, 웹판 <code>Reference Manual (web)</code> 추가. ndhmarkdown 아래 <code>사양서 (pdf)</code>와 <code>사양서 (web)</code> 추가(기본 브라우저로 연다).</li>
