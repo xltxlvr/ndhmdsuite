@@ -5,13 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ndhmd4tex · ndhmd2html 변경 이력 — ndhmdSuite</title>
 <meta name="description" content="최신 항목이 위에 있습니다">
-<link rel="icon" href="data:,">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="stylesheet" href="docs.css">
 </head>
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../index.html">ndhmd<span>Suite</span></a>
+    <a class="brand" href="../index.html"><img src="../assets/icon-64.png" alt="" width="26" height="26"><span class="bt">ndhmd<span>Suite</span></span></a>
     <nav>
       <a href="index.html">문서</a>
       <a href="../index.html#download">다운로드</a>
@@ -27,6 +29,7 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#ndhmd4tex-0250--ndhmd2html-060">ndhmd4tex 0.25.0 / ndhmd2html 0.6.0</a></li>
 <li><a href="#ndhmd4tex-0243">ndhmd4tex 0.24.3</a></li>
 <li><a href="#ndhmd2html-052-보정-2">ndhmd2html 0.5.2 보정 (2)</a></li>
 <li><a href="#ndhmd2html-052-보정">ndhmd2html 0.5.2 보정</a></li>
@@ -184,6 +187,12 @@
       <p class="doc-sub">최신 항목이 위에 있습니다</p>
     </div>
 <h1 id="ndhmd4tex-변경-이력">ndhmd4tex 변경 이력<a class="anchor" href="#ndhmd4tex-변경-이력" aria-label="링크">#</a></h1>
+<h2 id="ndhmd4tex-0250--ndhmd2html-060">ndhmd4tex 0.25.0 / ndhmd2html 0.6.0<a class="anchor" href="#ndhmd4tex-0250--ndhmd2html-060" aria-label="링크">#</a></h2>
+<ul>
+<li><code>--inherit-meta main.md</code> 추가: 서브 파일만 컴파일(HTML 변환)할 때 main 의 헤더를 쓴다. main 은 일반 변환과 똑같이 해석하고(setup 체인·기본 헤더 포함), 서브 파일 자신의 front matter 는 버리며, <code>title/subtitle/author/date/maketitle/tocloft</code> 는 상속하지 않는다. <code>--syncinfo</code> 의 줄 번호는 정확하게 유지된다. <code>--pandoc/--mmd</code> 에서는 무시한다.</li>
+<li><code>mapping</code> 은 main 폴더 기준으로 찾는다. main 과 폴더가 다르면 상대 경로(.bib, \input 등)에 대해 경고한다.</li>
+<li><code>split_frontmatter()</code> 에 <code>lenient</code> 인자: 깨진 YAML 도 떼어 내기만 한다.</li>
+</ul>
 <h2 id="ndhmd4tex-0243">ndhmd4tex 0.24.3<a class="anchor" href="#ndhmd4tex-0243" aria-label="링크">#</a></h2>
 <ul>
 <li><code>bibliography:</code> 에 <code>print: false</code> 를 추가했다. 문헌 목록 출력 명령을 넣지 않고 선언만 한다. <code>\input</code> 한 LaTeX 파일 안에 <code>\printbibliography</code> 가 있을 때 목록이 두 번 나오는 것을 막는다.</li>

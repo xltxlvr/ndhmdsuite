@@ -29,6 +29,9 @@ header.top{
 header.top .wrap{display:flex; align-items:center; gap:20px; height:56px; padding:0 24px; max-width:1280px; margin:0 auto}
 .brand{font-weight:700; letter-spacing:-.01em; color:var(--fg); text-decoration:none}
 .brand span{color:var(--accent)}
+.brand{display:inline-flex; align-items:center; gap:9px}
+.brand .bt{color:var(--fg)}
+.brand img{width:26px; height:26px; border-radius:6px; display:block}
 header.top nav{display:flex; gap:18px; font-size:.92rem}
 header.top nav a{color:var(--muted); text-decoration:none}
 header.top nav a:hover{color:var(--fg)}

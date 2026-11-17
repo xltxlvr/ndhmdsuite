@@ -33,7 +33,7 @@ DOCS = [
          title="빠른 시작", sub="ndhmdSuite 설치부터 첫 PDF까지",
          group="start", number=False),
     dict(slug="ndhmdwriter-manual", src="ndhmdwriter-manual.md", kind="ndhmd",
-         title="ndhmdWriter 설명서 (참조편)", sub="ndhmdWriter 0.9 기준 · 메뉴와 화면 순서로 적은 기능 사전",
+         title="ndhmdWriter 설명서 (참조편)", sub="ndhmdWriter 0.9.5 기준 · 메뉴와 화면 순서로 적은 기능 사전",
          group="ref", number=True, tblr=True),
     dict(slug="ndhmd4tex-dialect-guide", src="ndhmd4tex-dialect-guide.md", kind="ndhmd",
          title="ndhmd4tex 방언 사양서", sub="ndhmd4tex 0.22 기준 · ndhmarkdown 문법 전체",
@@ -389,13 +389,15 @@ def page(spec, body, toc, math, prev_next):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{head_title} — ndhmdSuite</title>
 <meta name="description" content="{html.escape(spec['sub'])}">
-<link rel="icon" href="data:,">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="stylesheet" href="docs.css">
 {mj}</head>
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../index.html">ndhmd<span>Suite</span></a>
+    <a class="brand" href="../index.html"><img src="../assets/icon-64.png" alt="" width="26" height="26"><span class="bt">ndhmd<span>Suite</span></span></a>
     <nav>
       <a href="index.html">문서</a>
       <a href="../index.html#download">다운로드</a>

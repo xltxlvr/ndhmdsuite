@@ -1,5 +1,11 @@
 # ndhmd4tex 변경 이력
 
+## ndhmd4tex 0.25.0 / ndhmd2html 0.6.0
+
+- `--inherit-meta main.md` 추가: 서브 파일만 컴파일(HTML 변환)할 때 main 의 헤더를 쓴다. main 은 일반 변환과 똑같이 해석하고(setup 체인·기본 헤더 포함), 서브 파일 자신의 front matter 는 버리며, `title/subtitle/author/date/maketitle/tocloft` 는 상속하지 않는다. `--syncinfo` 의 줄 번호는 정확하게 유지된다. `--pandoc/--mmd` 에서는 무시한다.
+- `mapping` 은 main 폴더 기준으로 찾는다. main 과 폴더가 다르면 상대 경로(.bib, \\input 등)에 대해 경고한다.
+- `split_frontmatter()` 에 `lenient` 인자: 깨진 YAML 도 떼어 내기만 한다.
+
 ## ndhmd4tex 0.24.3
 
 - `bibliography:` 에 `print: false` 를 추가했다. 문헌 목록 출력 명령을 넣지 않고 선언만 한다. `\input` 한 LaTeX 파일 안에 `\printbibliography` 가 있을 때 목록이 두 번 나오는 것을 막는다.
