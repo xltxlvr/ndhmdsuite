@@ -29,6 +29,7 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#치트시트-ndhmd4tex-0250-기준">치트시트 (ndhmd4tex 0.25.0 기준)</a></li>
 <li><a href="#ndhmd4tex-0250--ndhmd2html-060">ndhmd4tex 0.25.0 / ndhmd2html 0.6.0</a></li>
 <li><a href="#ndhmd4tex-0243">ndhmd4tex 0.24.3</a></li>
 <li><a href="#ndhmd2html-052-보정-2">ndhmd2html 0.5.2 보정 (2)</a></li>
@@ -187,6 +188,10 @@
       <p class="doc-sub">최신 항목이 위에 있습니다</p>
     </div>
 <h1 id="ndhmd4tex-변경-이력">ndhmd4tex 변경 이력<a class="anchor" href="#ndhmd4tex-변경-이력" aria-label="링크">#</a></h1>
+<h2 id="치트시트-ndhmd4tex-0250-기준">치트시트 (ndhmd4tex 0.25.0 기준)<a class="anchor" href="#치트시트-ndhmd4tex-0250-기준" aria-label="링크">#</a></h2>
+<ul>
+<li><code>ndhmd4tex_cheatsheet</code> 를 0.19.2 에서 0.25.0 으로 갱신했다. 앞면은 기존 내용에 <code>--mmd</code>, <code>--external</code>, <code>--inherit-meta</code> 와 front matter 키(<code>mmdoption</code>, <code>bibliography</code>, <code>RTLtypeset</code>)를 더했고, <strong>뒷면(확장 기능)</strong> 을 새로 만들었다: <code>bibliography:</code>(lang, print), 부분 컴파일·ndhmd2html, 각주 종류, <code>||</code>·grid 표, <code>external</code>·<code>showexam</code>, <code>RTLtypeset</code>, mapping 키(quotes, tilde, wavedash, notes …), 그리고 함정·막힐 때(앞면에서 옮김).</li>
+</ul>
 <h2 id="ndhmd4tex-0250--ndhmd2html-060">ndhmd4tex 0.25.0 / ndhmd2html 0.6.0<a class="anchor" href="#ndhmd4tex-0250--ndhmd2html-060" aria-label="링크">#</a></h2>
 <ul>
 <li><code>--inherit-meta main.md</code> 추가: 서브 파일만 컴파일(HTML 변환)할 때 main 의 헤더를 쓴다. main 은 일반 변환과 똑같이 해석하고(setup 체인·기본 헤더 포함), 서브 파일 자신의 front matter 는 버리며, <code>title/subtitle/author/date/maketitle/tocloft</code> 는 상속하지 않는다. <code>--syncinfo</code> 의 줄 번호는 정확하게 유지된다. <code>--pandoc/--mmd</code> 에서는 무시한다.</li>

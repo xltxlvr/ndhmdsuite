@@ -65,6 +65,12 @@
   h1{font-size:clamp(2.2rem,6vw,3.6rem); line-height:1.12; letter-spacing:-.03em; margin:0 0 18px}
   .lead{font-size:1.15rem; color:var(--muted); max-width:640px; margin:0 0 32px}
   .cta{display:flex; flex-wrap:wrap; gap:12px}
+  a.badge{
+    display:inline-block; font-size:.8rem; font-weight:600; color:var(--fg); text-decoration:none;
+    border:1px solid var(--line); background:var(--card); padding:3px 12px; border-radius:999px;
+    margin:0 0 20px 6px; vertical-align:top;
+  }
+  a.badge:hover{border-color:var(--accent); color:var(--accent)}
   .btn{
     display:inline-flex; align-items:center; gap:8px; padding:12px 22px;
     border-radius:10px; font-weight:600; text-decoration:none; font-size:1rem;
@@ -166,7 +172,7 @@
 
 <main id="top">
   <div class="wrap hero">
-    <span class="eyebrow">Version 4.58 · Windows</span>
+    <span class="eyebrow">Version 4.58 · Windows</span><a class="badge" href="https://github.com/xltxlvr/ndhmd4tex/blob/main/guide/ndhmd4tex_cheatsheet.pdf" target="_blank" rel="noopener">📄 <span data-l="ko">치트시트</span><span data-l="en">Cheatsheet</span> (PDF)</a>
     <div class="herohead">
       <img src="assets/icon-192.png" alt="ndhmdSuite icon" width="88" height="88">
       <h1>ndhmdSuite</h1>
@@ -339,6 +345,10 @@
         <a class="card doclink" href="https://github.com/xltxlvr/ndhmd4tex/tree/main/samples" target="_blank" rel="noopener">
           <h3><span data-l="ko">ndhmd4tex 예제 ↗</span><span data-l="en">ndhmd4tex samples ↗</span></h3>
           <p><span data-l="ko">논문·에세이·Beamer·참고문헌 등 바로 변환해 볼 수 있는 예제 원고 (GitHub).</span><span data-l="en">Sample manuscripts you can convert right away: article, essay, Beamer, bibliography and more (GitHub).</span></p>
+        </a>
+        <a class="card doclink" href="https://github.com/xltxlvr/ndhmd4tex/blob/main/guide/ndhmd4tex_cheatsheet.pdf" target="_blank" rel="noopener">
+          <h3><span data-l="ko">ndhmd4tex 치트시트 ↗</span><span data-l="en">ndhmd4tex cheatsheet ↗</span></h3>
+          <p><span data-l="ko">문법을 한 장으로 요약한 PDF (GitHub).</span><span data-l="en">A one-page PDF summary of the syntax (GitHub).</span></p>
         </a>
       </div>
       <p class="sub" style="margin-top:18px">
