@@ -27,6 +27,10 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#ndhmd2html-052-보정">ndhmd2html 0.5.2 보정</a></li>
+<li><a href="#ndhmd2html-052--bbl2bibitemlua-수식-복원">ndhmd2html 0.5.2 / bbl2bibitem.lua (수식 복원)</a></li>
+<li><a href="#bbl2bibitemlua-수확-누락-수정">bbl2bibitem.lua (수확 누락 수정)</a></li>
+<li><a href="#ndhmd2html-051">ndhmd2html 0.5.1</a></li>
 <li><a href="#kskoreanbibsty-04-ndhmd4texpy-0242-그대로">kskoreanbib.sty 0.4 (ndhmd4tex.py 0.24.2 그대로)</a></li>
 <li><a href="#ndhmd4texpy-0242">ndhmd4tex.py 0.24.2</a></li>
 <li><a href="#ndhmd4texpy-0241-그대로-ndhmd2htmlpy-050">ndhmd4tex.py 0.24.1 그대로, ndhmd2html.py 0.5.0</a></li>
@@ -178,6 +182,28 @@
       <p class="doc-sub">최신 항목이 위에 있습니다</p>
     </div>
 <h1 id="ndhmd4tex-변경-이력">ndhmd4tex 변경 이력<a class="anchor" href="#ndhmd4tex-변경-이력" aria-label="링크">#</a></h1>
+<h2 id="ndhmd2html-052-보정">ndhmd2html 0.5.2 보정<a class="anchor" href="#ndhmd2html-052-보정" aria-label="링크">#</a></h2>
+<ul>
+<li><code>--bibharvest</code> 가 돌리는 texlua 의 출력을 UTF-8 로 읽는다(<code>errors="replace"</code>). 한글 경고가 잘못된 바이트를 포함하면 <code>UnicodeDecodeError</code> 로 죽던 문제.</li>
+<li>bbl2bibitem.lua: 수식 경고 문구를 바이트가 아니라 글자 단위로 자른다(한글이 반쪽이 되어 잘못된 UTF-8 이 나오던 원인). 한글 음절 뒤의 보이지 않는 U+F0000 표지 글리프를 수확에서 버린다.</li>
+</ul>
+<h2 id="ndhmd2html-052--bbl2bibitemlua-수식-복원">ndhmd2html 0.5.2 / bbl2bibitem.lua (수식 복원)<a class="anchor" href="#ndhmd2html-052--bbl2bibitemlua-수식-복원" aria-label="링크">#</a></h2>
+<ul>
+<li>biber 문헌 목록의 수식(<code>$…$</code>)을 복원한다. <code>.bbl</code> 필드 원문과 수확 본문의 <code>[[MATH?]]</code> 표지를 맞춰 채우며 추가 패스는 없다. 맞추지 못하면 <code>⟨수식⟩</code>으로 남기고 경고한다.</li>
+<li>bbl2bibitem.lua: 수학 글꼴 구간마다가 아니라 수식 한 덩어리(<code>$…$</code>)마다 표지 하나를 낸다(<code>O(n^2)</code> 가 여러 표지로 쪼개지던 문제).</li>
+<li>수확본의 <code>[[MATH?]]</code> 가 ndhmd 색인 문법으로 읽혀 <code>MATH?</code> 색인 표지가 나오던 문제도 사라진다.</li>
+</ul>
+<h2 id="bbl2bibitemlua-수확-누락-수정">bbl2bibitem.lua (수확 누락 수정)<a class="anchor" href="#bbl2bibitemlua-수확-누락-수정" aria-label="링크">#</a></h2>
+<ul>
+<li>빈 문단이 먼저 처리되면서 다음 항목의 키를 소모해 버려, <code>\printbibliography</code> 를 여러 번 부르는 문서(<code>lang: en+ko</code>)에서 항목이 하나 빠지던 문제를 고쳤다.</li>
+<li>출력 루틴 안에서 조판되는 문단(쪽 번호 등)은 무시한다. 항목 사이에서 쪽이 넘어갈 때 쪽 번호 "1" 이 항목 키를 가로채 본문이 "1" 로 수확되던 문제.</li>
+<li>그래도 <code>.bbl</code> 대비 빠진 항목이 있으면 한 목록 방식으로 다시 수확해 보충한다. <code>--single</code> 옵션으로 직접 지정할 수도 있다.</li>
+</ul>
+<h2 id="ndhmd2html-051">ndhmd2html 0.5.1<a class="anchor" href="#ndhmd2html-051" aria-label="링크">#</a></h2>
+<ul>
+<li>문헌 목록 진단 강화: biber <code>.bbl</code> 에는 있으나 <code>-thebib.tex</code> 수확본에서 빠진 키(수확본이 낡은 경우 등)를 경고한다.</li>
+<li>문헌 목록에 없는 키를 인용하면 항상 경고하며, 해당 인용은 <code>cite-missing</code> 클래스(붉은색)로 표시된다.</li>
+</ul>
 <h2 id="kskoreanbibsty-04-ndhmd4texpy-0242-그대로">kskoreanbib.sty 0.4 (ndhmd4tex.py 0.24.2 그대로)<a class="anchor" href="#kskoreanbibsty-04-ndhmd4texpy-0242-그대로" aria-label="링크">#</a></h2>
 <ul>
 <li><strong>numeric: 논문이 아닌 <code>kobib</code> 항목(book, booklet …)의 제목도 <code>『제목』</code> 으로 찍는다.</strong> 이전에는 <code>article</code> 만 서식을 받아 <code>@booklet</code> 등의 한국어 제목이 서식 없이 나왔다. 논문은 그대로 <code>「제목」,</code>. 영문 항목에는 영향이 없다.</li>
