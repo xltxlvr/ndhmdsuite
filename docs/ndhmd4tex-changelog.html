@@ -29,6 +29,7 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#ndhmd4tex-0251">ndhmd4tex 0.25.1</a></li>
 <li><a href="#ndhmd2html-061">ndhmd2html 0.6.1</a></li>
 <li><a href="#치트시트-ndhmd4tex-0250-기준">치트시트 (ndhmd4tex 0.25.0 기준)</a></li>
 <li><a href="#ndhmd4tex-0250--ndhmd2html-060">ndhmd4tex 0.25.0 / ndhmd2html 0.6.0</a></li>
@@ -189,6 +190,10 @@
       <p class="doc-sub">최신 항목이 위에 있습니다</p>
     </div>
 <h1 id="ndhmd4tex-변경-이력">ndhmd4tex 변경 이력<a class="anchor" href="#ndhmd4tex-변경-이력" aria-label="링크">#</a></h1>
+<h2 id="ndhmd4tex-0251">ndhmd4tex 0.25.1<a class="anchor" href="#ndhmd4tex-0251" aria-label="링크">#</a></h2>
+<ul>
+<li><code>RTLtypeset</code>(polyglossia/babel)와 <code>bibliography:</code>(biblatex)를 함께 쓰면 <code>Package biblatex Error: 'polyglossia' loaded after biblatex</code> 가 나던 문제. 프리앰블에서 RTL 줄(polyglossia/babel)을 먼저, biblatex/kskoreanbib 와 <code>\addbibresource</code> 를 그 뒤에 놓는다. (사용자가 <code>preamble:</code> 에서 직접 biblatex 를 앞서 불렀다면 그 순서는 사용자 몫이다.)</li>
+</ul>
 <h2 id="ndhmd2html-061">ndhmd2html 0.6.1<a class="anchor" href="#ndhmd2html-061" aria-label="링크">#</a></h2>
 <ul>
 <li>옆에 <code>ndhmd4tex.py</code> 가 없고 확장자 없는 <code>ndhmd4tex</code> 만 있으면, 그것이 텍스트 스크립트일 때 불러 쓴다. 바이너리(ELF/PE/Mach-O 등, NUL 바이트, UTF-8 이 아닌 내용)는 쓰지 않고 오류를 낸다. <code>ndhmd4tex.py</code> 가 있으면 언제나 그쪽이 먼저이고, 있는데 가져오기가 실패한 경우에는 그 오류를 그대로 보인다. 실행 파일로 묶인 경우에는 실행 파일 옆 폴더도 찾는다.</li>
