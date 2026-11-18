@@ -31,11 +31,12 @@
 <ul class="toc-list">
 <li><a href="#준비물">준비물</a></li>
 <li><a href="#설치-windows">설치 (Windows)</a></li>
+<li><a href="#설치-macos">설치 (macOS)</a></li>
 <li><a href="#처음-실행-작업공간-고르기">처음 실행: 작업공간 고르기</a></li>
 <li><a href="#첫-원고-쓰기">첫 원고 쓰기</a></li>
 <li><a href="#pdf-만들기">PDF 만들기</a></li>
 <li><details><summary><a href="#원고와-pdf-오가기">원고와 PDF 오가기</a></summary><ul>
-<li><a href="#id-1-sumatrapdf에-역방향-검색-명령-넣기">1. SumatraPDF에 역방향 검색 명령 넣기</a></li>
+<li><a href="#id-1-pdf-뷰어에-역방향-검색-명령-넣기">1. PDF 뷰어에 역방향 검색 명령 넣기</a></li>
 <li><a href="#id-2-ndhmdwriter에서-뷰어-등록하기">2. ndhmdWriter에서 뷰어 등록하기</a></li>
 </ul></details></li>
 <li><a href="#문서마다-다르게-front-matter">문서마다 다르게: front matter</a></li>
@@ -71,7 +72,22 @@
 <blockquote class="quote">
 <p><strong>경로에 한글과 공백을 함께 쓰지 않는다.</strong> 경로에 한글이 있으면 PDF 뷰어와의 동기화가 되지 않고, 한글과 공백이 둘 다 있으면 컴파일이 오류로 끝난다. 사용자 계정 이름이 한글이면 <code>C:\Users\계정이름\…</code> 아래가 모두 여기에 걸리므로, 작업 폴더는 <code>C:\work\book</code>처럼 영문·숫자로 된 경로에 둔다.</p>
 </blockquote>
-<p>macOS와 Linux는 <a href="https://github.com/xltxlvr/ndhmd4tex/blob/main/INSTALLATION.md">ndhmd4tex 저장소의 INSTALLATION.md</a>를 따른다.</p>
+<h2 id="설치-macos">설치 (macOS)<a class="anchor" href="#설치-macos" aria-label="링크">#</a></h2>
+<p>pkg 설치 프로그램이 아니라 dmg 안의 스크립트를 터미널에서 직접 실행하는 방식이다. 순서를 그대로 따른다.</p>
+<ol>
+<li>홈페이지에서 자신의 Mac에 맞는 dmg(애플 실리콘 또는 Intel x86_64)를 내려받는다.</li>
+<li>dmg를 더블클릭해 마운트한다.</li>
+<li>터미널을 열고 마운트된 볼륨으로 이동한다.</li>
+</ol>
+<pre><code>cd /Volumes/ndhmdSuite</code></pre>
+<ol>
+<li><code>install.command</code>를 셸 스크립트로 실행한다. 더블클릭이 아니라 반드시 <code>sh</code>로 실행한다.</li>
+</ol>
+<pre><code>sh ./install.command</code></pre>
+<ol>
+<li>비밀번호를 물으면 Mac 로그인 비밀번호를 입력한다.</li>
+</ol>
+<p>Linux는 <a href="https://github.com/xltxlvr/ndhmd4tex/blob/main/INSTALLATION.md">ndhmd4tex 저장소의 INSTALLATION.md</a>를 따른다.</p>
 <h2 id="처음-실행-작업공간-고르기">처음 실행: 작업공간 고르기<a class="anchor" href="#처음-실행-작업공간-고르기" aria-label="링크">#</a></h2>
 <p>바로가기로 <strong>ndhmdwriter</strong>를 실행한다. 처음에는 <strong>작업공간</strong> 폴더를 고르라는 창이 뜬다. 원고를 모아 둘 빈 폴더(예: <code>C:\work\book</code>)를 만들어 고른다. 다음 실행부터는 마지막 작업공간이 자동으로 열린다. 나중에 바꾸려면 <strong>파일 ▶ 작업공간 열기</strong>(<code>Ctrl+Shift+O</code>)를 쓴다.</p>
 <p>앱은 작업공간 <strong>바로 아래</strong>의 <code>.md</code> <code>.txt</code> <code>.nmd</code> <code>.mmd</code> 파일만 원고로 본다. 왼쪽 <strong>서랍</strong>에 원고 목록이 나온다.</p>
@@ -93,23 +109,42 @@
 <p>컴파일 전에 마크업에 실수가 없는지만 보고 싶으면 <strong>컴파일 ▶ 마크업 점검</strong>(<code>Ctrl+Shift+K</code>)을 쓴다. 컴파일이 실패하면 콘솔 창에 로그가 나오고, <strong>오류 위치로</strong> 버튼을 누르면 원고의 해당 줄로 이동한다.</p>
 <h2 id="원고와-pdf-오가기">원고와 PDF 오가기<a class="anchor" href="#원고와-pdf-오가기" aria-label="링크">#</a></h2>
 <p>원고에서 커서를 둔 줄에 해당하는 PDF 자리를 보려면 <strong>컴파일 ▶ PDF에서 이 위치 보기</strong>(<code>Ctrl+Alt+F</code>)를 쓴다.</p>
-<p>반대로 PDF를 더블클릭해서 원고의 해당 줄로 돌아오는 <strong>역방향 검색</strong>은 처음에 한 번 설정해 두어야 한다. PDF 뷰어는 SumatraPDF를 기준으로 설명한다.</p>
-<h3 id="id-1-sumatrapdf에-역방향-검색-명령-넣기">1. SumatraPDF에 역방향 검색 명령 넣기<a class="anchor" href="#id-1-sumatrapdf에-역방향-검색-명령-넣기" aria-label="링크">#</a></h3>
+<p>반대로 PDF를 더블클릭해서(Skim에서는 <code>⌘⇧</code>를 누른 채 클릭) 원고의 해당 줄로 돌아오는 <strong>역방향 검색</strong>은 처음에 한 번 설정해 두어야 한다. Windows는 SumatraPDF, macOS는 Skim을 기준으로 설명한다. 순서는 같다. 먼저 PDF 뷰어에 명령을 넣고, 그다음 ndhmdWriter에서 뷰어를 등록한다.</p>
+<h3 id="id-1-pdf-뷰어에-역방향-검색-명령-넣기">1. PDF 뷰어에 역방향 검색 명령 넣기<a class="anchor" href="#id-1-pdf-뷰어에-역방향-검색-명령-넣기" aria-label="링크">#</a></h3>
+<h4 id="windows-sumatrapdf">Windows: SumatraPDF<a class="anchor" href="#windows-sumatrapdf" aria-label="링크">#</a></h4>
 <p>SumatraPDF를 실행해 <strong>메뉴 ▶ 설정 ▶ 옵션</strong>을 연다. 맨 아래 <strong>명령줄 역방향 탐색 설정</strong> 칸에 다음을 그대로 적고 <strong>확인</strong>을 누른다.</p>
 <pre><code>ndhmdsync --line %l "%f"</code></pre>
 <figure class="figure">
 <img src="img/sumatra-inverse-search.png" alt="SumatraPDF 옵션의 명령줄 역방향 탐색 설정" />
 <figcaption><span class="caption-label">그림 1.</span> SumatraPDF 옵션의 명령줄 역방향 탐색 설정</figcaption>
 </figure>
+<h4 id="macos-skim">macOS: Skim<a class="anchor" href="#macos-skim" aria-label="링크">#</a></h4>
+<p>Skim을 실행해 <strong>Skim ▶ Settings…</strong>(설정)를 열고 <strong>Sync</strong> 탭으로 간다. <strong>PDF-TeX Sync support</strong>에서 <strong>Preset</strong>을 <strong>Custom</strong>으로 두고 다음과 같이 적는다.</p>
+<ul>
+<li><strong>Command</strong>: <code>ndhmdsync</code></li>
+<li><strong>Arguments</strong>: <code>--line %line "%file"</code></li>
+</ul>
+<figure class="figure">
+<img src="img/skim-sync.png" alt="Skim 설정의 Sync 탭" />
+<figcaption><span class="caption-label">그림 2.</span> Skim 설정의 Sync 탭</figcaption>
+</figure>
+<blockquote class="quote">
+<p>Skim이 <code>ndhmdsync</code>를 찾지 못하면 Command에 전체 경로를 적는다. 터미널에서 <code>which ndhmdsync</code>로 경로를 확인할 수 있다.</p>
+</blockquote>
 <h3 id="id-2-ndhmdwriter에서-뷰어-등록하기">2. ndhmdWriter에서 뷰어 등록하기<a class="anchor" href="#id-2-ndhmdwriter에서-뷰어-등록하기" aria-label="링크">#</a></h3>
-<p>ndhmdWriter를 실행(바탕화면 아이콘을 더블클릭)하고 <strong>설정 ▶ 환경설정</strong>을 연다.</p>
+<p>ndhmdWriter를 실행(Windows는 바탕화면 아이콘을 더블클릭)하고 <strong>설정 ▶ 환경설정</strong>의 <strong>컴파일·도구</strong> 탭을 연다.</p>
 <ol>
 <li><strong>PDF 뷰어 역방향 검색</strong> 줄의 <strong>지금 등록</strong>을 누른다.</li>
 <li><strong>PDF 뷰어 기본 앱</strong> 줄의 <strong>감지된 뷰어로 등록</strong>을 누른다.</li>
 </ol>
 <figure class="figure">
-<img src="img/ndhmdwriter-settings.png" alt="환경설정의 PDF 뷰어 항목" />
-<figcaption><span class="caption-label">그림 2.</span> 환경설정의 PDF 뷰어 항목</figcaption>
+<img src="img/ndhmdwriter-settings.png" alt="환경설정의 PDF 뷰어 항목 (Windows)" />
+<figcaption><span class="caption-label">그림 3.</span> 환경설정의 PDF 뷰어 항목 (Windows)</figcaption>
+</figure>
+<p>macOS에서는 다음처럼 보인다. 역방향 검색이 등록되면 “이 앱이 등록되어 있습니다.”라고 표시되고, 기본 앱 줄에는 감지된 Skim의 설정값이 나타난다.</p>
+<figure class="figure">
+<img src="img/ndhmdwriter-settings-mac.png" alt="환경설정의 PDF 뷰어 항목 (macOS)" />
+<figcaption><span class="caption-label">그림 4.</span> 환경설정의 PDF 뷰어 항목 (macOS)</figcaption>
 </figure>
 <p>이제 PDF에서 문장을 더블클릭하면 ndhmdWriter가 해당 원고 줄로 커서를 옮긴다. 자세한 동작은 설명서의 <a href="ndhmdwriter-manual.html#sec-inverse">역방향 검색</a>을 본다.</p>
 <h2 id="문서마다-다르게-front-matter">문서마다 다르게: front matter<a class="anchor" href="#문서마다-다르게-front-matter" aria-label="링크">#</a></h2>

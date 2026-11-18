@@ -71,6 +71,8 @@
     margin:0 0 20px 6px; vertical-align:top;
   }
   a.badge:hover{border-color:var(--accent); color:var(--accent)}
+  pre.cmd{margin:10px 0 0; padding:12px 16px; background:var(--soft); border:1px solid var(--line); border-radius:10px; overflow-x:auto; font-size:.92rem}
+  pre.cmd code{background:none; padding:0}
   .btn{
     display:inline-flex; align-items:center; gap:8px; padding:12px 22px;
     border-radius:10px; font-weight:600; text-decoration:none; font-size:1rem;
@@ -172,7 +174,7 @@
 
 <main id="top">
   <div class="wrap hero">
-    <span class="eyebrow">Version 4.58 · Windows</span><a class="badge" href="https://github.com/xltxlvr/ndhmd4tex/blob/main/guide/ndhmd4tex_cheatsheet.pdf" target="_blank" rel="noopener">📄 <span data-l="ko">치트시트</span><span data-l="en">Cheatsheet</span> (PDF)</a>
+    <span class="eyebrow">Version 4.58 · Windows · macOS</span><a class="badge" href="https://github.com/xltxlvr/ndhmd4tex/blob/main/guide/ndhmd4tex_cheatsheet.pdf" target="_blank" rel="noopener">📄 <span data-l="ko">치트시트</span><span data-l="en">Cheatsheet</span> (PDF)</a>
     <div class="herohead">
       <img src="assets/icon-192.png" alt="ndhmdSuite icon" width="88" height="88">
       <h1>ndhmdSuite</h1>
@@ -183,15 +185,21 @@
     </p>
     <div class="cta">
       <a class="btn primary" id="download" href="https://drive.google.com/file/d/1sEWJ3L15oYN1hjQyb1cUia1nzbuv5Cuu/view?usp=sharing" target="_blank" rel="noopener">
-        ⬇ <span data-l="ko">ndhmdSuite 다운로드</span><span data-l="en">Download ndhmdSuite</span>
+        ⬇ <span data-l="ko">Windows 다운로드</span><span data-l="en">Download for Windows</span>
+      </a>
+      <a class="btn" href="https://drive.google.com/file/d/16iMNJT9cA2b4hUDDA3QqZxGbrUgtcorI/view?usp=drive_link" target="_blank" rel="noopener">
+        ⬇ <span data-l="ko">macOS · 애플 실리콘</span><span data-l="en">macOS · Apple silicon</span>
+      </a>
+      <a class="btn" href="https://drive.google.com/file/d/1dQT4PopISndgiN1GpeGi3Kxv1YclWI7a/view?usp=drive_link" target="_blank" rel="noopener">
+        ⬇ <span data-l="ko">macOS · Intel (x86_64)</span><span data-l="en">macOS · Intel (x86_64)</span>
       </a>
       <a class="btn" href="https://github.com/xltxlvr/ndhmdwriter" target="_blank" rel="noopener">
         <span data-l="ko">GitHub에서 보기</span><span data-l="en">View on GitHub</span>
       </a>
     </div>
     <p class="meta">
-      <span data-l="ko">설치 파일 <code>ndhmdSuite_Setup.exe</code>는 Google Drive에서 내려받습니다.</span>
-      <span data-l="en">The installer <code>ndhmdSuite_Setup.exe</code> is hosted on Google Drive.</span>
+      <span data-l="ko">설치 파일은 Google Drive에서 내려받습니다. Windows는 <code>ndhmdSuite_Setup.exe</code>, macOS는 dmg이며 <a href="#install-mac">설치 방법이 다릅니다</a>.</span>
+      <span data-l="en">Installers are hosted on Google Drive: <code>ndhmdSuite_Setup.exe</code> for Windows, a dmg for macOS (<a href="#install-mac">installed differently</a>).</span>
     </p>
   </div>
 
@@ -278,8 +286,8 @@
     <div class="wrap">
       <h2><span data-l="ko">설치</span><span data-l="en">Installation</span></h2>
       <p class="sub">
-        <span data-l="ko">Windows 설치 프로그램 하나로 끝납니다.</span>
-        <span data-l="en">A single Windows installer does everything.</span>
+        <span data-l="ko">Windows는 설치 프로그램 하나로 끝납니다. macOS는 <a href="#install-mac">아래</a>를 보세요.</span>
+        <span data-l="en">On Windows a single installer does everything. For macOS, <a href="#install-mac">see below</a>.</span>
       </p>
       <ol class="steps">
         <li>
@@ -319,6 +327,36 @@
           </ul>
         </div>
       </div>
+
+      <h3 id="install-mac" style="margin:48px 0 8px"><span data-l="ko">macOS 설치</span><span data-l="en">macOS installation</span></h3>
+      <p class="sub">
+        <span data-l="ko">pkg 설치 프로그램이 아니라 dmg 안의 스크립트를 터미널에서 직접 실행하는 방식입니다. 아래 순서를 그대로 따라 주세요.</span>
+        <span data-l="en">This is not a pkg installer: you run a script inside the dmg from Terminal. Please follow the steps exactly.</span>
+      </p>
+      <ol class="steps">
+        <li>
+          <span data-l="ko">자신의 Mac에 맞는 dmg를 내려받습니다: <a href="https://drive.google.com/file/d/16iMNJT9cA2b4hUDDA3QqZxGbrUgtcorI/view?usp=drive_link" target="_blank" rel="noopener">애플 실리콘</a> 또는 <a href="https://drive.google.com/file/d/1dQT4PopISndgiN1GpeGi3Kxv1YclWI7a/view?usp=drive_link" target="_blank" rel="noopener">Intel x86_64 (Sequoia)</a>.</span>
+          <span data-l="en">Download the dmg for your Mac: <a href="https://drive.google.com/file/d/16iMNJT9cA2b4hUDDA3QqZxGbrUgtcorI/view?usp=drive_link" target="_blank" rel="noopener">Apple silicon</a> or <a href="https://drive.google.com/file/d/1dQT4PopISndgiN1GpeGi3Kxv1YclWI7a/view?usp=drive_link" target="_blank" rel="noopener">Intel x86_64 (Sequoia)</a>.</span>
+        </li>
+        <li>
+          <span data-l="ko">dmg를 더블클릭해 마운트합니다.</span>
+          <span data-l="en">Double-click the dmg to mount it.</span>
+        </li>
+        <li>
+          <span data-l="ko">터미널을 열고 마운트된 볼륨으로 이동합니다.</span>
+          <span data-l="en">Open Terminal and go to the mounted volume.</span>
+          <pre class="cmd"><code>cd /Volumes/ndhmdSuite</code></pre>
+        </li>
+        <li>
+          <span data-l="ko"><code>install.command</code>를 셸 스크립트로 실행합니다. 더블클릭이 아니라 반드시 <code>sh</code>로 실행하세요.</span>
+          <span data-l="en">Run <code>install.command</code> as a shell script. Use <code>sh</code>; do not double-click it.</span>
+          <pre class="cmd"><code>sh ./install.command</code></pre>
+        </li>
+        <li>
+          <span data-l="ko">비밀번호를 물으면 Mac 로그인 비밀번호를 입력합니다.</span>
+          <span data-l="en">When asked for a password, enter your Mac login password.</span>
+        </li>
+      </ol>
     </div>
   </section>
 

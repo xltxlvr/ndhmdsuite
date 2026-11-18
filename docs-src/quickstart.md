@@ -19,7 +19,27 @@
 
 > **경로에 한글과 공백을 함께 쓰지 않는다.** 경로에 한글이 있으면 PDF 뷰어와의 동기화가 되지 않고, 한글과 공백이 둘 다 있으면 컴파일이 오류로 끝난다. 사용자 계정 이름이 한글이면 `C:\Users\계정이름\…` 아래가 모두 여기에 걸리므로, 작업 폴더는 `C:\work\book`처럼 영문·숫자로 된 경로에 둔다.
 
-macOS와 Linux는 [ndhmd4tex 저장소의 INSTALLATION.md](https://github.com/xltxlvr/ndhmd4tex/blob/main/INSTALLATION.md)를 따른다.
+## 설치 (macOS)
+
+pkg 설치 프로그램이 아니라 dmg 안의 스크립트를 터미널에서 직접 실행하는 방식이다. 순서를 그대로 따른다.
+
+1. 홈페이지에서 자신의 Mac에 맞는 dmg(애플 실리콘 또는 Intel x86_64)를 내려받는다.
+2. dmg를 더블클릭해 마운트한다.
+3. 터미널을 열고 마운트된 볼륨으로 이동한다.
+
+   ```
+   cd /Volumes/ndhmdSuite
+   ```
+
+4. `install.command`를 셸 스크립트로 실행한다. 더블클릭이 아니라 반드시 `sh`로 실행한다.
+
+   ```
+   sh ./install.command
+   ```
+
+5. 비밀번호를 물으면 Mac 로그인 비밀번호를 입력한다.
+
+Linux는 [ndhmd4tex 저장소의 INSTALLATION.md](https://github.com/xltxlvr/ndhmd4tex/blob/main/INSTALLATION.md)를 따른다.
 
 ## 처음 실행: 작업공간 고르기
 
@@ -56,9 +76,11 @@ macOS와 Linux는 [ndhmd4tex 저장소의 INSTALLATION.md](https://github.com/xl
 
 원고에서 커서를 둔 줄에 해당하는 PDF 자리를 보려면 **컴파일 ▶ PDF에서 이 위치 보기**(`Ctrl+Alt+F`)를 쓴다.
 
-반대로 PDF를 더블클릭해서 원고의 해당 줄로 돌아오는 **역방향 검색**은 처음에 한 번 설정해 두어야 한다. PDF 뷰어는 SumatraPDF를 기준으로 설명한다.
+반대로 PDF를 더블클릭해서(Skim에서는 `⌘⇧`를 누른 채 클릭) 원고의 해당 줄로 돌아오는 **역방향 검색**은 처음에 한 번 설정해 두어야 한다. Windows는 SumatraPDF, macOS는 Skim을 기준으로 설명한다. 순서는 같다. 먼저 PDF 뷰어에 명령을 넣고, 그다음 ndhmdWriter에서 뷰어를 등록한다.
 
-### 1. SumatraPDF에 역방향 검색 명령 넣기
+### 1. PDF 뷰어에 역방향 검색 명령 넣기
+
+#### Windows: SumatraPDF
 
 SumatraPDF를 실행해 **메뉴 ▶ 설정 ▶ 옵션**을 연다. 맨 아래 **명령줄 역방향 탐색 설정** 칸에 다음을 그대로 적고 **확인**을 누른다.
 
@@ -68,14 +90,29 @@ ndhmdsync --line %l "%f"
 
 ![SumatraPDF 옵션의 명령줄 역방향 탐색 설정](img/sumatra-inverse-search.png)
 
+#### macOS: Skim
+
+Skim을 실행해 **Skim ▶ Settings…**(설정)를 열고 **Sync** 탭으로 간다. **PDF-TeX Sync support**에서 **Preset**을 **Custom**으로 두고 다음과 같이 적는다.
+
+- **Command**: `ndhmdsync`
+- **Arguments**: `--line %line "%file"`
+
+![Skim 설정의 Sync 탭](img/skim-sync.png)
+
+> Skim이 `ndhmdsync`를 찾지 못하면 Command에 전체 경로를 적는다. 터미널에서 `which ndhmdsync`로 경로를 확인할 수 있다.
+
 ### 2. ndhmdWriter에서 뷰어 등록하기
 
-ndhmdWriter를 실행(바탕화면 아이콘을 더블클릭)하고 **설정 ▶ 환경설정**을 연다.
+ndhmdWriter를 실행(Windows는 바탕화면 아이콘을 더블클릭)하고 **설정 ▶ 환경설정**의 **컴파일·도구** 탭을 연다.
 
 1. **PDF 뷰어 역방향 검색** 줄의 **지금 등록**을 누른다.
 2. **PDF 뷰어 기본 앱** 줄의 **감지된 뷰어로 등록**을 누른다.
 
-![환경설정의 PDF 뷰어 항목](img/ndhmdwriter-settings.png)
+![환경설정의 PDF 뷰어 항목 (Windows)](img/ndhmdwriter-settings.png)
+
+macOS에서는 다음처럼 보인다. 역방향 검색이 등록되면 "이 앱이 등록되어 있습니다."라고 표시되고, 기본 앱 줄에는 감지된 Skim의 설정값이 나타난다.
+
+![환경설정의 PDF 뷰어 항목 (macOS)](img/ndhmdwriter-settings-mac.png)
 
 이제 PDF에서 문장을 더블클릭하면 ndhmdWriter가 해당 원고 줄로 커서를 옮긴다. 자세한 동작은 설명서의 [역방향 검색](ndhmdwriter-manual.html#sec-inverse)을 본다.
 
