@@ -174,7 +174,7 @@
 
 <main id="top">
   <div class="wrap hero">
-    <span class="eyebrow">Version 4.59 · Windows · macOS</span><a class="badge" href="https://github.com/xltxlvr/ndhmd4tex/blob/main/guide/ndhmd4tex_cheatsheet.pdf" target="_blank" rel="noopener">📄 <span data-l="ko">치트시트</span><span data-l="en">Cheatsheet</span> (PDF)</a>
+    <span class="eyebrow">Version 4.58 · Windows · macOS</span><a class="badge" href="https://github.com/xltxlvr/ndhmd4tex/blob/main/guide/ndhmd4tex_cheatsheet.pdf" target="_blank" rel="noopener">📄 <span data-l="ko">치트시트</span><span data-l="en">Cheatsheet</span> (PDF)</a>
     <div class="herohead">
       <img src="assets/icon-192.png" alt="ndhmdSuite icon" width="88" height="88">
       <h1>ndhmdSuite</h1>
@@ -271,11 +271,11 @@
         <div class="box log">
           <h3>ndhmd4tex · ndhmd2html</h3>
           <ul>
-            <li><i>0.25.1</i><span><span data-l="ko"><code>--inherit-meta main.md</code>: 하위 파일만 컴파일할 때 책 최상위의 헤더를 상속 (ndhmd2html 0.6.0)</span><span data-l="en"><code>--inherit-meta main.md</code>: compile a sub-file alone with the main file's header (ndhmd2html 0.6.0)</span></span></li>
+            <li><i>0.25.1</i><span><span data-l="ko">preamble의 패키지 로딩 순서 버그 수정</span><span data-l="en">Fixed a package-loading order bug in the preamble</span></span></li>
+            <li><i>0.25.0</i><span><span data-l="ko"><code>--inherit-meta main.md</code>: 하위 파일만 컴파일할 때 책 최상위의 헤더를 상속 (ndhmd2html 0.6.0)</span><span data-l="en"><code>--inherit-meta main.md</code>: compile a sub-file alone with the main file's header (ndhmd2html 0.6.0)</span></span></li>
             <li><i>0.24.3</i><span><span data-l="ko"><code>bibliography:</code>에 <code>print: false</code> 추가 (문헌 목록 중복 출력 방지)</span><span data-l="en"><code>print: false</code> for <code>bibliography:</code> (avoids a duplicated reference list)</span></span></li>
             <li><i>0.24.2</i><span><span data-l="ko">bibtex 방식 <code>\bibliography</code>에 <code>.bib</code> 확장자 부여</span><span data-l="en">bibtex mode: <code>\bibliography</code> now lists <code>.bib</code> extensions</span></span></li>
             <li><i>0.5.2</i><span><span data-l="ko">ndhmd2html: biber 문헌 목록의 수식 복원, 한글 경고로 죽던 문제 수정</span><span data-l="en">ndhmd2html: restores math in biber bibliographies, fixes a crash on Korean warnings</span></span></li>
-            <li><i>0.24.1</i><span><span data-l="ko">한국어 문헌: <code>korean.lbx</code> 정리, “et al.”을 “외”로 (kskoreanbib)</span><span data-l="en">Korean bibliographies: cleaned up <code>korean.lbx</code>, “외” for “et al.” (kskoreanbib)</span></span></li>
           </ul>
         </div>
       </div>
@@ -357,6 +357,10 @@
           <span data-l="en">When asked for a password, enter your Mac login password.</span>
         </li>
       </ol>
+      <p class="sub" style="margin-top:14px">
+        <span data-l="ko">설치가 끝나면 ndhmdWriter 앱은 <code>/Applications</code>가 아니라 <b>사용자 폴더의 <code>~/Applications/</code></b>에 있습니다.</span>
+        <span data-l="en">After installation, the ndhmdWriter app is placed in <b><code>~/Applications/</code> in your home folder</b>, not in <code>/Applications</code>.</span>
+      </p>
     </div>
   </section>
 
@@ -398,7 +402,7 @@
 
 <footer>
   <div class="wrap">
-    <span>ndhmdSuite 4.59 · Publisher: ndhmd</span>
+    <span>ndhmdSuite 4.58 · Publisher: ndhmd</span>
     <span>
       <a href="https://github.com/xltxlvr/ndhmdwriter" target="_blank" rel="noopener">ndhmdwriter</a> ·
       <a href="https://github.com/xltxlvr/ndhmd4tex" target="_blank" rel="noopener">ndhmd4tex</a> ·

@@ -39,6 +39,8 @@ pkg 설치 프로그램이 아니라 dmg 안의 스크립트를 터미널에서 
 
 5. 비밀번호를 물으면 Mac 로그인 비밀번호를 입력한다.
 
+설치가 끝나면 ndhmdWriter 앱은 `/Applications`가 아니라 사용자 폴더의 `~/Applications/`에 있다. Finder에서 `Shift+Cmd+A`(응용 프로그램)가 아니라 `Shift+Cmd+H`(홈)를 누른 다음, 홈 폴더 안의 `Applications` 폴더를 열어 ndhmdWriter를 찾는다.
+
 Linux는 [ndhmd4tex 저장소의 INSTALLATION.md](https://github.com/xltxlvr/ndhmd4tex/blob/main/INSTALLATION.md)를 따른다.
 
 ## 처음 실행: 작업공간 고르기
