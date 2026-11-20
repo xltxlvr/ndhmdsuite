@@ -101,6 +101,7 @@
 </ul></details></li>
 <li><details><summary><a href="#id-19-mappingyaml-로-매핑-재정의">19. mapping.yaml 로 매핑 재정의</a></summary><ul>
 <li><a href="#id-191-원고-안에-바로-mappingrule">19.1. 원고 안에 바로 — mappingrule:</a></li>
+<li><a href="#id-192-문서-일부에서만---ndhmd-mappingrule---구간-0261">19.2. 문서 일부에서만 — &lt;!--ndhmd mappingrule--&gt; 구간 (0.26.1)</a></li>
 </ul></details></li>
 <li><details><summary><a href="#id-20-파일-포함-filename">20. 파일 포함 ({{filename}})</a></summary><ul>
 <li><a href="#id-201-날-latex-파일-그대로-끼워넣기-texfilename">20.1. 날 LaTeX 파일 그대로 끼워넣기 ({{tex:filename}})</a></li>
@@ -1991,6 +1992,28 @@ mappingrule: |
 <li>안의 YAML이 깨졌거나 <code>key: value</code> 형태가 아니면 오류로 멈춘다 — 매핑 설정이 조용히 무시되면 원인을 찾기 어렵기 때문이다.</li>
 </ul>
 <p><code>mapping.yaml</code> 파일 전체를 복사해 올 필요가 없다는 것이 요점이다. 바꿀 항목만 적으면 나머지 기본값은 그대로 남는다.</p>
+<h3 id="id-192-문서-일부에서만---ndhmd-mappingrule---구간-0261">19.2. 문서 일부에서만 — <code>&lt;!--ndhmd mappingrule--&gt;</code> 구간 (0.26.1)<a class="anchor" href="#id-192-문서-일부에서만---ndhmd-mappingrule---구간-0261" aria-label="링크">#</a></h3>
+<p>문서의 한 구간(예: 세로조판할 부분)에서만 <code>quotes</code> 같은 값을 바꿨다가 그 뒤에 원래대로 돌아오고 싶을 때 쓴다. 한 줄을 통째로 차지하는 주석 모양의 지시로 연다.</p>
+<pre><code class="language-markdown">가로 조판 본문. "한글"과 "English"는 tex 따옴표로 나온다.
+
+&lt;!--ndhmd mappingrule
+quotes: "「」『』"
+quotes_scope: cjk
+--&gt;
+세로조판 구간. "한글 인용"은 낫표가 되고 "English"는 그대로다.
+&lt;!--ndhmd end--&gt;
+
+다시 가로 조판. 위에서 바꾼 값은 원래대로 돌아와 있다.</code></pre>
+<ul>
+<li><code>&lt;!--ndhmd mappingrule</code> 다음 줄부터 <code>--&gt;</code> 앞까지가 <code>mappingrule:</code>과 같은 YAML 조각이다(<code>key: value</code>). 안에서 쓰는 값은 <code>mapping:</code>/<code>mappingrule:</code>로 이미 정한 것 <strong>위에</strong> 얹힌다. <code>extra_inline</code> 같은 리스트는 이어붙이지 않고 통째로 바뀐다(<code>mappingrule:</code>과 같다).</li>
+<li><code>&lt;!--ndhmd end--&gt;</code>가 가장 안쪽 구간 하나를 닫고, 그 구간이 바꾼 키만 지시 이전 값으로 되돌린다. 구간은 중첩할 수 있다.</li>
+<li>지시는 <strong>한 줄을 통째로</strong> 차지해야 한다(여러 줄에 걸친 <code>mappingrule</code> 지시는 괜찮다). 문장 중간에 쓰면 경고하고 무시한다. 일반 Markdown 뷰어에서는 주석이라 보이지 않는다.</li>
+<li>지시 줄은 블록을 끊지만 <strong>문단을 나누지는 않는다</strong>. 앞뒤 줄 사이에 빈 줄이 없으면 LaTeX에서는 한 문단으로 이어진다(<code>:::</code> 환경의 여닫는 줄과 같다). ndhmd2html에서는 <code>&lt;p&gt;</code>가 나뉜다.</li>
+<li>환경(<code>:::{이름}</code>)·인용 안에서 열어도 되고, 환경 바깥에서 연 구간은 안쪽까지 적용된다. <code>end</code>가 없으면 문서 끝까지 열려 있고 경고한다 — <code>{{포함}}</code>된 파일 끝에서 자동으로 닫히지는 <strong>않으므로</strong> 그 파일 안에서 닫아야 한다.</li>
+<li>바꿀 수 없는 키: 본문을 훑기 전에 한 번에 처리되거나 문서 전체에 걸리는 <code>linecomment</code>, <code>escape_chars</code>, <code>external</code>, <code>showexam</code>, <code>animation_fps</code>, <code>codeblock_template</code>, <code>literal_macros</code>, <code>extra_macros</code>, <code>verbatim_env</code>, <code>metadata_macro_prefix</code>, <code>raw_inline_formats</code>와 <code>_</code>로 시작하는 키. 경고하고 그 키만 무시한다. 잘못된 YAML이면 경고하고 지시 전체를 무시한다.</li>
+<li>세로조판 자체의 환경(<code>\begin{...}</code>)은 이 지시가 하지 않는다. 바꿀 구간을 <code>:::{환경}</code>이나 raw 환경으로 감싸고 그 안에서 값을 바꾼다.</li>
+<li><code>vpunct.py</code> 같은 외부 후처리는 이 구간을 모른다. <code>.tex</code> 전체에 돌아간다.</li>
+</ul>
 <hr />
 <h2 id="id-20-파일-포함-filename">20. 파일 포함 (<code>{{filename}}</code>)<a class="anchor" href="#id-20-파일-포함-filename" aria-label="링크">#</a></h2>
 <p>multimarkdown의 트랜스클루전 문법을 본떠, 다른 <code>.md</code> 파일의 본문을 그 자리에 끼워넣을 수 있다. 여러 챕터 파일을 하나의 최상위 문서에서 모아 단행본을 조판할 때 쓴다.</p>

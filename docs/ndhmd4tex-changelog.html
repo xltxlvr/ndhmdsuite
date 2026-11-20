@@ -29,6 +29,7 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#ndhmd4tex-0261--ndhmd2html-063">ndhmd4tex 0.26.1 / ndhmd2html 0.6.3</a></li>
 <li><a href="#ndhmd4tex-0260--ndhmd2html-062">ndhmd4tex 0.26.0 / ndhmd2html 0.6.2</a></li>
 <li><a href="#ndhmd4tex-0251">ndhmd4tex 0.25.1</a></li>
 <li><a href="#ndhmd2html-061">ndhmd2html 0.6.1</a></li>
@@ -191,6 +192,10 @@
       <p class="doc-sub">최신 항목이 위에 있습니다</p>
     </div>
 <h1 id="ndhmd4tex-변경-이력">ndhmd4tex 변경 이력<a class="anchor" href="#ndhmd4tex-변경-이력" aria-label="링크">#</a></h1>
+<h2 id="ndhmd4tex-0261--ndhmd2html-063">ndhmd4tex 0.26.1 / ndhmd2html 0.6.3<a class="anchor" href="#ndhmd4tex-0261--ndhmd2html-063" aria-label="링크">#</a></h2>
+<ul>
+<li>문서 일부에서만 mapping 값을 바꿨다가 되돌리는 구간 지시 추가: 한 줄짜리 <code>&lt;!--ndhmd mappingrule</code> … <code>--&gt;</code> 로 열고 <code>&lt;!--ndhmd end--&gt;</code> 로 닫는다. 안의 YAML 은 <code>mappingrule:</code> 과 같고, 닫으면 그 구간이 바꾼 키만 이전 값으로 돌아간다. 중첩·환경 안 사용 가능. 지시 줄은 블록만 끊고 문단은 나누지 않는다(ndhmd2html 은 <code>&lt;p&gt;</code> 가 나뉜다). 본문을 훑기 전에 처리되는 키(<code>linecomment</code>, <code>escape_chars</code>, <code>external</code>, <code>showexam</code> 등)는 구간에서 바꿀 수 없다. <code>{{포함}}</code> 파일 끝에서 자동으로 닫히지 않는다. 가이드 19.2 절.</li>
+</ul>
 <h2 id="ndhmd4tex-0260--ndhmd2html-062">ndhmd4tex 0.26.0 / ndhmd2html 0.6.2<a class="anchor" href="#ndhmd4tex-0260--ndhmd2html-062" aria-label="링크">#</a></h2>
 <ul>
 <li><code>quotes: mixed</code> 와 <code>quotes_scope: cjk</code> 추가. 여는 따옴표 다음 글자(<code>*</code> <code>~</code> 는 건너뜀)가 한글/한자일 때만 낫표 등 결과 문자로 바꾸고, 짝인 닫는 따옴표는 여는 쪽을 따른다. 영문 인용은 tex 따옴표(``..'')로 남는다. 이 모드에서 <code>'</code> 의 단어 안 아포스트로피는 닫는 따옴표로 보지 않는다. 판정 규칙은 <code>vpunct.py --contextual</code> 과 같다. <code>mixed</code> 는 <code>「」『』</code> 에 <code>cjk</code> 를 더한 줄임말. ndhmd2html 은 변환하지 않은 쪽을 <code>“ ”</code> <code>‘ ’</code> 로 낸다.</li>
