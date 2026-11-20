@@ -29,6 +29,7 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#0133">0.13.3</a></li>
 <li><a href="#0132">0.13.2</a></li>
 <li><a href="#0131">0.13.1</a></li>
 <li><a href="#0130">0.13.0</a></li>
@@ -271,6 +272,12 @@
     </div>
 <h1 id="changelog">CHANGELOG<a class="anchor" href="#changelog" aria-label="링크">#</a></h1>
 <p>버전은 <code>__version__</code> 하나로 관리한다(파일 맨 위). 수정이 있을 때마다 마지막 자리(patch)를 하나씩 올린다. 최신 항목이 위에 온다.</p>
+<h2 id="0133">0.13.3<a class="anchor" href="#0133" aria-label="링크">#</a></h2>
+<ul>
+<li>환경설정의 <code>PDF 뷰어 기본 앱</code>(·<code>역방향 검색</code>) 상태 글이 macOS에서 한 줄 높이로 잘리던 것을 고침(줄바꿈 라벨에 최소 높이 보장, 선택·복사 가능).</li>
+<li><code>AI 도우미 설정</code>: macOS에서 입력칸이 내용 크기에 머물러 좁던 것을 고침(폼이 가로로 늘어나게, 라벨 너비 통일, 창 780px, 시간 제한 칸은 좁게). 기능 변화 없음.</li>
+<li>시험은 리눅스 offscreen 렌더링뿐. <strong>미확인</strong>: 실제 macOS 모양.</li>
+</ul>
 <h2 id="0132">0.13.2<a class="anchor" href="#0132" aria-label="링크">#</a></h2>
 <ul>
 <li><code>본문만 tex 변환</code>도 <code>최상위 헤더 가져오기</code>가 켜져 있으면 <code>--inherit-meta</code>를 함께 넘긴다. <code>--default NONE</code>은 문서 구조만 버리고 <code>mapping:</code>·<code>mappingrule:</code>·<code>toplevel:</code>은 그대로 적용하므로, 하위 파일에서도 최상위의 번역 규칙(예: ellipsis)이 반영된다. 0.13.1의 "헤더를 넘기지 않음"은 잘못이었다.</li>
