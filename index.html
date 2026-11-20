@@ -175,7 +175,7 @@
 
 <main id="top">
   <div class="wrap hero">
-    <span class="eyebrow">Version 4.58 · Windows · macOS</span><a class="badge" href="https://github.com/xltxlvr/ndhmd4tex/blob/main/guide/ndhmd4tex_cheatsheet.pdf" target="_blank" rel="noopener">📄 <span data-l="ko">치트시트</span><span data-l="en">Cheatsheet</span> (PDF)</a>
+    <span class="eyebrow">Version 4.60 · Windows · macOS</span><a class="badge" href="https://github.com/xltxlvr/ndhmd4tex/blob/main/guide/ndhmd4tex_cheatsheet.pdf" target="_blank" rel="noopener">📄 <span data-l="ko">치트시트</span><span data-l="en">Cheatsheet</span> (PDF)</a>
     <div class="herohead">
       <img src="assets/icon-192.png" alt="ndhmdSuite icon" width="88" height="88">
       <h1>ndhmdSuite</h1>
@@ -228,7 +228,7 @@
           <h3>ndhmd4tex</h3>
           <div class="tag"><span data-l="ko">변환기 · CLI</span><span data-l="en">Converter · CLI</span></div>
           <p>
-            <span data-l="ko">ndhmd 문법의 markdown을 TeX로 변환하는 도구. 여러 원고를 이어 붙여 한 권의 책으로 만들 수 있습니다.</span>
+            <span data-l="ko">ndhmd 문법의 markdown을 TeX으로 변환하는 도구. 여러 원고를 이어 붙여 한 권의 책으로 만들 수 있습니다.</span>
             <span data-l="en">Converts ndhmd-flavoured markdown into TeX and can assemble multiple manuscripts into a single book.</span>
           </p>
           <a class="repo" href="https://github.com/xltxlvr/ndhmd4tex" target="_blank" rel="noopener">github.com/xltxlvr/ndhmd4tex →</a>
@@ -255,9 +255,9 @@
         <span data-l="en">Current versions and a short summary of recent changes. Full history (Korean): <a href="docs/ndhmdwriter-changelog.html">ndhmdwriter</a> · <a href="docs/ndhmd4tex-changelog.html">ndhmd4tex·ndhmd2html</a></span>
       </p>
       <div class="vers">
-        <div class="ver"><b>ndhmdwriter</b><span class="n">0.13.0</span></div>
-        <div class="ver"><b>ndhmd4tex</b><span class="n">0.25.1</span></div>
-        <div class="ver"><b>ndhmd2html</b><span class="n">0.6.1</span></div>
+        <div class="ver"><b>ndhmdwriter</b><span class="n">0.13.2</span></div>
+        <div class="ver"><b>ndhmd4tex</b><span class="n">0.26.0</span></div>
+        <div class="ver"><b>ndhmd2html</b><span class="n">0.6.2</span></div>
         <div class="ver"><b>ndhmdsync</b><span class="n">0.5.6</span></div>
         <div class="ver"><b>ksruncltex</b><span class="n">rev8</span></div>
       </div>
@@ -265,20 +265,20 @@
         <div class="box log">
           <h3>ndhmdwriter</h3>
           <ul>
-            <li><i>0.13.0</i><span><span data-l="ko"><code>환경설정 ▶ 이 파일만 ▶ 최상위 헤더 가져오기</code> 추가: 하위 파일 단독 컴파일·HTML 변환에도 쪽 설정·문서 글꼴 반영 (ndhmd4tex 0.25.0 / ndhmd2html 0.6.0 이상 필요)</span><span data-l="en">New <code>Preferences ▶ This file only ▶ Inherit top-level header</code>: page setup and document font apply to single-file compile/HTML of sub-files (requires ndhmd4tex 0.25.0 / ndhmd2html 0.6.0 or later)</span></span></li>
+            <li><i>0.13.2</i><span><span data-l="ko"><code>컴파일 ▶ 본문만 tex 변환</code> 추가</span><span data-l="en">New <code>Compile ▶ Convert body to tex only</code>: body only conversion</span></span></li>
+            <li><i>0.13.0</i><span><span data-l="ko"><code>환경설정 ▶ 이 파일만 ▶ 최상위 헤더 가져오기</code> 추가 (ndhmd4tex 0.25.0 / ndhmd2html 0.6.0 이상 필요)</span><span data-l="en">New <code>Preferences ▶ This file only ▶ Inherit top-level header</code>: page setup and document font apply to single-file compile/HTML of sub-files (requires ndhmd4tex 0.25.0 / ndhmd2html 0.6.0 or later)</span></span></li>
             <li><i>0.12.3</i><span><span data-l="ko">문서 글꼴 도구를 앱 안의 창으로 열기 (macOS 앱 번들에서 창이 안 뜨던 문제 수정)</span><span data-l="en">Document-font tool opens inside the app (fixes the window not appearing in the macOS app bundle)</span></span></li>
             <li><i>0.12.0</i><span><span data-l="ko"><code>설정 ▶ 문서 글꼴…</code> 추가: 본문·산세리프·고정폭 글꼴을 front matter에 기록</span><span data-l="en">New <code>Settings ▶ Document fonts…</code>: writes main/sans/mono fonts into the front matter</span></span></li>
-            <li><i>0.11.2</i><span><span data-l="ko">쪽 설정에 글자 크기 추가</span><span data-l="en">Page setup: font size option</span></span></li>
             <li><i>0.11.0</i><span><span data-l="ko"><code>쪽 설정</code> 추가: 용지, 단면/양면, 여백을 front matter에 기록</span><span data-l="en">New <code>Page setup</code>: paper size, one/two-sided, margins written into the front matter</span></span></li>
           </ul>
         </div>
         <div class="box log">
           <h3>ndhmd4tex · ndhmd2html</h3>
           <ul>
+            <li><i>0.26.0</i><span><span data-l="ko"><code>quotes: mixed</code> 도입 (ndhmd2html 0.6.2)</span><span data-l="en">introduce <code>quotes: mixed</code> (ndhmd2html 0.6.2)</span></span></li>
             <li><i>0.25.1</i><span><span data-l="ko">preamble의 패키지 로딩 순서 버그 수정</span><span data-l="en">Fixed a package-loading order bug in the preamble</span></span></li>
             <li><i>0.25.0</i><span><span data-l="ko"><code>--inherit-meta main.md</code>: 하위 파일만 컴파일할 때 책 최상위의 헤더를 상속 (ndhmd2html 0.6.0)</span><span data-l="en"><code>--inherit-meta main.md</code>: compile a sub-file alone with the main file's header (ndhmd2html 0.6.0)</span></span></li>
             <li><i>0.24.3</i><span><span data-l="ko"><code>bibliography:</code>에 <code>print: false</code> 추가 (문헌 목록 중복 출력 방지)</span><span data-l="en"><code>print: false</code> for <code>bibliography:</code> (avoids a duplicated reference list)</span></span></li>
-            <li><i>0.24.2</i><span><span data-l="ko">bibtex 방식 <code>\bibliography</code>에 <code>.bib</code> 확장자 부여</span><span data-l="en">bibtex mode: <code>\bibliography</code> now lists <code>.bib</code> extensions</span></span></li>
             <li><i>0.5.2</i><span><span data-l="ko">ndhmd2html: biber 문헌 목록의 수식 복원, 한글 경고로 죽던 문제 수정</span><span data-l="en">ndhmd2html: restores math in biber bibliographies, fixes a crash on Korean warnings</span></span></li>
           </ul>
         </div>
@@ -406,7 +406,7 @@
 
 <footer>
   <div class="wrap">
-    <span>ndhmdSuite 4.58 · Publisher: ndhmd</span>
+    <span>ndhmdSuite 4.60 · Publisher: ndhmd</span>
     <span>
       <a href="https://github.com/xltxlvr/ndhmdwriter" target="_blank" rel="noopener">ndhmdwriter</a> ·
       <a href="https://github.com/xltxlvr/ndhmd4tex" target="_blank" rel="noopener">ndhmd4tex</a> ·

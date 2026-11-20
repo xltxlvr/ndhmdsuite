@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ndhmdWriter 설명서 (참조편) — ndhmdSuite</title>
-<meta name="description" content="ndhmdWriter 0.9.5 기준 · 메뉴와 화면 순서로 적은 기능 사전">
+<meta name="description" content="ndhmdWriter 0.13.0 기준 · 메뉴와 화면 순서로 적은 기능 사전">
 <link rel="icon" href="../assets/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -135,7 +135,7 @@
   <main class="doc">
     <div class="doc-head">
       <h1 class="doc-title">ndhmdWriter 설명서 (참조편)</h1>
-      <p class="doc-sub">ndhmdWriter 0.9.5 기준 · 메뉴와 화면 순서로 적은 기능 사전</p>
+      <p class="doc-sub">ndhmdWriter 0.13.0 기준 · 메뉴와 화면 순서로 적은 기능 사전</p>
     </div>
 <h1 id="ch-about"><span class="secnum">1</span> 이 설명서에 대하여<a class="anchor" href="#ch-about" aria-label="링크">#</a></h1>
 <p>이 설명서는 <strong><em>ndhmdWriter</em></strong> 버전 0.13.0의 <strong>참조편</strong>이다. 처음 쓰는 사람을 안내하는 글이 아니라, 앱이 가진 기능을 메뉴 순서와 화면 구성에 맞추어 빠짐없이 적은 사전이다. “왜 이렇게 만들었는가”는 별도의 안내문(<em>무엇을 위해 만들었는가</em>)이 다루고, 이 글은 “무엇이 어떻게 동작하는가”만 적는다.</p>
@@ -1287,6 +1287,7 @@
 </ul>
 <p><strong><code>오류 위치로</code></strong>(0.4.113). 콘솔 창 <code>컴파일 실패 (백엔드)</code> 아래에 이 버튼이 생긴다. 출력에서 tex 오류의 행을 찾아(<code>./note1.tex:23: Undefined control sequence.</code> 꼴, 또는 <code>! 메시지</code> 뒤의 <code>l.23 …</code> 꼴) <code>.nmdsync</code>로 <strong>원고의 해당 줄</strong>을 찾아 그리로 커서를 옮기고, 상태표시줄에 <code>tex 23행 → note1.md:4  메시지</code>를 8초 보인다. <code>ndhmdsync --line 23 note1.tex</code>를 따로 돌리지 않아도 같은 자리가 나온다(같은 규칙으로 읽는다). 오류가 여럿이면 버튼 글자에 <code>(1/3)</code>처럼 순서가 붙고, 누를 때마다 다음 오류로 가며 끝에서는 처음으로 돌아온다. - 변환한 그 <code>.tex</code>의 행만 되짚는다. <code>.sty</code> 따위 다른 파일의 오류와 <code>==&gt; Fatal error occurred</code> 줄은 뺀다. 같은 tex 행은 한 번만 센다. 대응할 오류가 없으면 버튼은 나오지 않는다. - 위치는 근사이다. 문단 안의 줄은 비례로 보간한 줄이고, 원고 줄이 정확히 같다는 보장은 없다. - 오류가 <code>{{}}</code>로 포함된 파일의 줄이면 그 파일이 열린다. 이동은 위치 되짚기 이력에 쌓인다(<a class="ref ref-ref" href="#sec-history">4.8</a>절). - 산출물은 대상 원고와 <strong>같은 폴더</strong>에 <code>이름.tex</code> <code>.pdf</code> <code>.log</code> <code>.nmdsync</code>(+ synctex, aux 등)로 생긴다. 책 컴파일이면 책 루트 이름으로, 이 파일만 컴파일이면 그 파일 이름으로 만들어진다. - <strong>이 파일만 컴파일</strong>은 그 파일 자신의 프론트매터와 <code>setup:</code> 상속을 그대로 적용하여 단독 문서로 컴파일한다. 부모가 없는 파일에서는 책 컴파일과 같다. - 도구가 없을 때: <code>latexmk 를 찾지 못했습니다 / PATH 에 latexmk 가 없습니다. TeX Live/MiKTeX 설치를 확인하십시오.</code>, <code>ksruncltex 를 찾지 못했습니다 / texlua/kpsewhich 를 PATH 에서 찾지 못했거나 ksruncltex 이 설치돼 있지 않은 것 같습니다.</code></p>
 <ul>
+<li><strong>본문만 tex 변환</strong>(0.13.1, <code>컴파일 ▶ 본문만 tex 변환</code>)은 지금 연 파일을 <code>ndhmd4tex --default NONE</code>으로 변환해 <code>이름-body.tex</code>로 남긴다. front matter와 프리앰블 없이 pandoc이 만든 본문 LaTeX 조각 그대로이며, 컴파일은 하지 않는다. 컴파일용 <code>이름.tex</code>를 덮어쓰지 않고, <code>작업공간 청소</code>로도 지워지지 않는다. 문서 구조(class·preamble·title 등)는 쓰지 않지만 <code>mapping:</code>·<code>mappingrule:</code>·<code>toplevel:</code> 같은 마크업 번역 규칙은 <code>--default NONE</code>에서도 적용된다. 그래서 <code>환경설정 ▶ 이 파일만 ▶ 최상위 헤더 가져오기</code>가 켜져 있으면 최상위 원고의 규칙을 가져와 변환한다.</li>
 <li><strong>최상위 헤더 가져오기</strong>(0.13.0, <code>환경설정 ▶ 이 파일만</code>, 기본 <strong>꺼짐</strong>). 켜면 책의 하위 파일을 <code>이 파일만 컴파일</code>·<code>이 파일만 HTML로 변환</code>할 때 최상위 원고를 <code>--inherit-meta</code>로 변환기에 넘긴다. 최상위의 front matter(class, classoption, preamble, setup, <code>쪽 설정</code>·<code>문서 글꼴</code> 블록 포함)를 최상위를 변환할 때와 똑같이 해석해 쓰고, 그 파일 자신의 front matter는 버린다. 단독 컴파일에 맞지 않는 <code>title</code>·<code>subtitle</code>·<code>author</code>·<code>date</code>·<code>maketitle</code>·<code>tocloft</code>는 가져오지 않으므로 표지·목차는 생기지 않는다. 본문과 줄 번호는 그 파일 그대로라서 <code>.nmdsync</code>의 소스 파일·줄(앞뒤 검색)은 켜고 끌 때 같다(tex 쪽 줄만 헤더 길이만큼 달라진다). 최상위와 하위 파일의 폴더가 다르면 상속한 헤더의 상대 경로(<code>.bib</code>, <code>\input</code> 등)는 컴파일하는 폴더 기준으로 찾는다는 경고가 나온다. 책이 아닌 단독 원고와 책 전체 변환에는 영향이 없다. ndhmd4tex 0.25.0, ndhmd2html 0.6.0 이상이 필요하다.</li>
 </ul>
 <h2 id="sec-convert"><span class="secnum">8.5</span> 변환·덤프·.tex 열기<a class="anchor" href="#sec-convert" aria-label="링크">#</a></h2>

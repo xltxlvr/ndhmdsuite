@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ndhmd4tex 방언 사양서 — ndhmdSuite</title>
-<meta name="description" content="ndhmd4tex 0.22 기준 · ndhmarkdown 문법 전체">
+<meta name="description" content="ndhmd4tex 0.26 기준 · ndhmarkdown 문법 전체">
 <link rel="icon" href="../assets/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -123,7 +123,7 @@
   <main class="doc">
     <div class="doc-head">
       <h1 class="doc-title">ndhmd4tex 방언 사양서</h1>
-      <p class="doc-sub">ndhmd4tex 0.22 기준 · ndhmarkdown 문법 전체</p>
+      <p class="doc-sub">ndhmd4tex 0.26 기준 · ndhmarkdown 문법 전체</p>
     </div>
 
 <p>이 문서는 <code>ndhmd4tex.py</code>가 인식하는 markdown → LaTeX 변환 문법을 정리한 참조 가이드다. 표준 Pandoc markdown과 여러 지점에서 다르므로, 특히 <strong>따옴표</strong>, <strong>리스트 이어쓰기</strong>, <strong>설명 리스트(<code>::</code>)</strong>, <strong>커스텀 환경(<code>:::</code>)</strong> 부분은 꼭 확인하고 쓰는 것이 좋다.</p>
@@ -819,10 +819,12 @@ RTLtypeset:                              # 풀어 쓴 꼴
 <tr><td>4글자 <code>"「」『』"</code></td><td>처음 두 글자(여는, 닫는)</td><td>뒤 두 글자(여는, 닫는)</td></tr>
 <tr><td>2글자 <code>"《》"</code></td><td>그 두 글자</td><td><code>tex</code> 방식 그대로</td></tr>
 <tr><td>리스트 <code>["&lt;&lt;", "&gt;&gt;"]</code></td><td>여러 글자짜리는 같은 길이의 리스트로</td><td>(4개 요소면 뒤의 둘)</td></tr>
+<tr><td><code>mixed</code></td><td><code>「」</code> — 한글/한자 맥락만</td><td><code>『』</code> — 한글/한자 맥락만</td></tr>
 </tbody>
 </table></div>
 <p><code>unicode</code>는 4글자 <code>“”‘’</code>의 줄임말이다. 여는/닫는 판정과 이스케이프(<code>\"</code>, <code>\'</code>), 코드·수식 안의 따옴표 처리는 <code>tex</code>일 때와 똑같고 바뀌는 것은 치환 결과 문자뿐이다. 결과 문자는 뒤 단계가 건드리지 못하게 보호된다. 잘못된 값은 경고하고 <code>tex</code>로 둔다. <code>--pandoc</code>/<code>--mmd</code>에는 적용되지 않는다(pandoc의 smart 확장, mmd의 <code>--smart</code>가 맡는다).</p>
 <ul>
+<li><strong>한글/한자 맥락만 바꾸기 (0.26.0)</strong>: <code>quotes: mixed</code>, 또는 위의 어떤 값이든 <code>quotes_scope: cjk</code>를 더하면(기본 <code>all</code>) 여는 따옴표 바로 다음 글자(<code>*</code> <code>~</code>는 건너뜀)가 한글·한자일 때만 결과 문자로 바꾸고, 짝인 닫는 따옴표는 여는 쪽의 판정을 따른다. 영문 인용(<code>"Hello"</code>)은 <code>tex</code> 방식 <code>``Hello''</code>로 남아 원래 글꼴로 식자된다. <code>「」</code> 안에 영문이 있어도 한글로 열었으면 <code>「」</code>다. 이 모드의 <code>'</code>는 단어 안 아포스트로피(<code>don't</code>)를 닫는 따옴표로 보지 않는다. 가로·세로 겸용 원고에서 <code>vpunct.py --contextual</code>과 판정을 맞추려는 용도다. ndhmd2html에서는 변환하지 않은 쪽이 <code>“ ”</code> <code>‘ ’</code>로 나온다.</li>
 <li>유니코드 따옴표는 xelatex/lualatex에서 쓰는 글꼴에 그 글리프가 있을 때 나온다. pdflatex에서는 <code>inputenc</code>가 필요하다.</li>
 <li>닫는 작은따옴표 문자는 <code>don't</code>의 아포스트로피에도 쓰인다. <code>unicode</code>에서는 U+2019라서 맞는 결과지만, <code>「」『』</code>처럼 쓰면 <code>don』t</code>가 되므로 그 자리는 <code>\'</code>로 직선을 지키거나 <code>\textquoteright{}</code>를 쓴다.</li>
 </ul>
