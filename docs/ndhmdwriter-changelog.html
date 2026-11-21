@@ -29,6 +29,10 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#0137">0.13.7</a></li>
+<li><a href="#0136">0.13.6</a></li>
+<li><a href="#0135">0.13.5</a></li>
+<li><a href="#0134">0.13.4</a></li>
 <li><a href="#0133">0.13.3</a></li>
 <li><a href="#0132">0.13.2</a></li>
 <li><a href="#0131">0.13.1</a></li>
@@ -272,6 +276,26 @@
     </div>
 <h1 id="changelog">CHANGELOG<a class="anchor" href="#changelog" aria-label="링크">#</a></h1>
 <p>버전은 <code>__version__</code> 하나로 관리한다(파일 맨 위). 수정이 있을 때마다 마지막 자리(patch)를 하나씩 올린다. 최신 항목이 위에 온다.</p>
+<h2 id="0137">0.13.7<a class="anchor" href="#0137" aria-label="링크">#</a></h2>
+<ul>
+<li><code>이 파일만 컴파일</code> 뒤 정방향 검색 열기가 책 최상위 PDF(<code>main.pdf</code>)가 있으면 그쪽으로 가던 것을 고침. 방금 만든 하위 파일 자신의 <code>.nmdsync</code>/<code>.tex</code>/<code>.pdf</code>를 ndhmdsync에 명시해 <code>ch1.pdf</code>를 연다. 책 전체 컴파일 때 동작은 그대로. main.pdf를 지우는 방식은 쓰지 않는다(책 PDF 보존).</li>
+<li>시험: 하위 파일 → <code>--sync-file/--tex/--pdf</code>가 ch1.*로 전달, 책 PDF → 인자 없음(명령 구성 확인). <strong>미확인</strong>: 실제 ndhmdsync·뷰어에서 ch1.pdf가 뜨는 것.</li>
+</ul>
+<h2 id="0136">0.13.6<a class="anchor" href="#0136" aria-label="링크">#</a></h2>
+<ul>
+<li>문서 글꼴 창(font.py 1.1.1, Writer 모드)에서 <code>Ctrl+W</code>(맥 ⌘W)로 보내지 않고 닫을 수 있다. 원고는 바뀌지 않는다. styler 단독 실행(Writer 모드가 아닐 때)에는 단축키를 추가하지 않는다.</li>
+<li>시험: Writer 안에서 font 창을 열고 Ctrl+W → 창 닫힘, 원고 변화 없음(offscreen). <strong>미확인</strong>: 맥 ⌘W 실제 키 입력.</li>
+</ul>
+<h2 id="0135">0.13.5<a class="anchor" href="#0135" aria-label="링크">#</a></h2>
+<ul>
+<li><code>환경설정 ▶ 컴파일·도구 ▶ ndhmd4tex 옵션</code> 추가. 한 줄로 적은 옵션(예: <code>--encoding cp949</code>, <code>--config ./mapping.yaml</code>)이 ndhmd4tex를 부르는 모든 명령(컴파일, 변환후 열기, 본문만 tex, 점검, 메타 읽기) 맨 앞에 붙는다. Writer가 붙이는 기존 옵션은 그대로 두고 뒤에 오므로 겹치면 Writer가 이긴다. ndhmd2html·<code>--guide</code>에는 적용 안 함.</li>
+<li>시험: <code>--encoding cp949</code> 로 cp949 원고를 본문만 tex 변환 → 한글 정상, 명령 순서 확인. <strong>미확인</strong>: <code>--config</code> 실제 매핑 파일, 따옴표 든 값의 Windows 동작.</li>
+</ul>
+<h2 id="0134">0.13.4<a class="anchor" href="#0134" aria-label="링크">#</a></h2>
+<ul>
+<li>인라인 각주 <code>^[…]</code>와 각주 참조 <code>[^키]</code>에 옅은 바탕색을 깔았다(링크색을 편집창 바탕에 16% 섞은 색 — 밝은·어두운 테마 모두 자동). 긴 인라인 각주가 본문과 한눈에 구별된다. 각주 정의 줄의 <code>[^키]:</code>는 예전처럼 색·이탤릭만.</li>
+<li>시험: 밝은 테마 offscreen 렌더링으로 확인. <strong>미확인</strong>: 어두운 테마·맥 실제 화면, 줄바꿈되는 긴 각주의 모양(줄마다 바탕이 끊겨 보임).</li>
+</ul>
 <h2 id="0133">0.13.3<a class="anchor" href="#0133" aria-label="링크">#</a></h2>
 <ul>
 <li>환경설정의 <code>PDF 뷰어 기본 앱</code>(·<code>역방향 검색</code>) 상태 글이 macOS에서 한 줄 높이로 잘리던 것을 고침(줄바꿈 라벨에 최소 높이 보장, 선택·복사 가능).</li>
