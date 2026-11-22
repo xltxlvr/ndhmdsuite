@@ -290,8 +290,8 @@
     <div class="wrap">
       <h2><span data-l="ko">설치</span><span data-l="en">Installation</span></h2>
       <p class="sub">
-        <span data-l="ko">Windows는 설치 프로그램 하나로 끝납니다. macOS는 <a href="#install-mac">아래</a>를 보세요.</span>
-        <span data-l="en">On Windows a single installer does everything. For macOS, <a href="#install-mac">see below</a>.</span>
+        <span data-l="ko">Windows는 설치 프로그램 하나로 끝납니다. macOS는 <a href="#install-mac">아래</a>를 보세요. (제거: <a href="#uninstall-mac">macOS 제거</a>)</span>
+        <span data-l="en">On Windows a single installer does everything. For macOS, <a href="#install-mac">see below</a>. (Removal: <a href="#uninstall-mac">macOS uninstallation</a>)</span>
       </p>
       <ol class="steps">
         <li>
@@ -365,6 +365,46 @@
         <span data-l="ko">설치가 끝나면 ndhmdWriter 앱은 <code>/Applications</code>가 아니라 <b>사용자 폴더의 <code>~/Applications/</code></b>에 있습니다.</span>
         <span data-l="en">After installation, the ndhmdWriter app is placed in <b><code>~/Applications/</code> in your home folder</b>, not in <code>/Applications</code>.</span>
       </p>
+
+      <h3 id="uninstall-mac" style="margin:48px 0 8px"><span data-l="ko">macOS 제거</span><span data-l="en">macOS uninstallation</span></h3>
+      <p class="sub">
+        <span data-l="ko">macOS에는 “설치된 앱” 같은 제거 메뉴가 없으므로 <a href="https://github.com/xltxlvr/ndhmdsuite/blob/main/tools/uninstall-ndhmdsuite.sh" target="_blank" rel="noopener"><code>uninstall-ndhmdsuite.sh</code></a> 스크립트로 제거합니다.</span>
+        <span data-l="en">macOS has no uninstall menu for this, so remove it with the <a href="https://github.com/xltxlvr/ndhmdsuite/blob/main/tools/uninstall-ndhmdsuite.sh" target="_blank" rel="noopener"><code>uninstall-ndhmdsuite.sh</code></a> script.</span>
+      </p>
+      <ol class="steps">
+        <li>
+          <span data-l="ko">스크립트를 내려받습니다. <a href="https://github.com/xltxlvr/ndhmdsuite/blob/main/tools/uninstall-ndhmdsuite.sh" target="_blank" rel="noopener">GitHub 페이지</a>에서 Raw 파일을 저장하거나, 터미널에서 다음을 실행합니다.</span>
+          <span data-l="en">Download the script: save the raw file from the <a href="https://github.com/xltxlvr/ndhmdsuite/blob/main/tools/uninstall-ndhmdsuite.sh" target="_blank" rel="noopener">GitHub page</a>, or run this in Terminal.</span>
+          <pre class="cmd"><code>curl -O https://raw.githubusercontent.com/xltxlvr/ndhmdsuite/main/tools/uninstall-ndhmdsuite.sh</code></pre>
+        </li>
+        <li>
+          <span data-l="ko">내려받은 폴더에서 셸 스크립트로 실행합니다.</span>
+          <span data-l="en">Run it as a shell script from the folder where you downloaded it.</span>
+          <pre class="cmd"><code>sh ./uninstall-ndhmdsuite.sh</code></pre>
+        </li>
+        <li>
+          <span data-l="ko">“계속할까요? [y/N]”라고 물으면 <code>y</code>를 입력합니다. 일부 항목은 관리자 권한이 필요하므로 비밀번호를 물으면 Mac 로그인 비밀번호를 입력합니다.</span>
+          <span data-l="en">When asked “Continue? [y/N]”, type <code>y</code>. Some items need administrator rights, so enter your Mac login password if prompted.</span>
+        </li>
+      </ol>
+      <div class="two" style="margin-top:24px">
+        <div class="box">
+          <h3><span data-l="ko">제거되는 것</span><span data-l="en">What is removed</span></h3>
+          <ul>
+            <li><span data-l="ko">ndhmdWriter 앱(<code>~/Applications</code> 또는 <code>/Applications</code>)과 환경설정</span><span data-l="en">The ndhmdWriter app (<code>~/Applications</code> or <code>/Applications</code>) and its preferences</span></li>
+            <li><span data-l="ko">ndhmd4tex 설정(<code>~/Library/ndhmd4tex</code>)과 <code>/usr/local/bin</code>의 변환 도구</span><span data-l="en">ndhmd4tex settings (<code>~/Library/ndhmd4tex</code>) and the conversion tools in <code>/usr/local/bin</code></span></li>
+            <li><span data-l="ko">ksruncltex 구성 요소</span><span data-l="en">The ksruncltex components</span></li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3><span data-l="ko">그대로 남는 것</span><span data-l="en">What is left alone</span></h3>
+          <ul>
+            <li><span data-l="ko">작성한 원고</span><span data-l="en">Your manuscripts</span></li>
+            <li><span data-l="ko">글꼴</span><span data-l="en">Fonts</span></li>
+            <li><span data-l="ko">TeX 배포판</span><span data-l="en">Your TeX distribution</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
