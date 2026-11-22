@@ -29,6 +29,7 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#0148">0.14.8</a></li>
 <li><a href="#0147">0.14.7</a></li>
 <li><a href="#0146">0.14.6</a></li>
 <li><a href="#0145">0.14.5</a></li>
@@ -284,6 +285,11 @@
     </div>
 <h1 id="changelog">CHANGELOG<a class="anchor" href="#changelog" aria-label="링크">#</a></h1>
 <p>버전은 <code>__version__</code> 하나로 관리한다(파일 맨 위). 수정이 있을 때마다 마지막 자리(patch)를 하나씩 올린다. 최신 항목이 위에 온다.</p>
+<h2 id="0148">0.14.8<a class="anchor" href="#0148" aria-label="링크">#</a></h2>
+<ul>
+<li>조판 미리보기가 오른쪽에 붙어(독) 있을 때 다크 모드에서 제목·<code>자동</code>·<code>앞뒤 N 블록</code>·배율·상태 글이 안 보이던 문제 수정. 패널이 앱 테마가 아니라 시스템 팔레트를 따르던 탓이어서, 이제 <code>apply_theme</code> 으로 앱의 밝은/어두운 테마를 따른다(떠 있는 창일 때는 원래 창 배경 덕에 괜찮았던 것).</li>
+<li>시험: 샌드박스(offscreen)에서 다크 테마로 독 상태 패널을 그려 글자가 읽히는 것을 확인. 밝은 테마와 macOS 실기는 확인하지 못함.</li>
+</ul>
 <h2 id="0147">0.14.7<a class="anchor" href="#0147" aria-label="링크">#</a></h2>
 <ul>
 <li>화면 언어를 English로 했을 때 [환경 설정] "컴파일·도구" 탭 등에 한글이 남던 문제 수정: 외부 도구 블록, 문헌 목록(HTML), ndhmd4tex 옵션, 조판 미리보기 --context·대기, 이 파일만(--inherit-meta), 조각 그림 종류의 라벨·체크박스·자리 표시 글·툴팁과, 조판 미리보기 패널(자동, 앞뒤 N 블록, 폭 맞춤 툴팁, 상태 문구)·메뉴 툴팁의 영어 번역을 더했다.</li>
