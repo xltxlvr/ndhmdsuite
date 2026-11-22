@@ -29,6 +29,10 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#ndhmd4tex-0265">ndhmd4tex 0.26.5</a></li>
+<li><a href="#ndhmd4tex-0264">ndhmd4tex 0.26.4</a></li>
+<li><a href="#ndhmd4tex-0263">ndhmd4tex 0.26.3</a></li>
+<li><a href="#ndhmd4tex-0262">ndhmd4tex 0.26.2</a></li>
 <li><a href="#ndhmd4tex-0261--ndhmd2html-063">ndhmd4tex 0.26.1 / ndhmd2html 0.6.3</a></li>
 <li><a href="#ndhmd4tex-0260--ndhmd2html-062">ndhmd4tex 0.26.0 / ndhmd2html 0.6.2</a></li>
 <li><a href="#ndhmd4tex-0251">ndhmd4tex 0.25.1</a></li>
@@ -192,6 +196,22 @@
       <p class="doc-sub">최신 항목이 위에 있습니다</p>
     </div>
 <h1 id="ndhmd4tex-변경-이력">ndhmd4tex 변경 이력<a class="anchor" href="#ndhmd4tex-변경-이력" aria-label="링크">#</a></h1>
+<h2 id="ndhmd4tex-0265">ndhmd4tex 0.26.5<a class="anchor" href="#ndhmd4tex-0265" aria-label="링크">#</a></h2>
+<ul>
+<li><code>--preview-at</code>: <code>\newhangulfontfamily</code>·<code>\newhanjafontfamily</code>(및 <code>…fontface</code>)도 글꼴 정의 명령으로 취급해 <code>\def\이름{}</code> 로 대신한다.</li>
+</ul>
+<h2 id="ndhmd4tex-0264">ndhmd4tex 0.26.4<a class="anchor" href="#ndhmd4tex-0264" aria-label="링크">#</a></h2>
+<ul>
+<li><code>--preview-at</code>: <code>\newfontfamily\이름{…}</code>·<code>\newfontface</code>·<code>\newCJKfontfamily</code>·<code>\newCJKfontface</code> 를 지울 때 그 명령이 정의하던 <code>\이름</code> 을 <code>\def\이름{}</code> 로 남겨, 본문에서 <code>{\이름 …}</code> 을 써도 오류가 나지 않게 했다(<code>\newfontfamily{\이름}</code> 꼴도 처리).</li>
+</ul>
+<h2 id="ndhmd4tex-0263">ndhmd4tex 0.26.3<a class="anchor" href="#ndhmd4tex-0263" aria-label="링크">#</a></h2>
+<ul>
+<li><code>--preview-at</code>: 글꼴 지정을 지울 때 명령 한 줄이 아니라 뒤따르는 <code>(...)</code> <code>[...]</code> <code>{...}</code> 인자 전체를 여러 줄에 걸쳐 지운다. ndhmdWriter 의 font.py 가 만드는 <code>\setmainfont{…}[</code> + 여러 줄 옵션 + <code>]</code> 꼴이 옵션 줄만 남아 오류가 나던 것을 고쳤다. <code>\setko…font</code>(oblivoir)·<code>\setmonohangulfont</code>·<code>\newfontfamily\이름</code> 등도 같은 방식으로 처리한다.</li>
+</ul>
+<h2 id="ndhmd4tex-0262">ndhmd4tex 0.26.2<a class="anchor" href="#ndhmd4tex-0262" aria-label="링크">#</a></h2>
+<ul>
+<li><code>--preview-at [파일:]줄</code> 과 <code>--context N</code>(기본 1) 추가: 원고의 한 줄이 속한 블록과 앞뒤 N개 블록만 담은 약식 미리보기 <code>.tex</code> 를 만든다. 헤더는 전체 변환의 것을 쓰되 글꼴 지정(<code>\setkomainfont</code> 등)은 지워 kotex 기본(UnBatang)·lmodern 에 맡기고, 앞선 제목 수로 카운터를 맞춘다. 쪽 나눔·상호참조는 부정확. 가이드 1.5.1 절.</li>
+</ul>
 <h2 id="ndhmd4tex-0261--ndhmd2html-063">ndhmd4tex 0.26.1 / ndhmd2html 0.6.3<a class="anchor" href="#ndhmd4tex-0261--ndhmd2html-063" aria-label="링크">#</a></h2>
 <ul>
 <li>문서 일부에서만 mapping 값을 바꿨다가 되돌리는 구간 지시 추가: 한 줄짜리 <code>&lt;!--ndhmd mappingrule</code> … <code>--&gt;</code> 로 열고 <code>&lt;!--ndhmd end--&gt;</code> 로 닫는다. 안의 YAML 은 <code>mappingrule:</code> 과 같고, 닫으면 그 구간이 바꾼 키만 이전 값으로 돌아간다. 중첩·환경 안 사용 가능. 지시 줄은 블록만 끊고 문단은 나누지 않는다(ndhmd2html 은 <code>&lt;p&gt;</code> 가 나뉜다). 본문을 훑기 전에 처리되는 키(<code>linecomment</code>, <code>escape_chars</code>, <code>external</code>, <code>showexam</code> 등)는 구간에서 바꿀 수 없다. <code>{{포함}}</code> 파일 끝에서 자동으로 닫히지 않는다. 가이드 19.2 절.</li>
