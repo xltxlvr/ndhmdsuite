@@ -175,7 +175,7 @@
 
 <main id="top">
   <div class="wrap hero">
-    <span class="eyebrow">Version 4.67 · Windows · macOS</span><a class="badge" href="https://github.com/xltxlvr/ndhmd4tex/blob/main/guide/ndhmd4tex_cheatsheet.pdf" target="_blank" rel="noopener">📄 <span data-l="ko">치트시트</span><span data-l="en">Cheatsheet</span> (PDF)</a>
+    <span class="eyebrow">Version 4.69 · Windows · macOS</span><a class="badge" href="https://github.com/xltxlvr/ndhmd4tex/blob/main/guide/ndhmd4tex_cheatsheet.pdf" target="_blank" rel="noopener">📄 <span data-l="ko">치트시트</span><span data-l="en">Cheatsheet</span> (PDF)</a>
     <div class="herohead">
       <img src="assets/icon-192.png" alt="ndhmdSuite icon" width="88" height="88">
       <h1>ndhmdSuite</h1>
@@ -255,9 +255,9 @@
         <span data-l="en">Current versions and a short summary of recent changes. Full history (Korean): <a href="docs/ndhmdwriter-changelog.html">ndhmdwriter</a> · <a href="docs/ndhmd4tex-changelog.html">ndhmd4tex·ndhmd2html</a></span>
       </p>
       <div class="vers">
-        <div class="ver"><b>ndhmdwriter</b><span class="n">0.14.8</span></div>
-        <div class="ver"><b>ndhmd4tex</b><span class="n">0.26.5</span></div>
-        <div class="ver"><b>ndhmd2html</b><span class="n">0.6.3</span></div>
+        <div class="ver"><b>ndhmdwriter</b><span class="n">0.15.0</span></div>
+        <div class="ver"><b>ndhmd4tex</b><span class="n">0.26.7</span></div>
+        <div class="ver"><b>ndhmd2html</b><span class="n">0.6.4</span></div>
         <div class="ver"><b>ndhmdsync</b><span class="n">0.5.6</span></div>
         <div class="ver"><b>ksruncltex</b><span class="n">rev8</span></div>
       </div>
@@ -265,7 +265,7 @@
         <div class="box log">
           <h3>ndhmdwriter</h3>
           <ul>
-            <li><i>0.14.8</i><span><span data-l="ko"><code>보기 ▶ 조판 미리보기</code> 다크모드에서 색상 수정</span><span data-l="en"><code>View ▶ Typeset Preview</code> fix color theme in dark mode</span></span></li>            
+            <li><i>0.15.0</i><span><span data-l="ko">서랍 떼어내기, 끌기, 위치 이동 개선</span><span data-l="en">improve drag action in drawer</span></span></li>
             <li><i>0.14.7</i><span><span data-l="ko"><code>보기 ▶ 조판 미리보기</code> 배율 수정, 인터페이스 메시지 수정</span><span data-l="en"><code>View ▶ Typeset Preview</code> minor corrections</span></span></li>
             <li><i>0.14.0</i><span><span data-l="ko"><code>보기 ▶ 조판 미리보기</code> (F6, 지금 갱신 Shift+F6) 추가.</span><span data-l="en"><code>View ▶ Typeset Preview</code> support ndhmd4tex 0.26.5 <code>--preview-at</code></span></span></li>
             <li><i>0.13.0</i><span><span data-l="ko"><code>환경설정 ▶ 이 파일만 ▶ 최상위 헤더 가져오기</code> 추가 (ndhmd4tex 0.25.0 / ndhmd2html 0.6.0 이상 필요)</span><span data-l="en">New <code>Preferences ▶ This file only ▶ Inherit top-level header</code>: page setup and document font apply to single-file compile/HTML of sub-files (requires ndhmd4tex 0.25.0 / ndhmd2html 0.6.0 or later)</span></span></li>
@@ -275,11 +275,11 @@
         <div class="box log">
           <h3>ndhmd4tex · ndhmd2html</h3>
           <ul>
+            <li><i>0.26.7</i><span><span data-l="ko">중첩된 따옴표<code>"'</code> 판정 오류 수정</span><span data-l="en">fix <code>"'...'"</code> quotation marks</span></span></li>
             <li><i>0.26.5</i><span><span data-l="ko"><code>--preview-at</code> 미리보기를 위해 한두 문단만 추려내어 컴파일</span><span data-l="en"><code>--preview-at</code> compiles a few paragraphs around cursor position</span></span></li>
             <li><i>0.26.1</i><span><span data-l="ko">문서 일부 <code>mappingrule</code> 바꾸기 되돌리기 (ndhmd2html 0.6.3)</span><span data-l="en">for part of a document <code>mappingrule</code> scopes (ndhmd2html 0.6.3)</span></span></li>
             <li><i>0.26.0</i><span><span data-l="ko"><code>quotes: mixed</code> 도입 (ndhmd2html 0.6.2)</span><span data-l="en">introduce <code>quotes: mixed</code> (ndhmd2html 0.6.2)</span></span></li>
             <li><i>0.25.0</i><span><span data-l="ko"><code>--inherit-meta main.md</code>: 하위 파일만 컴파일할 때 책 최상위의 헤더를 상속 (ndhmd2html 0.6.0)</span><span data-l="en"><code>--inherit-meta main.md</code>: compile a sub-file alone with the main file's header (ndhmd2html 0.6.0)</span></span></li>
-            <li><i>0.24.3</i><span><span data-l="ko"><code>bibliography:</code>에 <code>print: false</code> 추가 (문헌 목록 중복 출력 방지)</span><span data-l="en"><code>print: false</code> for <code>bibliography:</code> (avoids a duplicated reference list)</span></span></li>
           </ul>
         </div>
       </div>
@@ -446,7 +446,7 @@
 
 <footer>
   <div class="wrap">
-    <span>ndhmdSuite 4.67 · Publisher: ndhmd</span>
+    <span>ndhmdSuite 4.69 · Publisher: ndhmd</span>
     <span>
       <a href="https://github.com/xltxlvr/ndhmdwriter" target="_blank" rel="noopener">ndhmdwriter</a> ·
       <a href="https://github.com/xltxlvr/ndhmd4tex" target="_blank" rel="noopener">ndhmd4tex</a> ·

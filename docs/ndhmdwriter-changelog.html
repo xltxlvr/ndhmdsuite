@@ -29,6 +29,7 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#0150">0.15.0</a></li>
 <li><a href="#0148">0.14.8</a></li>
 <li><a href="#0147">0.14.7</a></li>
 <li><a href="#0146">0.14.6</a></li>
@@ -285,6 +286,15 @@
     </div>
 <h1 id="changelog">CHANGELOG<a class="anchor" href="#changelog" aria-label="링크">#</a></h1>
 <p>버전은 <code>__version__</code> 하나로 관리한다(파일 맨 위). 수정이 있을 때마다 마지막 자리(patch)를 하나씩 올린다. 최신 항목이 위에 온다.</p>
+<h2 id="0150">0.15.0<a class="anchor" href="#0150" aria-label="링크">#</a></h2>
+<ul>
+<li>서랍 떼어내기: 서랍 머리줄의 <code>⧉</code> 로 서랍을 떠다니는 창으로 뺀다(<code>⊡</code> 로 되돌림). 창 위치·크기와 떠 있는 상태를 기억한다. 서랍을 상자(<code>drawer_box</code>)에 담아 칸 번호가 밀리지 않게 했다. 떠 있으면 "글쓰기가 시작되면 서랍 자동 닫기"는 건너뛴다.</li>
+<li>끌지 않고 옮기기: <code>Alt+↑/↓</code>(같은 단계 순서), <code>Alt+→</code>(앞 형제의 하위로), <code>Alt+←</code>(한 단계 위로 / 책에서 빼기), 우클릭 ▶ <code>이동</code>(맨 앞·맨 뒤 포함)과 <code>위치를 골라 이동…</code>(항목을 골라 앞/뒤/하위로). 모두 <code>{{}}</code> 줄 수정이고, ndhmain 힌트도 끌어 놓기와 같이 맞춘다.</li>
+<li>서랍을 다시 그려도 스크롤 위치를 지키고, 옮긴 항목은 선택을 유지한다(이전에는 매번 맨 위로 돌아갔다).</li>
+<li>긴 이름은 가운데를 줄여 보이고(앞 번호·뒤 끝말 유지), 항목에 올리면 전체 이름이 툴팁으로 나온다.</li>
+<li>시험(샌드박스, offscreen): 20장짜리 책에서 up/down/top/bottom/in/out, 키 입력(Alt+↑), 위치 선택 대화상자, 하위로 넣을 때의 <code>ndhmain:</code> 기록, 서랍 떼기·붙이기·숨기기·보이기를 확인. 끌어 놓기 자체와 macOS 실기(Option+화살표 키 전달)는 확인하지 못함.</li>
+<li>컬럼 모드는 아직 만들지 않았다(이 변경을 써 본 뒤 판단).</li>
+</ul>
 <h2 id="0148">0.14.8<a class="anchor" href="#0148" aria-label="링크">#</a></h2>
 <ul>
 <li>조판 미리보기가 오른쪽에 붙어(독) 있을 때 다크 모드에서 제목·<code>자동</code>·<code>앞뒤 N 블록</code>·배율·상태 글이 안 보이던 문제 수정. 패널이 앱 테마가 아니라 시스템 팔레트를 따르던 탓이어서, 이제 <code>apply_theme</code> 으로 앱의 밝은/어두운 테마를 따른다(떠 있는 창일 때는 원래 창 배경 덕에 괜찮았던 것).</li>

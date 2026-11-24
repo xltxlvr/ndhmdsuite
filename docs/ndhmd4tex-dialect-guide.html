@@ -103,6 +103,7 @@
 <li><details><summary><a href="#id-19-mappingyaml-로-매핑-재정의">19. mapping.yaml 로 매핑 재정의</a></summary><ul>
 <li><a href="#id-191-원고-안에-바로-mappingrule">19.1. 원고 안에 바로 — mappingrule:</a></li>
 <li><a href="#id-192-문서-일부에서만---ndhmd-mappingrule---구간-0261">19.2. 문서 일부에서만 — &lt;!--ndhmd mappingrule--&gt; 구간 (0.26.1)</a></li>
+<li><a href="#id-193---ndhmd-endinput---여기서-변환을-멈추기-0266">19.3. &lt;!--ndhmd endinput--&gt; — 여기서 변환을 멈추기 (0.26.6)</a></li>
 </ul></details></li>
 <li><details><summary><a href="#id-20-파일-포함-filename">20. 파일 포함 ({{filename}})</a></summary><ul>
 <li><a href="#id-201-날-latex-파일-그대로-끼워넣기-texfilename">20.1. 날 LaTeX 파일 그대로 끼워넣기 ({{tex:filename}})</a></li>
@@ -838,6 +839,7 @@ RTLtypeset:                              # 풀어 쓴 꼴
 </table></div>
 <p><code>unicode</code>는 4글자 <code>“”‘’</code>의 줄임말이다. 여는/닫는 판정과 이스케이프(<code>\"</code>, <code>\'</code>), 코드·수식 안의 따옴표 처리는 <code>tex</code>일 때와 똑같고 바뀌는 것은 치환 결과 문자뿐이다. 결과 문자는 뒤 단계가 건드리지 못하게 보호된다. 잘못된 값은 경고하고 <code>tex</code>로 둔다. <code>--pandoc</code>/<code>--mmd</code>에는 적용되지 않는다(pandoc의 smart 확장, mmd의 <code>--smart</code>가 맡는다).</p>
 <ul>
+<li><strong>겹쳐 여닫는 따옴표 (0.26.7)</strong>: <code>"'가'"</code>처럼 여는 따옴표 바로 뒤의 따옴표도 여는 것으로 본다(이전에는 닫는 것으로 오인했다). <code>tex</code> 방식에서 작은 닫는 따옴표와 큰 닫는 따옴표가 붙으면(<code>'</code> + <code>''</code>) TeX가 <code>''</code> + <code>'</code>로 거꾸로 묶으므로 사이에 <code>\,</code>(얇은 공백)을 끼운다. 작은 여는 + 큰 여는(<code>`</code> + <code>``</code>)도 같다.</li>
 <li><strong>한글/한자 맥락만 바꾸기 (0.26.0)</strong>: <code>quotes: mixed</code>, 또는 위의 어떤 값이든 <code>quotes_scope: cjk</code>를 더하면(기본 <code>all</code>) 여는 따옴표 바로 다음 글자(<code>*</code> <code>~</code>는 건너뜀)가 한글·한자일 때만 결과 문자로 바꾸고, 짝인 닫는 따옴표는 여는 쪽의 판정을 따른다. 영문 인용(<code>"Hello"</code>)은 <code>tex</code> 방식 <code>``Hello''</code>로 남아 원래 글꼴로 식자된다. <code>「」</code> 안에 영문이 있어도 한글로 열었으면 <code>「」</code>다. 이 모드의 <code>'</code>는 단어 안 아포스트로피(<code>don't</code>)를 닫는 따옴표로 보지 않는다. 가로·세로 겸용 원고에서 <code>vpunct.py --contextual</code>과 판정을 맞추려는 용도다. ndhmd2html에서는 변환하지 않은 쪽이 <code>“ ”</code> <code>‘ ’</code>로 나온다.</li>
 <li>유니코드 따옴표는 xelatex/lualatex에서 쓰는 글꼴에 그 글리프가 있을 때 나온다. pdflatex에서는 <code>inputenc</code>가 필요하다.</li>
 <li>닫는 작은따옴표 문자는 <code>don't</code>의 아포스트로피에도 쓰인다. <code>unicode</code>에서는 U+2019라서 맞는 결과지만, <code>「」『』</code>처럼 쓰면 <code>don』t</code>가 되므로 그 자리는 <code>\'</code>로 직선을 지키거나 <code>\textquoteright{}</code>를 쓴다.</li>
@@ -2026,6 +2028,19 @@ quotes_scope: cjk
 <li>바꿀 수 없는 키: 본문을 훑기 전에 한 번에 처리되거나 문서 전체에 걸리는 <code>linecomment</code>, <code>escape_chars</code>, <code>external</code>, <code>showexam</code>, <code>animation_fps</code>, <code>codeblock_template</code>, <code>literal_macros</code>, <code>extra_macros</code>, <code>verbatim_env</code>, <code>metadata_macro_prefix</code>, <code>raw_inline_formats</code>와 <code>_</code>로 시작하는 키. 경고하고 그 키만 무시한다. 잘못된 YAML이면 경고하고 지시 전체를 무시한다.</li>
 <li>세로조판 자체의 환경(<code>\begin{...}</code>)은 이 지시가 하지 않는다. 바꿀 구간을 <code>:::{환경}</code>이나 raw 환경으로 감싸고 그 안에서 값을 바꾼다.</li>
 <li><code>vpunct.py</code> 같은 외부 후처리는 이 구간을 모른다. <code>.tex</code> 전체에 돌아간다.</li>
+</ul>
+<h3 id="id-193---ndhmd-endinput---여기서-변환을-멈추기-0266">19.3. <code>&lt;!--ndhmd endinput--&gt;</code> — 여기서 변환을 멈추기 (0.26.6)<a class="anchor" href="#id-193---ndhmd-endinput---여기서-변환을-멈추기-0266" aria-label="링크">#</a></h3>
+<p>TeX의 <code>\endinput</code>처럼, 이 줄 <strong>이후의 모든 내용을 버리고</strong> 변환하지 않는다. 긴 글을 앞에서부터 차례로 md로 고쳐 가는 동안 “여기까지만 변환”을 표시하는 용도다. 지울 때까지 뒤쪽은 그대로 두어도 된다.</p>
+<pre><code class="language-markdown">… 다듬은 부분 …
+
+&lt;!--ndhmd endinput--&gt;
+
+… 아직 손보지 않은 뒷부분(변환되지 않음) …</code></pre>
+<ul>
+<li>한 줄을 통째로 차지해야 한다(19.2절의 지시와 같다). 코드 펜스·주석 안의 것은 지시가 아니다.</li>
+<li>이 줄이 <code>:::</code> 환경 안이라도 열려 있던 환경은 자동으로 닫힌다. 열려 있던 <code>mappingrule</code> 구간은 문서 끝에서 경고한다.</li>
+<li><code>{{포함}}</code>으로 합쳐진 뒤의 문서에서 <strong>처음 나온</strong> 것이 기준이다. 포함된 파일 안에 있어도 TeX와 달리 그 파일만 끝나는 것이 아니라 문서 나머지가 모두 버려진다.</li>
+<li>ndhmd2html도 같다. <code>--preview-at</code>·<code>--syncinfo</code>의 줄 번호는 그대로 정확하다.</li>
 </ul>
 <hr />
 <h2 id="id-20-파일-포함-filename">20. 파일 포함 (<code>{{filename}}</code>)<a class="anchor" href="#id-20-파일-포함-filename" aria-label="링크">#</a></h2>
