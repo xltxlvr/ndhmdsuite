@@ -29,6 +29,8 @@
     <button class="side-toggle" id="sideToggle" type="button">목차</button>
     <nav class="toc" aria-label="목차">
 <ul class="toc-list">
+<li><a href="#ndhmd2html-090">ndhmd2html 0.9.0</a></li>
+<li><a href="#ndhmd4tex-0281--ndhmd2html-081">ndhmd4tex 0.28.1 / ndhmd2html 0.8.1</a></li>
 <li><a href="#ndhmd4tex-0280--ndhmd2html-080">ndhmd4tex 0.28.0 / ndhmd2html 0.8.0</a></li>
 <li><a href="#ndhmd4tex-0270--ndhmd2html-070">ndhmd4tex 0.27.0 / ndhmd2html 0.7.0</a></li>
 <li><a href="#ndhmd4tex-0268">ndhmd4tex 0.26.8</a></li>
@@ -201,6 +203,15 @@
       <p class="doc-sub">최신 항목이 위에 있습니다</p>
     </div>
 <h1 id="ndhmd4tex-변경-이력">ndhmd4tex 변경 이력<a class="anchor" href="#ndhmd4tex-변경-이력" aria-label="링크">#</a></h1>
+<h2 id="ndhmd2html-090">ndhmd2html 0.9.0<a class="anchor" href="#ndhmd2html-090" aria-label="링크">#</a></h2>
+<ul>
+<li>raw LaTeX 표(<code>tabular</code>, <code>tabularx</code>, <code>tabulary</code>, <code>tblr</code>, <code>longtblr</code>)를 생략하지 않고 <code>&lt;table&gt;</code> 로 옮긴다(EPUB 출판용). 열 정의, <code>\hline</code>·booktabs 줄, <code>\multicolumn</code>·<code>\multirow</code>·<code>\SetCell</code>, <code>\rowcolor</code>·<code>\cellcolor</code>, tblr 의 <code>cells</code>/<code>cell</code>/<code>row</code>/<code>column</code>/<code>hline</code>/<code>vline</code>/<code>hlines</code>/<code>vlines</code>/<code>rowhead</code>/<code>width</code>, <code>longtblr</code> 의 <code>caption</code>/<code>label</code> 을 읽고, 정렬·배경색·글자색·굵게·선 굵기와 점선·열 너비 비율(<code>co=</code>)을 인라인 스타일로 낸다. 색 이름은 front matter <code>preamble</code> 의 <code>\definecolor</code>/<code>\providecolor</code> 에서 찾는다. 모르는 키는 경고하고 내용은 남기며, 열 정의를 못 읽는 표만 이전처럼 생략한다. 가이드 14장.</li>
+</ul>
+<h2 id="ndhmd4tex-0281--ndhmd2html-081">ndhmd4tex 0.28.1 / ndhmd2html 0.8.1<a class="anchor" href="#ndhmd4tex-0281--ndhmd2html-081" aria-label="링크">#</a></h2>
+<ul>
+<li>원문에 쓴 <code>\$</code>(이스케이프된 달러)가 망가지던 문제를 고쳤다. 한 문단에 <code>\$</code> 가 둘 이상이면 <code>$…$</code> 짝으로 읽혀 인라인 수식으로 보호되었고, 그 바람에 첫 <code>\</code> 는 <code>\textbackslash{}</code> 로 바뀌어 <code>\textbackslash{}$</code> 가 나왔다. 하나만 있을 때도 <code>\textbackslash{}\$</code> 가 되었다. 이제 <code>\$</code> 는 수식 구분자로 세지 않고 그대로 통과하며, 수식 안의 <code>\$</code> 도 허용한다(<code>$5 \$ 3$</code>). <code>\%</code> 등 다른 이스케이프는 원래 문제가 없었다. 가이드 문서 본문 변환 결과는 변함없음을 확인했다.</li>
+<li>ndhmd2html: 같은 정규식을 공유하므로 같은 문제가 있었다(<code>\$</code> 둘이 <code>\(\)</code> 빈 수식이 됨). 이제 <code>\$</code> 는 리터럴 <code>$</code> 로 나오고 MathJax 로딩 플래그도 켜지 않는다.</li>
+</ul>
 <h2 id="ndhmd4tex-0280--ndhmd2html-080">ndhmd4tex 0.28.0 / ndhmd2html 0.8.0<a class="anchor" href="#ndhmd4tex-0280--ndhmd2html-080" aria-label="링크">#</a></h2>
 <ul>
 <li>정의형 각주 <code>[^id]:</code> 가 여러 문단과 환경을 담을 수 있다. 빈 줄 뒤에도 들여쓴 줄이 이어지면 같은 각주로 모은다(Pandoc 방식; 전에는 빈 줄에서 끊겨 나머지가 본문에 남았다). 빈 줄·목록·인용·<code>:::</code> 환경이 있으면 블록 각주로 보고 본문 렌더러로 처리해 <code>\footnote{문단\n\n문단 \begin{itemize}…}</code> 를 낸다. 한 문단짜리는 이전과 같다.</li>
